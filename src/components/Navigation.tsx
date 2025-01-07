@@ -18,9 +18,9 @@ export default function Navigation() {
     }`}>
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link to="/" className="text-2xl font-bold text-bmw-blue">
-          Auto Showcase
+        Luxury Motors
         </Link>
-        <div className="hidden md:flex space-x-8">
+        <div className="font-bold hidden md:flex space-x-8 text-white">
           <Link to="/" className="hover:text-bmw-blue transition">Home</Link>
           <Link to="/brands" className="hover:text-bmw-blue transition">Brands</Link>
           <a href="#contact" className="hover:text-bmw-blue transition">Contact</a>

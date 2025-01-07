@@ -1,17 +1,13 @@
-import { Link } from 'react-router-dom';
-import { brands } from '../data';
-import { 
-  ChevronRight, 
-  Play, 
-} from 'lucide-react';
+import { Link } from "react-router-dom";
+import { brands } from "../data";
+import { ChevronRight, Play } from "lucide-react";
 export default function Home() {
   return (
-    
     <div className="min-h-screen bg-black text-white">
       {/* Featured Brands Section */}
       <section className="h-screen relative overflow-hidden">
         <div className="absolute inset-0">
-          <img 
+          <img
             src="https://mediapool.bmwgroup.com/cache/P9/202205/P90461734/P90461734-the-new-bmw-m4-csl-on-the-racetrack-05-2022-2250px.jpg"
             alt="BMW M4 CSL"
             className="w-full h-full object-cover"
@@ -36,7 +32,9 @@ export default function Home() {
 
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-12 text-center">Featured Brands</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center">
+            Featured Brands
+          </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {brands.map((brand) => (
               <Link

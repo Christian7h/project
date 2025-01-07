@@ -52,9 +52,9 @@ export default function VehicleDetail() {
               </div>
 
               {/* Botón */}
-              <button className="w-full bg-bmw-blue text-white py-3 rounded-lg mt-8 hover:bg-bmw-blue/90 transition">
-                Schedule Test Drive
-              </button>
+                <button className="w-full bg-bmw-blue text-white py-3 rounded-lg mt-8 hover:bg-bmw-blue/90 transition">
+                Programar prueba de manejo
+                </button>
             </div>
           </div>
 
