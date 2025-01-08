@@ -7,6 +7,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Featured Brands Section */}
+      
       <HeroSection/>
 
       <section className="py-20">
