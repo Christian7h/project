@@ -1,3 +1,4 @@
+//src/app.tsx
 import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Home from './pages/Home';
