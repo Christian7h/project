@@ -9,10 +9,9 @@ function App() {
     <>
       <ScrollToTop />
       <Navigation />
-      <div className="content">
-        {/* Aquí se renderizan las rutas configuradas en main.tsx */}
-        <Outlet />
-      </div>
+      <main className='content'>
+        <Outlet /> {/* Renderiza las rutas hijas */}
+      </main>
       <Footer />
     </>
   );

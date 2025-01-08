@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import {
   createBrowserRouter,
   RouterProvider,
+  Outlet,
 } from 'react-router-dom';
 import './index.css';
 import App from './App';
@@ -15,23 +16,21 @@ import VehicleDetail from './pages/VehicleDetail';
 const router = createBrowserRouter(
   [
     {
-      path:'/',
-      element: <App />,
+      path: '/',
+      element: <App />, // App sirve como el contenedor principal
       children: [
-        { path: '/', element: <Home /> },
-        { path: 'contact', element: <Contact /> },
-        { path: 'brands', element: <Brand /> },
-        { path: '/brands/:brandId', element: <BrandPage /> },
-        { path: '/vehicles/:vehicleId', element: <VehicleDetail /> },
-        {path:'brands'},
-        {path:'contact'},
+        { path: '/', element: <Home /> }, // Página de inicio
+        { path: 'contact', element: <Contact /> }, // Página de contacto
+        { path: 'brands', element: <Brand /> }, // Lista de marcas
+        { path: 'brands/:brandId', element: <BrandPage /> }, // Detalle de marca
+        { path: 'vehicles/:vehicleId', element: <VehicleDetail /> }, // Detalle de vehículo
       ],
     },
   ],
   {
     future: {
-      v7_startTransition: true,
-      v7_relativeSplatPath: true,
+      v7_startTransition: true, // Habilita el uso de startTransition para actualizaciones más fluidas
+      v7_relativeSplatPath: true, // Corrige la resolución de rutas relativas en rutas tipo splat
     },
   }
 );
