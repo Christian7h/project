@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef,useEffect  } from "react";
 import { ChevronRight, Play } from "lucide-react";
 
 export default function HeroSection() {
@@ -21,6 +21,12 @@ export default function HeroSection() {
       videoRef.current.currentTime = 0; // Resetea el video a su inicio
     }
   };
+  useEffect(() => {
+    if (videoRef.current) {
+      // Establecer el volumen al 50% (valor entre 0 y 1)
+      videoRef.current.volume = 0.3; // Volumen del 50%
+    }
+  }, []);
 
   return (
     <section className="h-screen relative overflow-hidden">
@@ -29,7 +35,7 @@ export default function HeroSection() {
           ref={videoRef}
           src="/videohero.mp4"
           className="w-full h-full object-cover"
-          muted
+          disablePictureInPicture
           loop
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30" />
