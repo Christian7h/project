@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Mail, User, Send } from "lucide-react";
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ export default function Contact() {
     setIsSubmitted(true);
     setTimeout(() => setIsSubmitted(false), 3000);
   };
+  const { language} = useLanguage(); 
 
   return (
 <div>
@@ -29,16 +31,19 @@ export default function Contact() {
     {/* Contenido Principal */}
     <div className="container mx-auto px-4 relative z-10">
       <div className="max-w-2xl mx-auto bg-gray-100 dark:bg-gray-900 p-8 rounded-xl shadow-lg">
-        <h2 className="text-4xl font-bold mb-8 text-center text-black dark:text-white">
-          Contact Us
+      <h2 className="text-4xl font-bold mb-8 text-center text-black dark:text-white">
+          {language === 'es' ? 'Contáctanos' : 'Contact Us'}
         </h2>
         <p className="text-gray-600 dark:text-gray-300 text-center mb-8">
-          Have questions or feedback? Send us a message, and we’ll get back
-          to you!
+          {language === 'es'
+            ? '¿Tienes preguntas o comentarios? Envíanos un mensaje y te responderemos pronto.'
+            : 'Have questions or feedback? Send us a message, and we’ll get back to you!'}
         </p>
         {isSubmitted ? (
           <div className="text-center text-lg font-semibold text-bmw-blue animate-pulse">
-            Thank you! Your message has been sent.
+            {language === 'es'
+              ? '¡Gracias! Tu mensaje ha sido enviado.'
+              : 'Thank you! Your message has been sent.'}
           </div>
         ) : (
           <form className="space-y-6" onSubmit={handleSubmit}>
@@ -81,7 +86,9 @@ export default function Contact() {
               type="submit"
               className="w-full flex items-center justify-center bg-bmw-blue text-white py-3 rounded-md hover:bg-bmw-blue/90 transition-transform transform hover:scale-105"
             >
-              Send Message <Send className="ml-2" />
+                        {language === 'es'
+            ? 'Enviar Mensaje'
+            : 'Send Message'} <Send className="ml-2" />
             </button>
           </form>
         )}

@@ -6,6 +6,7 @@ import ScrollToTop from "./components/ScrollTop.tsx";
 import "./App.css";
 import { Outlet } from "react-router-dom";
 import LoadingScreen from "./components/LoadingScreen";
+import { LanguageProvider } from './context/LanguageContext.tsx';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +31,9 @@ function App() {
   const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
   return (
+    
     <div>
+          <LanguageProvider>
       <AnimatePresence mode="wait">
         {isLoading ? (
           <LoadingScreen key="loading" />
@@ -45,6 +48,8 @@ function App() {
           </>
         )}
       </AnimatePresence>
+      </LanguageProvider>
+
     </div>
   );
 }

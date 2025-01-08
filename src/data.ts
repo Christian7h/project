@@ -1,55 +1,159 @@
+//src/data.ts
 import { Brand, Vehicle } from './types';
+// Definir las traducciones de cada marca
+const translations = {
+  en: {
+    bmw: { name: 'BMW', description: 'The Ultimate Driving Machine' },
+    mercedes: { name: 'Mercedes-Benz', description: 'The Best or Nothing' },
+    audi: { name: 'Audi', description: 'Progress through Technology' },
+    porsche: { name: 'Porsche', description: 'There is no substitute' },
+    ferrari: { name: 'Ferrari', description: 'We build cars' },
+    lamborghini: { name: 'Lamborghini', description: 'We build' },
+    bugatti: { name: 'Bugatti', description: 'We build cars' },
+    koenigsegg: { name: 'Koenigsegg', description: 'We build cars' },
+  },
+  es: {
+    bmw: { name: 'BMW', description: 'La Máxima Máquina de Conducción' },
+    mercedes: { name: 'Mercedes-Benz', description: 'Lo Mejor o Nada' },
+    audi: { name: 'Audi', description: 'Progreso a través de la Tecnología' },
+    porsche: { name: 'Porsche', description: 'No hay sustituto' },
+    ferrari: { name: 'Ferrari', description: 'Construimos autos' },
+    lamborghini: { name: 'Lamborghini', description: 'Construimos' },
+    bugatti: { name: 'Bugatti', description: 'Construimos autos' },
+    koenigsegg: { name: 'Koenigsegg', description: 'Construimos autos' },
+  },
+};
 
 export const brands: Brand[] = [
   {
     id: 'bmw',
     name: 'BMW',
     logo: '/bmw/bmw.png',
-    description: 'The Ultimate Driving Machine'
+    description: 'The Ultimate Driving Machine',
+    translations: {
+      es: {
+        name: 'BMW',
+        description: 'La máquina de conducir definitiva',
+      },
+      en: {
+        name: 'BMW',
+        description: 'The Ultimate Driving Machine',
+      }
+    }
   },
-  {
+    {
     id: 'mercedes',
     name: 'Mercedes-Benz',
     logo: '/mb/mb.png',
-    description: 'The Best or Nothing'
+    description: 'The Best or Nothing',
+    translations: {
+      es: {
+        name: 'Mercedes-Benz',
+        description: 'Lo mejor o nada',
+      },
+      en: {
+        name: 'Mercedes-Benz',
+        description: 'The Best or Nothing',
+      }
+    }
   },
   {
     id: 'audi',
     name: 'Audi',
     logo: '/audi/audi.png',
-    description: 'Progress through Technology'
+    description: 'Progress through Technology',
+    translations: {
+      es: {
+        name: 'Audi',
+        description: 'Progreso a través de la tecnología',
+      },
+      en: {
+        name: 'Audi',
+        description: 'Progress through Technology',
+      }
+    }
   },
   {
     id: 'porsche',
     name: 'Porsche',
     logo: '/por/por.png',
     description: 'There is no substitute',
+    translations: {
+      es: {
+        name: 'Porsche',
+        description: 'No hay sustituto',
+      },
+      en: {
+        name: 'Porsche',
+        description: 'There is no substitute',
+      }
+    }
   },
   {
     id: 'ferrari',
     name: 'Ferrari',
     logo: '/fer/fer.png',
-    description: 'We build cars'
+    description: 'We build cars',
+    translations: {
+      es: {
+        name: 'Ferrari',
+        description: 'Construimos autos',
+      },
+      en: {
+        name: 'Ferrari',
+        description: 'We build cars',
+      }
+    }
   },
   {
     id: 'lamborghini',
     name: 'Lamborghini',
     logo: '/lambo/lambo.png',
-    description: 'We build',
+    description: 'We build luxury cars',
+    translations: {
+      es:{
+        name:'Lamborghini',
+        description:'Fabricamos autos de lujo',
+      },
+      en:{
+        name:'Lamborghini',
+        description:'We build luxury cars',
+      },
+    }
   },
   {
     id: 'bugatti',
     name: 'Bugatti',
     logo: '/buga/buga.png',
-    description: 'We build cars',
-  },
+    description: 'Construimos autos',
+    translations: {
+      es: {
+        name: 'Bugatti',
+        description: 'Construimos autos',
+      },
+      en: {
+        name: 'Bugatti',
+        description: 'We build cars',
+      },
+    }
+   },
 
   {
     id: 'koenigsegg',
     name: 'Koenigsegg',
     logo: '/koeni/koeni.png',
-    description: 'We build cars',
-  }
+    description: 'Construimos autos',
+    translations: {
+      es: {
+        name: 'Koenigsegg',
+        description: 'Construimos autos',
+      },
+      en: {
+        name: 'Koenigsegg',
+        description: 'We build cars',
+      },
+    }
+ }
 ];
 
 export const vehicles: Vehicle[] = [
@@ -58,20 +162,32 @@ export const vehicles: Vehicle[] = [
     brandId: 'bmw',
     name: 'BMW M4 CSL',
     image: '/bmw/m4cls/bmwm4cls.png',
-    images: ['/bmw/m4cls/bmwm4cls (20).jpg', '/bmw/m4cls/bmwm4cls (19).jpg', '/bmw/m4cls/bmwm4cls (18).jpg',
+    images: [
+      '/bmw/m4cls/bmwm4cls (20).jpg', '/bmw/m4cls/bmwm4cls (19).jpg', '/bmw/m4cls/bmwm4cls (18).jpg',
       '/bmw/m4cls/bmwm4cls (17).jpg', '/bmw/m4cls/bmwm4cls (16).jpg', '/bmw/m4cls/bmwm4cls (15).jpg',
       '/bmw/m4cls/bmwm4cls (14).jpg', '/bmw/m4cls/bmwm4cls (13).jpg', '/bmw/m4cls/bmwm4cls (12).jpg',
       '/bmw/m4cls/bmwm4cls (11).jpg', '/bmw/m4cls/bmwm4cls (10).jpg', '/bmw/m4cls/bmwm4cls (9).jpg',
       '/bmw/m4cls/bmwm4cls (8).jpg', '/bmw/m4cls/bmwm4cls (7).jpg', '/bmw/m4cls/bmwm4cls (6).jpg',
       '/bmw/m4cls/bmwm4cls (5).jpg', '/bmw/m4cls/bmwm4cls (4).jpg', '/bmw/m4cls/bmwm4cls (3).jpg',
-      '/bmw/m4cls/bmwm4cls (2).jpg', '/bmw/m4cls/bmwm4cls (1).jpg'],
+      '/bmw/m4cls/bmwm4cls (2).jpg', '/bmw/m4cls/bmwm4cls (1).jpg'
+    ],
     price: '$139,900',
     description: 'Competition. Sport. Lightweight.',
     specs: {
       power: '550 HP',
       acceleration: '3.6s',
       topSpeed: '191 mph'
-    }
+    },
+    translations: {
+      es: {
+        name: 'BMW M4 CSL',
+        description: 'Competición. Deporte. Ligero.',
+      },
+      en: {
+        name: 'BMW M4 CSL',
+        description: 'Competition. Sport. Lightweight.',
+      },
+    },
   },
   {
     id: 'm5-cs',
@@ -92,7 +208,17 @@ export const vehicles: Vehicle[] = [
       power: '627 HP',
       acceleration: '2.9s',
       topSpeed: '190 mph'
-    }
+    },
+    translations: {
+      es: {
+        name: 'BMW M5 CS',
+        description: 'El coche M más potente de todos los tiempos.',
+      },
+      en: {
+        name: 'BMW M5 CS',
+        description: 'The most powerful M car ever.',
+      },
+    },
   },
   {
     id: 'm8-competition',
@@ -111,7 +237,17 @@ export const vehicles: Vehicle[] = [
       power: '617 HP',
       acceleration: '3.0s',
       topSpeed: '190 mph'
-    }
+    },
+    translations: {
+      es: {
+        name: 'BMW ALPINA B8',
+        description: 'La máquina de conducción definitiva',
+      },
+      en: {
+        name: 'BMW ALPINA B8',
+        description: 'The Ultimate Driving Machine',
+      },
+    },
   },
   {
     id: 'amg-gt-black-series',
@@ -138,7 +274,17 @@ export const vehicles: Vehicle[] = [
       power: '720 HP',
       acceleration: '3.2s',
       topSpeed: '202 mph'
-    }
+    },
+    translations: {
+      es: {
+        name: 'Mercedes-AMG GT Black Series',
+        description: 'La máquina de rendimiento definitiva de AMG.',
+      },
+      en: {
+        name: 'Mercedes-AMG GT Black Series',
+        description: 'The ultimate AMG performance machine.',
+      },
+    },
   },
   {
     id: 's-class-maybach',
@@ -161,7 +307,17 @@ export const vehicles: Vehicle[] = [
       power: '496 HP',
       acceleration: '4.4s',
       topSpeed: '155 mph'
-    }
+    },
+    translations: {
+      es: {
+        name: 'Mercedes-Maybach S-Class',
+        description: 'La cima del lujo y la comodidad.',
+      },
+      en: {
+        name: 'Mercedes-Maybach S-Class',
+        description: 'A pinnacle of luxury and comfort.',
+      },
+    },
   },
   {
     id: 'eqs-580',
@@ -189,6 +345,16 @@ export const vehicles: Vehicle[] = [
       power: '516 HP',
       acceleration: '4.1s',
       topSpeed: '130 mph'
+    },
+    translations: {
+      es: {
+        name: 'Mercedes-Benz EQS 580',
+        description: 'El futuro de la movilidad eléctrica de lujo.',
+      },
+      en: {
+        name: 'Mercedes-Benz EQS 580',
+        description: 'The future of luxury electric mobility.',
+      },
     }
   },
   {
@@ -207,6 +373,16 @@ export const vehicles: Vehicle[] = [
       power: '591 HP',
       acceleration: '3.5s',
       topSpeed: '190 mph'
+    },
+    translations: {
+      es: {
+        name: 'Audi RS7 Performance',
+        description: 'Diseño dinámico y rendimiento emocionante.',
+      },
+      en: {
+        name: 'Audi RS7 Performance',
+        description: 'Dynamic design and thrilling performance.',
+      },
     }
   },
   {
@@ -225,7 +401,17 @@ export const vehicles: Vehicle[] = [
       power: '469 HP',
       acceleration: '3.9s',
       topSpeed: '152 mph'
-    }
+    },  
+    translations: {
+      es: {
+        name: 'Audi e-tron GT',
+        description: 'Una obra maestra completamente eléctrica de ingeniería.',
+      },
+      en: {
+        name: 'Audi e-tron GT',
+        description: 'A fully electric masterpiece of engineering.',
+      },
+    }    
   },
   {
     id: 'r8-v10-performance',
@@ -247,8 +433,17 @@ export const vehicles: Vehicle[] = [
       power: '602 HP',
       acceleration: '3.1s',
       topSpeed: '205 mph'
-    }
+    },
+    translations: {
+      es: {
+        name: 'Audi R8 V10 Performance',
+        description: 'El superdeportivo de motor central definitivo.',
+      },
+      en: {
+        name: 'Audi R8 V10 Performance',
+        description: 'The ultimate mid-engine supercar.',
+      },
+    }    
   }
-  
 ];
 
