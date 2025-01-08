@@ -1,8 +1,17 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { vehicles } from "../data";
 import { Car, Clock3, Settings } from "lucide-react";
 import LoadingSpinner from "../components/LoadingSpinner";
+import LightGallery from "lightgallery/react";
+
+// import styles
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import "lightgallery/css/lg-thumbnail.css";
+
+// import plugins if you need
+import lgThumbnail from "lightgallery/plugins/thumbnail";
+import lgZoom from "lightgallery/plugins/zoom";
 
 export default function VehicleDetail() {
   const { vehicleId } = useParams<{ vehicleId: string }>();
@@ -11,6 +20,10 @@ export default function VehicleDetail() {
   if (!vehicle) {
     return <LoadingSpinner />;
   }
+
+  const onInit = () => {
+    console.log("lightGallery has been initialized");
+  };
 
   return (
     <div className="min-h-screen bg-black text-white pt-24">
@@ -52,24 +65,29 @@ export default function VehicleDetail() {
               </div>
 
               {/* Botón */}
-                <button className="w-full bg-bmw-blue text-white py-3 rounded-lg mt-8 hover:bg-bmw-blue/90 transition ">
+              <button className="w-full bg-bmw-blue text-white py-3 rounded-lg mt-8 hover:bg-bmw-blue/90 transition ">
                 Programar prueba de manejo
-                </button>
+              </button>
             </div>
           </div>
 
           <div className="col-span-2">
-            <h2 className="text-3xl font-bold py-5">Galeria</h2>
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
+            <h2 className="text-3xl font-bold py-5">Galería</h2>
+            <LightGallery
+              onInit={onInit}
+              speed={500}
+              plugins={[lgThumbnail, lgZoom]}
+            >
               {vehicle.images.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={vehicle.name}
-                  className="w-full rounded-lg hover:scale-105 transition duration-500"
-                />
+                <a href={image} key={index}>
+                  <img
+                    src={image}
+                    alt={`${vehicle.name} ${index}`}
+                    className="w-full rounded-lg hover:scale-105 transition duration-500"
+                  />
+                </a>
               ))}
-            </div>
+            </LightGallery>
           </div>
         </div>
       </div>
