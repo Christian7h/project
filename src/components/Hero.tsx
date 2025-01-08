@@ -1,4 +1,4 @@
-import { useState, useRef,useEffect  } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChevronRight, Play } from "lucide-react";
 
 export default function HeroSection() {
@@ -21,11 +21,67 @@ export default function HeroSection() {
       videoRef.current.currentTime = 0; // Resetea el video a su inicio
     }
   };
+
+  // Función para pausar o reanudar el video
+  const handlePausePlayFilm = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play(); // Reanuda la reproducción si está en pausa
+      } else {
+        videoRef.current.pause(); // Pausa el video si está reproduciéndose
+      }
+    }
+  };
+
+  // Función para adelantar el video 10 segundos
+  const handleForward10Sec = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime += 10; // Adelanta el video 10 segundos
+    }
+  };
+
+  // Función para retroceder el video 10 segundos
+  const handleBackward10Sec = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime -= 10; // Retrocede el video 10 segundos
+    }
+  };
+
   useEffect(() => {
     if (videoRef.current) {
       // Establecer el volumen al 50% (valor entre 0 y 1)
-      videoRef.current.volume = 0.3; // Volumen del 50%
+      videoRef.current.volume = 0.3; // Volumen del 30%
     }
+
+    // Configurar el Intersection Observer para detectar cuando el video sale del viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            // El video ha salido del viewport, detenerlo
+            if (videoRef.current) {
+              videoRef.current.pause();
+              setIsPlaying(false);
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.5, // El video debe estar al menos un 50% visible para ser considerado
+      }
+    );
+
+    // Comenzar a observar el video
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    // Limpiar el observador cuando el componente se desmonte
+    return () => {
+      if (videoRef.current) {
+        observer.unobserve(videoRef.current);
+      }
+    };
   }, []);
 
   return (
@@ -40,14 +96,34 @@ export default function HeroSection() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30" />
 
-        {/* Botón para detener el video */}
+        {/* Botones para controlar el video */}
         {isPlaying && (
-          <button
-            onClick={handleStopFilm}
-            className="bg-gray-600 opacity-30 text-white px-8 py-3 rounded-md z-50 absolute bottom-20 left-1/2 transform -translate-x-1/2"
-          >
-            Stop
-          </button>
+          <div className="z-50 absolute bottom-20 left-1/2 transform -translate-x-1/2 flex space-x-4">
+            <button
+              onClick={handleStopFilm}
+              className="bg-gray-600 opacity-30 text-white px-8 py-3 rounded-md"
+            >
+              Stop
+            </button>
+            <button
+              onClick={handlePausePlayFilm}
+              className="bg-yellow-600 text-white px-8 py-3 rounded-md opacity-30"
+            >
+              {isPlaying ? "Pause" : "Play"}
+            </button>
+            <button
+              onClick={handleBackward10Sec}
+              className="bg-blue-600 text-white px-8 py-3 rounded-md opacity-30"
+            >
+              -10 Sec
+            </button>
+            <button
+              onClick={handleForward10Sec}
+              className="bg-green-600 text-white px-8 py-3 rounded-md opacity-30"
+            >
+              +10 Sec
+            </button>
+          </div>
         )}
       </div>
 
