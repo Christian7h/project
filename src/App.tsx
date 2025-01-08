@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Home from './pages/Home';
-import Contact from './pages/Contact.tsx'
-import Brand from './pages/Brand.tsx'
+import Contact from './pages/Contact'
+import Brand from './pages/Brand'
 import BrandPage from './pages/BrandPage';
 import VehicleDetail from './pages/VehicleDetail';
 import Footer from './components/Footer.tsx'
@@ -22,7 +22,6 @@ function App() {
         <Route path="/brands/:brandId" element={<BrandPage />} />
         <Route path="/vehicles/:vehicleId" element={<VehicleDetail />} />
       </Routes>
-
       <Footer />
     </>
   );
