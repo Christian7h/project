@@ -15,7 +15,7 @@ import VehicleDetail from './pages/VehicleDetail';
 const router = createBrowserRouter(
   [
     {
-      path: '/',
+      path:'/',
       element: <App />,
       children: [
         { path: '/', element: <Home /> },
@@ -23,6 +23,8 @@ const router = createBrowserRouter(
         { path: '/brands', element: <Brand /> },
         { path: '/brands/:brandId', element: <BrandPage /> },
         { path: '/vehicles/:vehicleId', element: <VehicleDetail /> },
+        {path:'/brands'},
+        {path:'/contact'},
       ],
     },
   ],
