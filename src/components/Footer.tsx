@@ -1,7 +1,5 @@
-import { Instagram, Facebook, Youtube, Twitter } from "lucide-react";
-{
-  /* Footer */
-}
+import { Instagram, Facebook, Youtube, Twitter,Home,Trello,UserCircle2Icon } from "lucide-react";
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -12,6 +10,9 @@ export default function Footer() {
           <Facebook className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" />
           <Youtube className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" />
           <Twitter className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" />
+          <Link to="/"><Home className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" /></Link>
+          <Link to="/brands"><Trello className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" /></Link>
+          <a href="/contact"><UserCircle2Icon className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" /></a>
         </div>
         <p className="text-center text-gray-400">
           © 2024 BMW M. All rights reserved.

@@ -23,7 +23,7 @@ export default function Navigation() {
         <div className="font-bold hidden md:flex space-x-8 text-white">
           <Link to="/" className="hover:text-bmw-blue transition">Home</Link>
           <Link to="/brands" className="hover:text-bmw-blue transition">Brands</Link>
-          <Link to="/contact" className="hover:text-bmw-blue transition">Contact</Link>
+          <a href="/contact" className="hover:text-bmw-blue transition">Contact</a>
         </div>
         <button className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition">
           Test Drive

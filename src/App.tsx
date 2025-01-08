@@ -8,6 +8,8 @@ import VehicleDetail from './pages/VehicleDetail';
 import Footer from './components/Footer.tsx'
 import ScrollToTop from './components/ScrollTop.tsx';
 import './App.css';
+
+
 function App() {
   return (
     <>

@@ -34,17 +34,17 @@ export default function VehicleDetail() {
 
               {/* Especificaciones */}
               <div className="grid grid-cols-3 gap-6">
-                <div className="bg-zinc-900 p-6 rounded-lg text-center">
+                <div className="bg-zinc-900 p-6 rounded-lg text-center hover:scale-105 transition duration-500">
                   <Settings className="w-8 h-8 mx-auto mb-2" />
                   <p className="font-bold">{vehicle.specs.power}</p>
                   <p className="text-sm text-gray-400">Power</p>
                 </div>
-                <div className="bg-zinc-900 p-6 rounded-lg text-center">
+                <div className="bg-zinc-900 p-6 rounded-lg text-center hover:scale-105 transition duration-500">
                   <Clock3 className="w-8 h-8 mx-auto mb-2" />
                   <p className="font-bold">{vehicle.specs.acceleration}</p>
                   <p className="text-sm text-gray-400">0-60 mph</p>
                 </div>
-                <div className="bg-zinc-900 p-6 rounded-lg text-center">
+                <div className="bg-zinc-900 p-6 rounded-lg text-center hover:scale-105 transition duration-500">
                   <Car className="w-8 h-8 mx-auto mb-2" />
                   <p className="font-bold">{vehicle.specs.topSpeed}</p>
                   <p className="text-sm text-gray-400">Top Speed</p>
@@ -52,7 +52,7 @@ export default function VehicleDetail() {
               </div>
 
               {/* Botón */}
-                <button className="w-full bg-bmw-blue text-white py-3 rounded-lg mt-8 hover:bg-bmw-blue/90 transition">
+                <button className="w-full bg-bmw-blue text-white py-3 rounded-lg mt-8 hover:bg-bmw-blue/90 transition ">
                 Programar prueba de manejo
                 </button>
             </div>
@@ -60,7 +60,7 @@ export default function VehicleDetail() {
 
           <div className="col-span-2">
             <h2 className="text-3xl font-bold py-5">Galeria</h2>
-            <div className="grid grid-cols-3 gap-4 ">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
               {vehicle.images.map((image, index) => (
                 <img
                   key={index}
