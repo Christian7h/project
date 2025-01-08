@@ -48,18 +48,18 @@ export default function VehicleDetail() {
               {/* Especificaciones */}
               <div className="grid grid-cols-3 gap-6">
                 <div className="bg-zinc-900 p-6 rounded-lg text-center hover:scale-105 transition duration-500">
-                  <Settings className="w-8 h-8 mx-auto mb-2" />
-                  <p className="font-bold">{vehicle.specs.power}</p>
+                  <Settings className="w-8 h-8 mx-auto mb-2 text-bmw-blue" />
+                  <p className="text-2xl font-bold">{vehicle.specs.power}</p>
                   <p className="text-sm text-gray-400">Power</p>
                 </div>
                 <div className="bg-zinc-900 p-6 rounded-lg text-center hover:scale-105 transition duration-500">
-                  <Clock3 className="w-8 h-8 mx-auto mb-2" />
-                  <p className="font-bold">{vehicle.specs.acceleration}</p>
+                  <Clock3 className="w-8 h-8 mx-auto mb-2 text-bmw-blue" />
+                  <p className="text-2xl font-bold">{vehicle.specs.acceleration}</p>
                   <p className="text-sm text-gray-400">0-60 mph</p>
                 </div>
                 <div className="bg-zinc-900 p-6 rounded-lg text-center hover:scale-105 transition duration-500">
-                  <Car className="w-8 h-8 mx-auto mb-2" />
-                  <p className="font-bold">{vehicle.specs.topSpeed}</p>
+                  <Car className="w-8 h-8 mx-auto mb-2 text-bmw-blue" />
+                  <p className="text-2xl font-bold">{vehicle.specs.topSpeed}</p>
                   <p className="text-sm text-gray-400">Top Speed</p>
                 </div>
               </div>

@@ -1,9 +1,17 @@
 /* App.css */
 
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
   
   html {
+    scroll-behavior: smooth;
     scrollbar-width: thin !important;
     scrollbar-color: #004c84 #000000 !important;
   }
-  
+  body {
+    @apply antialiased;
+  }
+
+
+
