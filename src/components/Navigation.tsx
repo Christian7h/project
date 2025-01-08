@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Moon, Sun } from "lucide-react"; // Importa los íconos de luz y luna
 
 export default function Navigation({ isDarkMode, toggleDarkMode }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,9 +63,14 @@ export default function Navigation({ isDarkMode, toggleDarkMode }) {
           </button>
           <button
             onClick={toggleDarkMode}
-            className="text-white bg-gray-700 px-4 py-2 rounded hover:bg-gray-600 transition"
+            className="text-white bg-bmw-blue/35 dark:bg-bmw-blue/35 dark:text-bmw-blue px-4 py-2 rounded hover:bg-gray-600 transition"
           >
-            {isDarkMode ? "Dark" : "Light"}
+            {/* Muestra el ícono correspondiente al modo actual */}
+            {isDarkMode ? (
+              <Moon className="w-auto h-auto" /> // Ícono de luna para modo oscuro
+            ) : (
+              <Sun className="w-auto h-auto" /> // Ícono de sol para modo claro
+            )}
           </button>
         </div>
       </div>

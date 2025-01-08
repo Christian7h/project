@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 export default function LoadingScreen() {
@@ -10,8 +9,8 @@ export default function LoadingScreen() {
       transition={{ duration: 1.2, ease: 'easeInOut' }} // Transición más suave
     >
       <div className="flex flex-col items-center">
-        <div className="w-16 h-16 border-4 border-bmw-blue dark:border-white border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-bmw-blue dark:text-white text-lg font-medium">Loading...</p>
+        <div className="w-16 h-16 border-4 border-bmw-blue dark:to-bmw-blue border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-bmw-blue dark:text-bmw-blue text-lg font-medium">Loading...</p>
       </div>
     </motion.div>
   );
