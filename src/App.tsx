@@ -7,6 +7,7 @@ import "./App.css";
 import { Outlet } from "react-router-dom";
 import LoadingScreen from "./components/LoadingScreen";
 import { LanguageProvider } from './context/LanguageContext.tsx';
+import ScrollProgress from './components/ScrollProgress';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,6 +40,7 @@ function App() {
           <LoadingScreen key="loading" />
         ) : (
           <>
+                      <ScrollProgress />
             <main>
               <ScrollToTop />
               <Navigation isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />

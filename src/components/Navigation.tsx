@@ -19,7 +19,7 @@ const { language, toggleLanguage } = useLanguage();
   return (
     <nav
       aria-label="Main navigation"
-      className={`fixed w-full z-50 transition-all duration-300 ${
+      className={`fixed w-full z-20 transition-all duration-300  ${
         isScrolled
           ? "bg-gray-100 dark:bg-black/90 shadow-md py-4"
           : "bg-transparent py-6"
