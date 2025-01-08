@@ -18,6 +18,6 @@ export default function Footer() {
           © 2024 BMW M. All rights reserved.
         </p>
       </div>
-    </footer>
+    </footer> 
   );
 }
