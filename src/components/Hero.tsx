@@ -142,7 +142,7 @@ export default function HeroSection() {
               </button>
               <button
                 onClick={handleWatchFilm}
-                className="border border-white px-8 py-3 rounded-md flex items-center hover:bg-white/10 transition"
+                className="border text-white  border-white  px-8 py-3 rounded-md flex items-center hover:bg-white/10 transition"
               >
                 Watch Film <Play className="ml-2" />
               </button>

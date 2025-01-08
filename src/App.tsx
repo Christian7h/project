@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
-
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer.tsx";
 import ScrollToTop from "./components/ScrollTop.tsx";
@@ -10,26 +9,38 @@ import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(
+    () => localStorage.getItem("theme") === "dark" // Recuperar del almacenamiento local
+  );
 
   useEffect(() => {
-    // Simulate loading time
     setTimeout(() => setIsLoading(false), 2000);
   }, []);
 
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
+
   return (
-    <div className={`${isDarkMode ? "dark" : ""}`}>
+    <div>
       <AnimatePresence mode="wait">
         {isLoading ? (
           <LoadingScreen key="loading" />
         ) : (
           <>
-            <main className="bg-white dark:bg-gray-900 transition-colors duration-300">
-            <ScrollToTop />
-            <Navigation />
+            <main>
+              <ScrollToTop />
+              <Navigation isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
               <Outlet /> {/* Renderiza las rutas hijas */}
-            <Footer />
-
+              <Footer />
             </main>
           </>
         )}

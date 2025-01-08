@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="bg-black py-12">
+    <footer className="bg-white dark:bg-black  py-12">
       <div className="container mx-auto px-4">
-        <div className="flex justify-center text-white space-x-6 mb-8">
+        <div className="flex justify-center text-black dark:text-white space-x-6 mb-8">
           <Instagram className="w-6 h-6  hover:text-bmw-blue cursor-pointer transition" />
           <Facebook className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" />
           <Youtube className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" />
