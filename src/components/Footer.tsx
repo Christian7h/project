@@ -12,7 +12,7 @@ export default function Footer() {
           <Twitter className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" />
           <Link to="/"><Home className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" /></Link>
           <Link to="/brands"><Trello className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" /></Link>
-          <a href="/contact"><UserCircle2Icon className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" /></a>
+          <Link to="/contact"><UserCircle2Icon className="w-6 h-6 hover:text-bmw-blue cursor-pointer transition" /></Link>
         </div>
         <p className="text-center text-gray-400">
           © 2024 BMW M. All rights reserved.

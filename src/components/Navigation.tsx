@@ -12,7 +12,7 @@ export default function Navigation() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+// #D0AE4E para text dorado luxy
   return (
       <nav 
         aria-label="Main navigation"
@@ -21,7 +21,7 @@ export default function Navigation() {
         }`}
       >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-bmw-blue">
+        <Link to="/" className="text-2xl font-bold text-bmw-blue"> 
         Luxury Motors
         </Link>
         <div className="font-bold hidden md:flex space-x-8 text-white">
