@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Moon, Sun } from "lucide-react"; // Importa los íconos de luz y luna
+import { Moon, Sun, Globe,Settings } from "lucide-react"; // Importar íconos adicionales
 import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function Navigation({ isDarkMode, toggleDarkMode }) {
   const [isScrolled, setIsScrolled] = useState(false);
-// Obtén el idioma y la función toggleLanguage desde el contexto
-const { language, toggleLanguage } = useLanguage(); 
+  const [menuOpen, setMenuOpen] = useState(false); // Nuevo estado para el menú
+  const { language, toggleLanguage } = useLanguage(); 
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,10 +16,14 @@ const { language, toggleLanguage } = useLanguage();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleMenuToggle = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <nav
       aria-label="Main navigation"
-      className={`fixed w-full z-20 transition-all duration-300  ${
+      className={`fixed w-full z-20 transition-all duration-300 ${
         isScrolled
           ? "bg-gray-100 dark:bg-black/90 shadow-md py-4"
           : "bg-transparent py-6"
@@ -41,60 +45,62 @@ const { language, toggleLanguage } = useLanguage();
             className="hover:text-bmw-blue dark:hover:text-bmw-blue transition"
           >
             {language === 'es' ? 'Inicio' : 'Home'}
-            </Link>
+          </Link>
           <Link
             to="/brands"
             className="hover:text-bmw-blue dark:hover:text-bmw-blue transition"
           >
             {language === 'es' ? 'Marcas' : 'Brands'}
-            </Link>
-            <Link
+          </Link>
+          <Link
             to="ListVehicles"
             className="hover:text-bmw-blue dark:hover:text-bmw-blue transition"
           >
             {language === 'es' ? 'Vehículos' : 'Vehicles'}
-            </Link>
-          {/* <Link
-            to="/contact"
-            className="hover:text-bmw-blue dark:hover:text-bmw-blue transition"
-          >
-            {language === 'es' ? 'Contacto' : 'Contact'}
-            </Link> */}
+          </Link>
         </div>
 
-        {/* Botones */} 
+        {/* Botones */}
         <div className="flex items-center space-x-4">
-          {/* <button
-            className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition"
-            aria-label="Schedule a test drive"
-          >
-            {language === 'es' ? 'Prueba de Manejo' : 'Test Drive'}
-            </button> */}
-            <Link to='contact'>
+          <Link to='contact'>
             <button
-            className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition"
-            aria-label="Schedule a test drive"
-          >
-            {language === 'es' ? 'Contacto' : 'Contact'}
+              className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition"
+              aria-label="Schedule a test drive"
+            >
+              {language === 'es' ? 'Contacto' : 'Contact'}
             </button>
-            </Link>
-          <button
-            onClick={toggleDarkMode}
-            className="text-white bg-[#D0AE4E]/40 dark:bg-bmw-blue/35 dark:text-bmw-blue px-4 py-2 rounded hover:bg-gray-600 transition"
-          >
-            {/* Muestra el ícono correspondiente al modo actual */}
-            {isDarkMode ? (
-              <Moon className="w-auto h-auto" /> // Ícono de luna para modo oscuro
-            ) : (
-              <Sun className="w-auto h-auto" /> // Ícono de sol para modo claro
+          </Link>
+          <div className="relative">
+            <button
+              onClick={handleMenuToggle}
+              className="text-white bg-gray-700/40 px-4 py-2 rounded hover:bg-gray-600 transition flex items-center"
+            >
+              <Settings className="w-5 h-5" /> {/* Ícono de globo para opciones */}
+            </button>
+            {menuOpen && (
+              <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 rounded shadow-lg z-50">
+                <button
+                  onClick={toggleDarkMode}
+                  className="flex items-center px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+                >
+                  {isDarkMode ? (
+                    <Moon className="w-5 h-5" />
+                  ) : (
+                    <Sun className="w-5 h-5" />
+                  )}
+                  {/* Eliminar el texto aquí */}
+                </button>
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+                >
+                  {/* <Globe className="w-5 h-5 " /> Ícono de globo para cambiar idioma */}
+                  {language === 'es' ? 'ES' : 'EN'}
+
+                </button>
+              </div>
             )}
-          </button>
-          <button
-            onClick={toggleLanguage} // Cambia el idioma cuando el usuario haga clic
-            className="text-white bg-gray-700/40 px-4 py-2 rounded hover:bg-gray-600 transition"
-          >
-            {language === 'es' ? 'Es' : 'En'} 
-        </button>
+          </div>
         </div>
       </div>
     </nav>

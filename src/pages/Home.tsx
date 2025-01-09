@@ -67,13 +67,11 @@ export default function Home() {
     <h2 className="text-black dark:text-bmw-blue text-4xl font-bold mb-12 text-center">
       {language === 'es' ? 'Explora Más' : 'Explore More'}
     </h2>
-    <div className="grid grid-cols-3 gap-8">
+    <div className="grid md:grid-cols-3 gap-8">
       {/* Column 1 */}
-      <motion.div
+      <div
         className="bg-white dark:bg-zinc-900 p-8 rounded-lg shadow-md text-center"
-        initial={{ opacity: 0, x: -50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
+
       >
         <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
           {language === 'es' ? 'Marcas' : 'Brands'}
@@ -83,14 +81,12 @@ export default function Home() {
             ? 'Descubre las marcas más exclusivas.'
             : 'Discover the most exclusive brands.'}
         </p>
-      </motion.div>
+      </div>
 
       {/* Column 2 */}
-      <motion.div
+      <div
         className="bg-white dark:bg-zinc-900 p-8 rounded-lg shadow-md text-center"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+
       >
         <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
           {language === 'es' ? 'Vehículos' : 'Vehicles'}
@@ -100,14 +96,11 @@ export default function Home() {
             ? 'Explora nuestra colección de autos de lujo.'
             : 'Explore our luxury car collection.'}
         </p>
-      </motion.div>
+      </div>
 
       {/* Column 3 */}
-      <motion.div
+      <div
         className="bg-white dark:bg-zinc-900 p-8 rounded-lg shadow-md text-center"
-        initial={{ opacity: 0, x: 50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
       >
         <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
           {language === 'es' ? 'Características' : 'Features'}
@@ -117,14 +110,11 @@ export default function Home() {
             ? 'Descubre lo que hace especial a Luxury Motors.'
             : 'Discover what makes Luxury Motors special.'}
         </p>
-      </motion.div>
+      </div>
 {/* Column 4: Total Brands */}
-<motion.div
-        className="bg-white dark:bg-zinc-900 p-8 rounded-lg shadow-md text-center col-span-3"
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }} // Ejecuta la animación una sola vez
-        transition={{ duration: 0.5, delay: 0.8 }}
+<div
+        className="bg-white dark:bg-zinc-900 p-8 rounded-lg shadow-md text-center"
+
       >
         <Link to='brands'>
         <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
@@ -134,14 +124,11 @@ export default function Home() {
           <AnimatedNumber target={totalBrands} start={true} />
         </p>
         </Link>
-      </motion.div>
+      </div>
       {/* Column 5: Total Vehicles */}
-      <motion.div
-        className="bg-white dark:bg-zinc-900 p-8 rounded-lg shadow-md text-center col-span-3"
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }} // Ejecuta la animación una sola vez
-        transition={{ duration: 0.5, delay: 0.6 }}
+      <div
+        className="bg-white dark:bg-zinc-900 p-8 rounded-lg shadow-md text-center"
+
       >
       <Link to="ListVehicles">
 
@@ -152,7 +139,7 @@ export default function Home() {
           <AnimatedNumber target={totalVehicles} start={true} />
         </p>
       </Link>
-      </motion.div>
+      </div>
       
     </div>
   </div>

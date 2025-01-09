@@ -483,6 +483,215 @@ export const vehicles: Vehicle[] = [
         type:'Supercar',
       },
     }    
+  },
+  {
+    id: '911-turbo-s',
+    brandId: 'porsche',
+    name: 'Porsche 911 Turbo S',
+    image: '/por/911/6.jpg', 
+    images: [
+      '/por/911/1.jpg', '/por/911/2.jpg', '/por/911/3.jpg', '/por/911/4.jpg',
+      '/por/911/5.jpg', '/por/911/6.jpg', '/por/911/7.jpg', '/por/911/8.jpg',
+      '/por/911/9.jpg', '/por/911/10.jpg', '/por/911/11.jpg', '/por/911/12.jpg',
+      '/por/911/13.jpg', '/por/911/14.jpg', '/por/911/15.jpg', '/por/911/16.jpg',
+      '/por/911/17.jpg', '/por/911/18.jpg', '/por/911/19.jpg', '/por/911/20.jpg',
+      '/por/911/21.jpg'
+    ],
+    price: '$204,000',
+    description: 'The iconic Porsche 911 Turbo S, designed for pure performance.',
+    type: 'Supercar',
+    year: 2025,
+    specs: {
+      power: '640 HP',
+      acceleration: '2.7s',
+      topSpeed: '205 mph'
+    },
+    translations: {
+      es: {
+        name: 'Porsche 911 Turbo S',
+        description: 'El icónico Porsche 911 Turbo S, diseñado para un rendimiento puro.',
+        type: 'Supercar',
+      },
+      en: {
+        name: 'Porsche 911 Turbo S',
+        description: 'The iconic Porsche 911 Turbo S, designed for pure performance.',
+        type: 'Supercar',
+      },
+    }    
+  },
+  {
+    id: '718-cayman-gt4',
+    brandId: 'porsche',
+    name: 'Porsche 718 Cayman GT4',
+    image: '/por/718/1.jpg', 
+    images: [
+      '/por/718/1.jpg', '/por/718/2.jpg', '/por/718/3.jpg', '/por/718/4.jpg',
+      '/por/718/5.jpg'
+    ],
+    price: '$99,000',
+    description: 'A perfect balance of power and handling in a compact form.',
+    type: 'Sports Car',
+    year: 2025,
+    specs: {
+      power: '420 HP',
+      acceleration: '3.8s',
+      topSpeed: '188 mph'
+    },
+    translations: {
+      es: {
+        name: 'Porsche 718 Cayman GT4',
+        description: 'Un equilibrio perfecto de potencia y manejo en una forma compacta.',
+        type: 'Coche Deportivo',
+      },
+      en: {
+        name: 'Porsche 718 Cayman GT4',
+        description: 'A perfect balance of power and handling in a compact form.',
+        type: 'Sports Car',
+      },
+    }    
+  },
+  {
+    id: 'panamera-turbo-s',
+    brandId: 'porsche',
+    name: 'Porsche Panamera Turbo S',
+    image: '/por/panamera/1.webp',
+    images: [
+      '/por/panamera/1.webp', '/por/panamera/2.webp', '/por/panamera/3.webp', '/por/panamera/4.webp',
+      '/por/panamera/5.webp', '/por/panamera/6.webp', '/por/panamera/7.webp', '/por/panamera/8.webp',
+      '/por/panamera/9.webp', '/por/panamera/10.webp', '/por/panamera/11.webp', '/por/panamera/12.webp',
+    ],
+    price: '$182,000',
+    description: 'The perfect combination of luxury and performance in a sedan.',
+    type: 'Luxury Sedan',
+    year: 2025,
+    specs: {
+      power: '620 HP',
+      acceleration: '3.1s',
+      topSpeed: '196 mph'
+    },
+    translations: {
+      es: {
+        name: 'Porsche Panamera Turbo S',
+        description: 'La combinación perfecta de lujo y rendimiento en una berlina.',
+        type: 'Sedán de lujo',
+      },
+      en: {
+        name: 'Porsche Panamera Turbo S',
+        description: 'The perfect combination of luxury and performance in a sedan.',
+        type: 'Luxury Sedan',
+      },
+    }    
+  },
+  {
+    id: 'sf90-stradale',
+    brandId: 'ferrari',
+    name: 'Ferrari SF90 Stradale',
+    image: '/fer/sf90/12.webp',
+    images: [
+      '/fer/sf90/1.jpg', '/fer/sf90/2.jpg', '/fer/sf90/3.jpg', '/fer/sf90/4.jpg',
+      '/fer/sf90/5.jpg', '/fer/sf90/6.jpg', '/fer/sf90/7.jpg', '/fer/sf90/8.jpg',
+      '/fer/sf90/9.webp', '/fer/sf90/10.webp', '/fer/sf90/11.webp', '/fer/sf90/12.webp',
+      '/fer/sf90/13.webp', '/fer/sf90/14.webp', '/fer/sf90/15.webp', '/fer/sf90/16.webp',
+      '/fer/sf90/17.webp', '/fer/sf90/18.webp', '/fer/sf90/19.webp', '/fer/sf90/20.webp',
+      '/fer/sf90/21.webp', '/fer/sf90/22.webp', '/fer/sf90/23.webp', '/fer/sf90/24.webp',
+      '/fer/sf90/25.webp', '/fer/sf90/26.webp'
+      
+    ],
+    price: '$625,000',
+    description: 'Ferrari’s most powerful and fastest road car, combining cutting-edge hybrid technology.',
+    type: 'Supercar',
+    year: 2025,
+    specs: {
+      power: '986 HP',
+      acceleration: '2.5s',
+      topSpeed: '211 mph'
+    },
+    translations: {
+      es: {
+        name: 'Ferrari SF90 Stradale',
+        description: 'El coche de carretera más potente y rápido de Ferrari, combinando tecnología híbrida de vanguardia.',
+        type: 'Superdeportivo',
+      },
+      en: {
+        name: 'Ferrari SF90 Stradale',
+        description: 'Ferrari’s most powerful and fastest road car, combining cutting-edge hybrid technology.',
+        type: 'Supercar',
+      },
+    }
+  },
+  {
+    id: '812-superfast',
+    brandId: 'ferrari',
+    name: 'Ferrari 812 Superfast',
+    image: '/fer/812/1.jpg',
+    images: [
+      '/fer/812/1.jpg', '/fer/812/2.jpg', '/fer/812/3.jpg', '/fer/812/4.jpg',
+      '/fer/812/5.jpg', '/fer/812/6.jpg', '/fer/812/7.jpg', '/fer/812/8.jpg',
+      '/fer/812/9.jpg', '/fer/812/10.jpg', '/fer/812/12.jpg', '/fer/812/13.jpg',
+      '/fer/812/14.jpg', '/fer/812/15.jpg', '/fer/812/16.jpg'
+    ],
+    price: '$335,000',
+    description: 'A naturally aspirated V12 engine delivering breathtaking performance and an unmatched driving experience.',
+    type: 'Grand Tourer',
+    year: 2025,
+    specs: {
+      power: '789 HP',
+      acceleration: '2.9s',
+      topSpeed: '211 mph'
+    },
+    translations: {
+      es: {
+        name: 'fer 812 Superfast',
+        description: 'Un motor V12 naturalmente aspirado que ofrece un rendimiento impresionante y una experiencia de conducción inigualable.',
+        type: 'Gran Turismo',
+      },
+      en: {
+        name: 'fer 812 Superfast',
+        description: 'A naturally aspirated V12 engine delivering breathtaking performance and an unmatched driving experience.',
+        type: 'Grand Tourer',
+      },
+    }
+  },
+  {
+    id: 'portofino-m',
+    brandId: 'ferrari',
+    name: 'fer Portofino M',
+    image: '/fer/portofino/1.jpg',
+    images: [
+      '/fer/portofino/1.jpg', '/fer/portofino/2.jpg', '/fer/portofino/3.jpg', '/fer/portofino/4.webp',
+      '/fer/portofino/5.webp', '/fer/portofino/6.webp', '/fer/portofino/7.webp', '/fer/portofino/8.webp',
+      '/fer/portofino/9.webp', '/fer/portofino/10.webp', '/fer/portofino/11.webp', '/fer/portofino/12.webp',
+      '/fer/portofino/13.webp', '/fer/portofino/14.webp', '/fer/portofino/15.webp', '/fer/portofino/16.webp',
+      '/fer/portofino/17.webp', '/fer/portofino/18.webp', '/fer/portofino/19.webp', '/fer/portofino/20.webp',
+       '/fer/portofino/21.webp'
+    ],
+    price: '$250,000',
+    description: 'The perfect blend of sportiness and elegance, combining a powerful twin-turbo V8 with an open-top design.',
+    type: 'Convertible',
+    year: 2025,
+    specs: {
+      power: '620 HP',
+      acceleration: '3.5s',
+      topSpeed: '199 mph'
+    },
+    translations: {
+      es: {
+        name: 'fer Portofino M',
+        description: 'La mezcla perfecta de deportividad y elegancia, combinando un potente V8 biturbo con un diseño de techo abierto.',
+        type: 'Convertible',
+      },
+      en: {
+        name: 'fer Portofino M',
+        description: 'The perfect blend of sportiness and elegance, combining a powerful twin-turbo V8 with an open-top design.',
+        type: 'Convertible',
+      },
+    }
   }
+  
+  
+  
+  
+  
+  
 ];
 
