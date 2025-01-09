@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Moon, Sun, Globe,Settings } from "lucide-react"; // Importar íconos adicionales
+import { Moon, Sun, Globe,Settings,Heart } from "lucide-react"; // Importar íconos adicionales
 import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function Navigation({ isDarkMode, toggleDarkMode }) {
@@ -62,6 +62,14 @@ export default function Navigation({ isDarkMode, toggleDarkMode }) {
 
         {/* Botones */}
         <div className="flex items-center space-x-4">
+          <Link to='favorites'>
+            <button
+              className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition"
+              aria-label="Schedule a test drive"
+            >
+                          <Heart className="w-6 h-6" />
+            </button>
+          </Link>
           <Link to='contact'>
             <button
               className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition"

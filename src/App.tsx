@@ -1,3 +1,4 @@
+//src/App.tsx
 import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import Navigation from "./components/Navigation";
@@ -6,8 +7,10 @@ import ScrollToTop from "./components/ScrollTop.tsx";
 import "./App.css";
 import { Outlet } from "react-router-dom";
 import LoadingScreen from "./components/LoadingScreen";
-import { LanguageProvider } from './context/LanguageContext.tsx';
-import ScrollProgress from './components/ScrollProgress';
+import { LanguageProvider } from "./context/LanguageContext.tsx";
+import { FavoritesProvider } from "./context/FavoritesContext";
+
+import ScrollProgress from "./components/ScrollProgress";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,26 +35,29 @@ function App() {
   const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
   return (
-    
     <div>
-          <LanguageProvider>
-      <AnimatePresence mode="wait">
-        {isLoading ? (
-          <LoadingScreen key="loading" />
-        ) : (
-          <>
-                      <ScrollProgress />
-            <main>
-              <ScrollToTop />
-              <Navigation isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-              <Outlet /> {/* Renderiza las rutas hijas */}
-              <Footer />
-            </main>
-          </>
-        )}
-      </AnimatePresence>
-      </LanguageProvider>
-
+      <FavoritesProvider>
+        <LanguageProvider>
+          <AnimatePresence mode="wait">
+            {isLoading ? (
+              <LoadingScreen key="loading" />
+            ) : (
+              <>
+                <ScrollProgress />
+                <main>
+                  <ScrollToTop />
+                  <Navigation
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                  <Outlet /> {/* Renderiza las rutas hijas */}
+                  <Footer />
+                </main>
+              </>
+            )}
+          </AnimatePresence>
+        </LanguageProvider>
+      </FavoritesProvider>
     </div>
   );
 }
