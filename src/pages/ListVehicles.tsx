@@ -4,7 +4,6 @@ import { useLanguage } from "../context/LanguageContext";
 import { brands as brandsData, vehicles as vehiclesData } from "../data";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../context/useFavorites";  // Importar el hook
-import { motion } from "framer-motion"; // Importamos Framer Motion para animación
 
 interface Vehicle {
   id: number;
@@ -30,56 +29,20 @@ export default function ListVehicles() {
   const [filterBrand, setFilterBrand] = useState("All");
   const [filterType, setFilterType] = useState("All");
   const [filterYear, setFilterYear] = useState("All");
-  const [addedToFavorites, setAddedToFavorites] = useState<number | null>(null); // Estado para el mensaje
+  const [favoriteMessage, setFavoriteMessage] = useState<string | null>(null);  // Estado para el mensaje de favorito
 
   const [currentPage, setCurrentPage] = useState(1);
   const vehiclesPerPage = 6; // Número de vehículos por página
   const { favorites, toggleFavorite } = useFavorites();  // Usar el hook
 
-  // Efecto de Confeti con framer-motion
-  const Confetti = () => (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1, rotate: 360, scale: [1, 1.5, 1] }}
-      transition={{
-        duration: 1.5,
-        repeat: 3,
-        repeatType: "loop",
-      }}
-      className="absolute top-10 left-1/2 transform -translate-x-1/2"
-    >
-      {[...Array(30)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="w-2 h-2 bg-yellow-400 rounded-full absolute"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            opacity: Math.random(),
-          }}
-          animate={{
-            y: [0, -100, 0],
-            x: [0, Math.random() * 100 - 50, 0],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            repeatType: "reverse",
-            delay: Math.random(),
-          }}
-        />
-      ))}
-    </motion.div>
-  );
-
   useEffect(() => {
     let filtered = vehiclesData;
-
+  
     // Filtrar por marca
     if (filterBrand !== "All") {
       filtered = filtered.filter((vehicle) => vehicle.brandId === filterBrand);
     }
-
+  
     // Filtrar por tipo
     if (filterType !== "All") {
       filtered = filtered.filter((vehicle) => vehicle.type === filterType);
@@ -96,11 +59,10 @@ export default function ListVehicles() {
         vehicle.name.toLowerCase().includes(search.toLowerCase())
       );
     }
-    // Mezclar aleatoriamente los vehículos filtrados
-    filtered = filtered.sort(() => Math.random() - 0.5);
-
-    setFilteredVehicles(filtered);
+  
+    setFilteredVehicles(filtered); // Aquí ya no se mezcla aleatoriamente
   }, [search, filterBrand, filterType, filterYear]);
+  
   // Generar listas únicas de marcas y tipos
   const brandOptions = brandsData.map((brand) => ({
     value: brand.id,
@@ -120,10 +82,23 @@ export default function ListVehicles() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const totalPages = Math.ceil(filteredVehicles.length / vehiclesPerPage);
+
   const handleToggleFavorite = (vehicleId: number) => {
     toggleFavorite(vehicleId);
-    setAddedToFavorites(vehicleId);
-    setTimeout(() => setAddedToFavorites(null), 2000); // Eliminar mensaje después de 2 segundos
+    
+    // Verificar si el vehículo está siendo agregado o eliminado de favoritos
+    const isAdded = favorites.includes(vehicleId);
+    setFavoriteMessage(
+      isAdded
+        ? language === "es"
+          ? "Eliminado de Favoritos!"
+          : "Removed from Favorites!"
+        : language === "es"
+        ? "Añadido a Favoritos!"
+        : "Added to Favorites!"
+    );
+
+    setTimeout(() => setFavoriteMessage(null),4000);
   };
 
   return (
@@ -195,20 +170,17 @@ export default function ListVehicles() {
           </select>
         </div>
       </div>
-{/* Mensaje de añadido a favoritos con confeti */}
-{addedToFavorites && (
-        <>
-          <Confetti /> {/* Mostrar animación de confeti */}
-          <motion.div
-            className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            style={{ zIndex: 9999 }}
-          >
-            {language === "es" ? "Añadido a favoritos!" : "Added to favorites!"}
-          </motion.div>
-        </>
+ {/* Mensaje de añadido o eliminado de favoritos */}
+      {favoriteMessage && (
+        <div
+          className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full shadow-lg ${
+            favoriteMessage.includes("Eliminado")
+              ? "bg-red-500"
+              : "bg-green-500"
+          }`}
+        >
+          {favoriteMessage}
+        </div>
       )}
       {/* Lista de Vehículos */}
 
@@ -254,7 +226,7 @@ export default function ListVehicles() {
                 </p>
             </Link>
 
-                          <button
+            <button
                 onClick={(e) => {
                   e.preventDefault();
                   handleToggleFavorite(vehicle.id); // Cambiar el estado de favorito
