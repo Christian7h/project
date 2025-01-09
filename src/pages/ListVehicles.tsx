@@ -52,10 +52,11 @@ export default function ListVehicles() {
         vehicle.name.toLowerCase().includes(search.toLowerCase())
       );
     }
+  // Mezclar aleatoriamente los vehículos filtrados
+  filtered = filtered.sort(() => Math.random() - 0.5);
 
-    setFilteredVehicles(filtered);
-  }, [search, filterBrand, filterType,filterYear]);
-
+  setFilteredVehicles(filtered);
+}, [search, filterBrand, filterType, filterYear]);
   // Generar listas únicas de marcas y tipos
   const brandOptions = brandsData.map((brand) => ({
     value: brand.id,

@@ -40,7 +40,7 @@ export const brands: Brand[] = [
       }
     }
   },
-    {
+  {
     id: 'mercedes',
     name: 'Mercedes-Benz',
     logo: '/mb/mb.png',
@@ -110,13 +110,13 @@ export const brands: Brand[] = [
     logo: '/lambo/lambo.png',
     description: 'We build luxury cars',
     translations: {
-      es:{
-        name:'Lamborghini',
-        description:'Fabricamos autos de lujo',
+      es: {
+        name: 'Lamborghini',
+        description: 'Fabricamos autos de lujo',
       },
-      en:{
-        name:'Lamborghini',
-        description:'We build luxury cars',
+      en: {
+        name: 'Lamborghini',
+        description: 'We build luxury cars',
       },
     }
   },
@@ -135,7 +135,7 @@ export const brands: Brand[] = [
         description: 'We build cars',
       },
     }
-   },
+  },
 
   {
     id: 'koenigsegg',
@@ -152,7 +152,7 @@ export const brands: Brand[] = [
         description: 'We build cars',
       },
     }
- }
+  }
 ];
 
 export const vehicles: Vehicle[] = [
@@ -172,8 +172,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$139,900',
     description: 'Competition. Sport. Lightweight.',
-    year:2024,
-    type:'Coupe',
+    year: 2024,
+    type: 'Coupe',
     specs: {
       power: '550 HP',
       acceleration: '3.6s',
@@ -183,12 +183,12 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'BMW M4 CSL',
         description: 'Competición. Deporte. Ligero.',
-        type:'Coupe',
+        type: 'Coupe',
       },
       en: {
         name: 'BMW M4 CSL',
         description: 'Competition. Sport. Lightweight.',
-        type:'Coupe'
+        type: 'Coupe'
       },
     },
   },
@@ -207,8 +207,8 @@ export const vehicles: Vehicle[] = [
       '/bmw/m5cs/bmwm5cs29.jpg', '/bmw/m5cs/bmwm5cs30.jpg', '/bmw/m5cs/bmwm5cs31.jpg', '/bmw/m5cs/bmwm5cs32.jpg',],
     price: '$142,000',
     description: 'The most powerful M car ever.',
-    type:'Sedan',
-    year:2025,
+    type: 'Sedan',
+    year: 2025,
     specs: {
       power: '627 HP',
       acceleration: '2.9s',
@@ -218,12 +218,12 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'BMW M5 CS',
         description: 'El coche M más potente de todos los tiempos.',
-        type:'Sedan'
+        type: 'Sedan'
       },
       en: {
         name: 'BMW M5 CS',
         description: 'The most powerful M car ever.',
-        type:'Sedan'
+        type: 'Sedan'
       },
     },
   },
@@ -240,8 +240,8 @@ export const vehicles: Vehicle[] = [
       '/bmw/b8/24.jpg', '/bmw/b8/25.jpg', '/bmw/b8/26.jpg', '/bmw/b8/27.jpg', '/bmw/b8/28.jpg',],
     price: '$146,000',
     description: 'The Ultimate Driving Machine',
-    type:'Sedan',
-    year:2025,
+    type: 'Sedan',
+    year: 2025,
     specs: {
       power: '617 HP',
       acceleration: '3.0s',
@@ -251,13 +251,13 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'BMW ALPINA B8',
         description: 'La máquina de conducción definitiva',
-        type:'Sedan',
+        type: 'Sedan',
 
       },
       en: {
         name: 'BMW ALPINA B8',
         description: 'The Ultimate Driving Machine',
-        type:'Sedan',
+        type: 'Sedan',
       },
     },
   },
@@ -282,8 +282,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$325,000',
     description: 'The ultimate AMG performance machine.',
-    type:'Coupe',
-    year:2025,
+    type: 'Coupe',
+    year: 2025,
     specs: {
       power: '720 HP',
       acceleration: '3.2s',
@@ -293,12 +293,12 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'Mercedes-AMG GT Black Series',
         description: 'La máquina de rendimiento definitiva de AMG.',
-        type:'Coupe',
+        type: 'Coupe',
       },
       en: {
         name: 'Mercedes-AMG GT Black Series',
         description: 'The ultimate AMG performance machine.',
-        type:'Coupe',
+        type: 'Coupe',
       },
     },
   },
@@ -319,8 +319,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$185,000',
     description: 'A pinnacle of luxury and comfort.',
-    type:'Sedan',
-    year:2025,
+    type: 'Sedan',
+    year: 2025,
     specs: {
       power: '496 HP',
       acceleration: '4.4s',
@@ -330,12 +330,12 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'Mercedes-Maybach S-Class',
         description: 'La cima del lujo y la comodidad.',
-        type:'Sedan',
+        type: 'Sedan',
       },
       en: {
         name: 'Mercedes-Maybach S-Class',
         description: 'A pinnacle of luxury and comfort.',
-        type:'Sedan',
+        type: 'Sedan',
       },
     },
   },
@@ -361,8 +361,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$125,000',
     description: 'The future of luxury electric mobility.',
-    type:'Electric',
-    year:2025,
+    type: 'Electric',
+    year: 2025,
     specs: {
       power: '516 HP',
       acceleration: '4.1s',
@@ -372,13 +372,13 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'Mercedes-Benz EQS 580',
         description: 'El futuro de la movilidad eléctrica de lujo.',
-        type:'Electric',
+        type: 'Electric',
 
       },
       en: {
         name: 'Mercedes-Benz EQS 580',
         description: 'The future of luxury electric mobility.',
-        type:'Electric',
+        type: 'Electric',
       },
     }
   },
@@ -386,16 +386,17 @@ export const vehicles: Vehicle[] = [
     id: 'rs7-performance',
     brandId: 'audi',
     name: 'Audi RS7 Performance',
-    image: '/audi/rs7/rs7-1.jpg',
+    image: '/audi/rs7/11.jpg',
     images: [
-      '/audi/rs7/1.jpg', '/audi/rs7/2.jpg', '/audi/rs7/3.jpg', '/audi/rs7/4.jpg', 
-      '/audi/rs7/5.jpg', '/audi/rs7/6.jpg', '/audi/rs7/7.jpg', '/audi/rs7/8.jpg',
-      '/audi/rs7/9.jpg', '/audi/rs7/10.jpg', '/audi/rs7/11.jpg', '/audi/rs7/12.jpg'
+      '/audi/rs7/9.avif', '/audi/rs7/11.jpg','/audi/rs7/7.avif', '/audi/rs7/8.avif', '/audi/rs7/12.webp'
+
+      , '/audi/rs7/5.avif', '/audi/rs7/6.avif',
+      '/audi/rs7/2.avif', '/audi/rs7/3.avif', '/audi/rs7/4.avif',
     ],
     price: '$121,000',
     description: 'Dynamic design and thrilling performance.',
-    type:'Sedan',
-    year:2025,
+    type: 'Sedan',
+    year: 2025,
     specs: {
       power: '591 HP',
       acceleration: '3.5s',
@@ -405,13 +406,13 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'Audi RS7 Performance',
         description: 'Diseño dinámico y rendimiento emocionante.',
-        type:'Sedan',
+        type: 'Sedan',
 
       },
       en: {
         name: 'Audi RS7 Performance',
         description: 'Dynamic design and thrilling performance.',
-        type:'Sedan',
+        type: 'Sedan',
       },
     }
   },
@@ -419,34 +420,34 @@ export const vehicles: Vehicle[] = [
     id: 'e-tron-gt',
     brandId: 'audi',
     name: 'Audi e-tron GT',
-    image: '/audi/e-tron/e-tron-1.jpg',
+    image: '/audi/e-tron/9.jpg',
     images: [
       '/audi/e-tron/1.jpg', '/audi/e-tron/2.jpg', '/audi/e-tron/3.jpg', '/audi/e-tron/4.jpg',
       '/audi/e-tron/5.jpg', '/audi/e-tron/6.jpg', '/audi/e-tron/7.jpg', '/audi/e-tron/8.jpg',
-      '/audi/e-tron/9.jpg', '/audi/e-tron/10.jpg', '/audi/e-tron/11.jpg', '/audi/e-tron/12.jpg'
+      '/audi/e-tron/9.jpg', '/audi/e-tron/10.jpg', '/audi/e-tron/11.jpg'
     ],
     price: '$105,000',
     description: 'A fully electric masterpiece of engineering.',
-    type:'Coupe',
-    year:2025,
+    type: 'Coupe',
+    year: 2025,
     specs: {
       power: '469 HP',
       acceleration: '3.9s',
       topSpeed: '152 mph'
-    },  
+    },
     translations: {
       es: {
         name: 'Audi e-tron GT',
         description: 'Una obra maestra completamente eléctrica de ingeniería.',
-    type:'Coupe',
+        type: 'Coupe',
 
       },
       en: {
         name: 'Audi e-tron GT',
         description: 'A fully electric masterpiece of engineering.',
-    type:'Coupe',
+        type: 'Coupe',
       },
-    }    
+    }
   },
   {
     id: 'r8-v10-performance',
@@ -464,8 +465,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$211,000',
     description: 'The ultimate mid-engine supercar.',
-    type:'Supercar',
-    year:2025,
+    type: 'Supercar',
+    year: 2025,
     specs: {
       power: '602 HP',
       acceleration: '3.1s',
@@ -475,20 +476,20 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'Audi R8 V10 Performance',
         description: 'El superdeportivo de motor central definitivo.',
-        type:'Supercar',
+        type: 'Supercar',
       },
       en: {
         name: 'Audi R8 V10 Performance',
         description: 'The ultimate mid-engine supercar.',
-        type:'Supercar',
+        type: 'Supercar',
       },
-    }    
+    }
   },
   {
     id: '911-turbo-s',
     brandId: 'porsche',
     name: 'Porsche 911 Turbo S',
-    image: '/por/911/6.jpg', 
+    image: '/por/911/6.jpg',
     images: [
       '/por/911/1.jpg', '/por/911/2.jpg', '/por/911/3.jpg', '/por/911/4.jpg',
       '/por/911/5.jpg', '/por/911/6.jpg', '/por/911/7.jpg', '/por/911/8.jpg',
@@ -517,13 +518,13 @@ export const vehicles: Vehicle[] = [
         description: 'The iconic Porsche 911 Turbo S, designed for pure performance.',
         type: 'Supercar',
       },
-    }    
+    }
   },
   {
     id: '718-cayman-gt4',
     brandId: 'porsche',
     name: 'Porsche 718 Cayman GT4',
-    image: '/por/718/1.jpg', 
+    image: '/por/718/1.jpg',
     images: [
       '/por/718/1.jpg', '/por/718/2.jpg', '/por/718/3.jpg', '/por/718/4.jpg',
       '/por/718/5.jpg'
@@ -548,7 +549,7 @@ export const vehicles: Vehicle[] = [
         description: 'A perfect balance of power and handling in a compact form.',
         type: 'Sports Car',
       },
-    }    
+    }
   },
   {
     id: 'panamera-turbo-s',
@@ -580,7 +581,7 @@ export const vehicles: Vehicle[] = [
         description: 'The perfect combination of luxury and performance in a sedan.',
         type: 'Luxury Sedan',
       },
-    }    
+    }
   },
   {
     id: 'sf90-stradale',
@@ -595,7 +596,7 @@ export const vehicles: Vehicle[] = [
       '/fer/sf90/17.webp', '/fer/sf90/18.webp', '/fer/sf90/19.webp', '/fer/sf90/20.webp',
       '/fer/sf90/21.webp', '/fer/sf90/22.webp', '/fer/sf90/23.webp', '/fer/sf90/24.webp',
       '/fer/sf90/25.webp', '/fer/sf90/26.webp'
-      
+
     ],
     price: '$625,000',
     description: 'Ferrari’s most powerful and fastest road car, combining cutting-edge hybrid technology.',
@@ -663,7 +664,7 @@ export const vehicles: Vehicle[] = [
       '/fer/portofino/9.webp', '/fer/portofino/10.webp', '/fer/portofino/11.webp', '/fer/portofino/12.webp',
       '/fer/portofino/13.webp', '/fer/portofino/14.webp', '/fer/portofino/15.webp', '/fer/portofino/16.webp',
       '/fer/portofino/17.webp', '/fer/portofino/18.webp', '/fer/portofino/19.webp', '/fer/portofino/20.webp',
-       '/fer/portofino/21.webp'
+      '/fer/portofino/21.webp'
     ],
     price: '$250,000',
     description: 'The perfect blend of sportiness and elegance, combining a powerful twin-turbo V8 with an open-top design.',
@@ -686,12 +687,131 @@ export const vehicles: Vehicle[] = [
         type: 'Convertible',
       },
     }
+  },
+  {
+    id: 'aventador-lp-780-4-ultimae',
+    brandId: 'lamborghini',
+    name: 'Lamborghini Aventador LP 780-4 Ultimae',
+    image: '/lambo/aventador/5.jpg',
+    images: [
+      '/lambo/aventador/1.jpg', '/lambo/aventador/2.jpg', '/lambo/aventador/3.jpg',
+      '/lambo/aventador/4.jpg', '/lambo/aventador/5.jpg', '/lambo/aventador/6.jpg',
+      '/lambo/aventador/7.jpg', '/lambo/aventador/8.jpg', '/lambo/aventador/9.jpg',
+      '/lambo/aventador/10.jpg', '/lambo/aventador/11.jpg', '/lambo/aventador/12.jpg',
+      '/lambo/aventador/13.jpg', '/lambo/aventador/14.jpg', '/lambo/aventador/15.jpg',
+      '/lambo/aventador/16.jpg', '/lambo/aventador/17.jpg', '/lambo/aventador/18.jpg',
+      '/lambo/aventador/19.jpg', '/lambo/aventador/20.jpg', '/lambo/aventador/21.jpg',
+      '/lambo/aventador/22.jpg', '/lambo/aventador/23.jpg', '/lambo/aventador/24.jpg',
+      '/lambo/aventador/25.jpg', '/lambo/aventador/26.jpg', '/lambo/aventador/27.jpg',
+      '/lambo/aventador/28.jpg', '/lambo/aventador/29.jpg', '/lambo/aventador/30.jpg',
+      '/lambo/aventador/31.jpg', '/lambo/aventador/32.jpg', '/lambo/aventador/33.jpg',
+      '/lambo/aventador/34.jpg'
+    ],
+    price: '$498,000',
+    description: 'A celebration of the Aventador legacy with unmatched performance and design.',
+    type: 'Supercar',
+    year: 2025,
+    specs: {
+      power: '780 HP',
+      acceleration: '2.8s',
+      topSpeed: '221 mph'
+    },
+    translations: {
+      es: {
+        name: 'Lamborghini Aventador LP 780-4 Ultimae',
+        description: 'Una celebración del legado Aventador con un rendimiento y diseño incomparables.',
+        type: 'Superdeportivo',
+      },
+      en: {
+        name: 'Lamborghini Aventador LP 780-4 Ultimae',
+        description: 'A celebration of the Aventador legacy with unmatched performance and design.',
+        type: 'Supercar',
+      },
+    }
+  },  
+  {
+    id: 'huracan-sto',
+    brandId: 'lamborghini',
+    name: 'Lamborghini Huracán STO',
+    image: '/lambo/huracan/30.jpg',
+    images: [
+      '/lambo/huracan/1.avif', '/lambo/huracan/2.avif', '/lambo/huracan/3.avif',
+      '/lambo/huracan/4.avif', '/lambo/huracan/5.avif', '/lambo/huracan/6.avif',
+      '/lambo/huracan/7.avif', '/lambo/huracan/8.avif', '/lambo/huracan/9.avif',
+      '/lambo/huracan/10.avif', '/lambo/huracan/11.jpg', '/lambo/huracan/12.avif',
+      '/lambo/huracan/13.jpg', '/lambo/huracan/14.avif', '/lambo/huracan/15.avif',
+      '/lambo/huracan/16.webp', '/lambo/huracan/17.webp', '/lambo/huracan/18.webp',
+      '/lambo/huracan/19.jpg', '/lambo/huracan/20.avif', '/lambo/huracan/21.jpg',
+      '/lambo/huracan/22.avif', '/lambo/huracan/23.avif', '/lambo/huracan/24.avif',
+      '/lambo/huracan/25.avif', '/lambo/huracan/26.avif', '/lambo/huracan/27.avif',
+      '/lambo/huracan/28.avif', '/lambo/huracan/29.webp', '/lambo/huracan/30.avif',
+      '/lambo/huracan/31.avif'
+    ],
+    price: '$327,000',
+    description: 'Track-inspired engineering for the ultimate performance.',
+    type: 'Supercar',
+    year: 2025,
+    specs: {
+      power: '640 HP',
+      acceleration: '3.0s',
+      topSpeed: '193 mph'
+    },
+    translations: {
+      es: {
+        name: 'Lamborghini Huracán STO',
+        description: 'Ingeniería inspirada en la pista para el máximo rendimiento.',
+        type: 'Superdeportivo',
+      },
+      en: {
+        name: 'Lamborghini Huracán STO',
+        description: 'Track-inspired engineering for the ultimate performance.',
+        type: 'Supercar',
+      },
+    }
+  },
+  {
+    id: 'urus-performante',
+    brandId: 'lamborghini',
+    name: 'Lamborghini Urus Performante',
+    image: '/lambo/urus/1.jpg',
+    images: [
+      '/lambo/urus/1.jpg', '/lambo/urus/2.jpg', '/lambo/urus/3.jpg',
+      '/lambo/urus/4.jpg', '/lambo/urus/5.jpg', '/lambo/urus/6.jpg',
+      '/lambo/urus/7.jpg', '/lambo/urus/8.jpg', '/lambo/urus/9.jpg',
+      '/lambo/urus/10.jpg', '/lambo/urus/11.jpg', '/lambo/urus/12.jpg',
+       '/lambo/urus/14.jpg', '/lambo/urus/15.jpg',
+      '/lambo/urus/16.jpg', '/lambo/urus/17.jpg',
+    ],
+    price: '$260,000',
+    description: 'The pinnacle of high-performance SUVs.',
+    type: 'SUV',
+    year: 2025,
+    specs: {
+      power: '657 HP',
+      acceleration: '3.3s',
+      topSpeed: '190 mph'
+    },
+    translations: {
+      es: {
+        name: 'Lamborghini Urus Performante',
+        description: 'El pináculo de los SUV de alto rendimiento.',
+        type: 'SUV',
+      },
+      en: {
+        name: 'Lamborghini Urus Performante',
+        description: 'The pinnacle of high-performance SUVs.',
+        type: 'SUV',
+      },
+    }
   }
   
   
   
-  
-  
-  
+
+
+
+
+
+
 ];
 
