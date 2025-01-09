@@ -1,15 +1,17 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
+// Tipo para el contexto
 interface FavoriteContextProps {
   favorites: number[];
   toggleFavorite: (vehicleId: number) => void;
 }
 
+// Crear el contexto
 const FavoritesContext = createContext<FavoriteContextProps | undefined>(undefined);
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   const [favorites, setFavorites] = useState<number[]>(() => {
-    // Cargar favoritos desde el almacenamiento local al inicio
+    // Cargar favoritos desde el almacenamiento local
     const storedFavorites = localStorage.getItem("favorites");
     return storedFavorites ? JSON.parse(storedFavorites) : [];
   });
@@ -32,10 +34,4 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useFavorites = () => {
-  const context = useContext(FavoritesContext);
-  if (!context) {
-    throw new Error("useFavorites must be used within a FavoritesProvider");
-  }
-  return context;
-};
+export default FavoritesContext;

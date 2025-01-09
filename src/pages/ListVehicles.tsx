@@ -1,9 +1,10 @@
 //src/pages/ListVehicles.tsx
 import { useState, useEffect } from "react";
 import { useLanguage } from "../context/LanguageContext";
-import { useFavorites } from "../context/FavoritesContext";
 import { brands as brandsData, vehicles as vehiclesData } from "../data";
 import { Link } from "react-router-dom";
+import { useFavorites } from "../context/useFavorites";  // Importar el hook
+import { motion } from "framer-motion"; // Importamos Framer Motion para animación
 
 interface Vehicle {
   id: number;
@@ -29,9 +30,47 @@ export default function ListVehicles() {
   const [filterBrand, setFilterBrand] = useState("All");
   const [filterType, setFilterType] = useState("All");
   const [filterYear, setFilterYear] = useState("All");
+  const [addedToFavorites, setAddedToFavorites] = useState<number | null>(null); // Estado para el mensaje
 
   const [currentPage, setCurrentPage] = useState(1);
   const vehiclesPerPage = 6; // Número de vehículos por página
+  const { favorites, toggleFavorite } = useFavorites();  // Usar el hook
+
+  // Efecto de Confeti con framer-motion
+  const Confetti = () => (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, rotate: 360, scale: [1, 1.5, 1] }}
+      transition={{
+        duration: 1.5,
+        repeat: 3,
+        repeatType: "loop",
+      }}
+      className="absolute top-10 left-1/2 transform -translate-x-1/2"
+    >
+      {[...Array(30)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="w-2 h-2 bg-yellow-400 rounded-full absolute"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            opacity: Math.random(),
+          }}
+          animate={{
+            y: [0, -100, 0],
+            x: [0, Math.random() * 100 - 50, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            repeatType: "reverse",
+            delay: Math.random(),
+          }}
+        />
+      ))}
+    </motion.div>
+  );
 
   useEffect(() => {
     let filtered = vehiclesData;
@@ -81,7 +120,11 @@ export default function ListVehicles() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const totalPages = Math.ceil(filteredVehicles.length / vehiclesPerPage);
-  const { favorites, toggleFavorite } = useFavorites();
+  const handleToggleFavorite = (vehicleId: number) => {
+    toggleFavorite(vehicleId);
+    setAddedToFavorites(vehicleId);
+    setTimeout(() => setAddedToFavorites(null), 2000); // Eliminar mensaje después de 2 segundos
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-black pt-24 py-4">
@@ -152,7 +195,21 @@ export default function ListVehicles() {
           </select>
         </div>
       </div>
-
+{/* Mensaje de añadido a favoritos con confeti */}
+{addedToFavorites && (
+        <>
+          <Confetti /> {/* Mostrar animación de confeti */}
+          <motion.div
+            className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            style={{ zIndex: 9999 }}
+          >
+            {language === "es" ? "Añadido a favoritos!" : "Added to favorites!"}
+          </motion.div>
+        </>
+      )}
       {/* Lista de Vehículos */}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -161,8 +218,8 @@ export default function ListVehicles() {
             vehicle.translations?.[language]?.name || vehicle.name;
           const vehicleType =
             vehicle.translations?.[language]?.type || vehicle.type;
-          const isFavorite = favorites.includes(vehicle.id);
-          return (
+            const isFavorite = favorites.includes(vehicle.id);
+            return (
 
               <div
                 key={vehicle.id}
@@ -197,16 +254,12 @@ export default function ListVehicles() {
                 </p>
             </Link>
 
-            <button
-
-                type="button" 
+                          <button
                 onClick={(e) => {
-                  e.preventDefault(); 
-                  toggleFavorite(vehicle.id);
+                  e.preventDefault();
+                  handleToggleFavorite(vehicle.id); // Cambiar el estado de favorito
                 }}
-                className={`rounded-full  ${
-                  isFavorite ? "text-red-500" : "text-gray-400"
-                }`}
+                className={`rounded-full ${isFavorite ? "text-red-500" : "text-gray-400"}`}
               >
                 ♥
               </button>

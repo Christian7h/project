@@ -1,4 +1,4 @@
-import { useFavorites } from "../context/FavoritesContext";
+import { useFavorites } from "../context/useFavorites";
 import { vehicles as vehiclesData } from "../data";
 import { Link } from "react-router-dom";
 
