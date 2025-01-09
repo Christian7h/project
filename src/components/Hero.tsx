@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronRight, Play } from "lucide-react";
-
+import { Link} from 'react-router-dom'
 export default function HeroSection() {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
@@ -137,9 +137,11 @@ export default function HeroSection() {
               Competition. Sport. Lightweight.
             </p>
             <div className="flex space-x-4">
+              <Link to='contact'>
               <button className="bg-bmw-blue text-white px-8 py-3 rounded-md flex items-center">
                 Configure Now <ChevronRight className="ml-2" />
               </button>
+              </Link>
               <button
                 onClick={handleWatchFilm}
                 className="border text-white  border-white  px-8 py-3 rounded-md flex items-center hover:bg-white/10 transition"

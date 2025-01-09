@@ -126,12 +126,14 @@ export default function Home() {
         viewport={{ once: true }} // Ejecuta la animación una sola vez
         transition={{ duration: 0.5, delay: 0.8 }}
       >
+        <Link to='brands'>
         <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
           {language === 'es' ? 'Marcas Totales' : 'Total Brands'}
         </h3>
         <p className="text-3xl font-bold text-bmw-blue dark:text-white">
           <AnimatedNumber target={totalBrands} start={true} />
         </p>
+        </Link>
       </motion.div>
       {/* Column 5: Total Vehicles */}
       <motion.div

@@ -70,12 +70,14 @@ const { language, toggleLanguage } = useLanguage();
           >
             {language === 'es' ? 'Prueba de Manejo' : 'Test Drive'}
             </button> */}
+            <Link to='contact'>
             <button
             className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition"
             aria-label="Schedule a test drive"
           >
             {language === 'es' ? 'Contacto' : 'Contact'}
             </button>
+            </Link>
           <button
             onClick={toggleDarkMode}
             className="text-white bg-[#D0AE4E]/40 dark:bg-bmw-blue/35 dark:text-bmw-blue px-4 py-2 rounded hover:bg-gray-600 transition"
