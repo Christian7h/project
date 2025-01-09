@@ -1,28 +1,27 @@
 //src/data.ts
 import { Brand, Vehicle } from './types';
-// Definir las traducciones de cada marca
-const translations = {
-  en: {
-    bmw: { name: 'BMW', description: 'The Ultimate Driving Machine' },
-    mercedes: { name: 'Mercedes-Benz', description: 'The Best or Nothing' },
-    audi: { name: 'Audi', description: 'Progress through Technology' },
-    porsche: { name: 'Porsche', description: 'There is no substitute' },
-    ferrari: { name: 'Ferrari', description: 'We build cars' },
-    lamborghini: { name: 'Lamborghini', description: 'We build' },
-    bugatti: { name: 'Bugatti', description: 'We build cars' },
-    koenigsegg: { name: 'Koenigsegg', description: 'We build cars' },
-  },
-  es: {
-    bmw: { name: 'BMW', description: 'La Máxima Máquina de Conducción' },
-    mercedes: { name: 'Mercedes-Benz', description: 'Lo Mejor o Nada' },
-    audi: { name: 'Audi', description: 'Progreso a través de la Tecnología' },
-    porsche: { name: 'Porsche', description: 'No hay sustituto' },
-    ferrari: { name: 'Ferrari', description: 'Construimos autos' },
-    lamborghini: { name: 'Lamborghini', description: 'Construimos' },
-    bugatti: { name: 'Bugatti', description: 'Construimos autos' },
-    koenigsegg: { name: 'Koenigsegg', description: 'Construimos autos' },
-  },
-};
+// const translations = {
+//   en: {
+//     bmw: { name: 'BMW', description: 'The Ultimate Driving Machine' },
+//     mercedes: { name: 'Mercedes-Benz', description: 'The Best or Nothing' },
+//     audi: { name: 'Audi', description: 'Progress through Technology' },
+//     porsche: { name: 'Porsche', description: 'There is no substitute' },
+//     ferrari: { name: 'Ferrari', description: 'We build cars' },
+//     lamborghini: { name: 'Lamborghini', description: 'We build' },
+//     bugatti: { name: 'Bugatti', description: 'We build cars' },
+//     koenigsegg: { name: 'Koenigsegg', description: 'We build cars' },
+//   },
+//   es: {
+//     bmw: { name: 'BMW', description: 'La Máxima Máquina de Conducción' },
+//     mercedes: { name: 'Mercedes-Benz', description: 'Lo Mejor o Nada' },
+//     audi: { name: 'Audi', description: 'Progreso a través de la Tecnología' },
+//     porsche: { name: 'Porsche', description: 'No hay sustituto' },
+//     ferrari: { name: 'Ferrari', description: 'Construimos autos' },
+//     lamborghini: { name: 'Lamborghini', description: 'Construimos' },
+//     bugatti: { name: 'Bugatti', description: 'Construimos autos' },
+//     koenigsegg: { name: 'Koenigsegg', description: 'Construimos autos' },
+//   },
+// };
 
 export const brands: Brand[] = [
   {
@@ -161,7 +160,7 @@ export const vehicles: Vehicle[] = [
     id: 'm4-csl',
     brandId: 'bmw',
     name: 'BMW M4 CSL',
-    image: '/bmw/m4cls/bmwm4cls.png',
+    image: '/bmw/m4cls/bmwm4cls (20).jpg',
     images: [
       '/bmw/m4cls/bmwm4cls (20).jpg', '/bmw/m4cls/bmwm4cls (19).jpg', '/bmw/m4cls/bmwm4cls (18).jpg',
       '/bmw/m4cls/bmwm4cls (17).jpg', '/bmw/m4cls/bmwm4cls (16).jpg', '/bmw/m4cls/bmwm4cls (15).jpg',
@@ -173,6 +172,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$139,900',
     description: 'Competition. Sport. Lightweight.',
+    year:2024,
+    type:'Coupe',
     specs: {
       power: '550 HP',
       acceleration: '3.6s',
@@ -182,10 +183,12 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'BMW M4 CSL',
         description: 'Competición. Deporte. Ligero.',
+        type:'Coupe',
       },
       en: {
         name: 'BMW M4 CSL',
         description: 'Competition. Sport. Lightweight.',
+        type:'Coupe'
       },
     },
   },
@@ -204,6 +207,8 @@ export const vehicles: Vehicle[] = [
       '/bmw/m5cs/bmwm5cs29.jpg', '/bmw/m5cs/bmwm5cs30.jpg', '/bmw/m5cs/bmwm5cs31.jpg', '/bmw/m5cs/bmwm5cs32.jpg',],
     price: '$142,000',
     description: 'The most powerful M car ever.',
+    type:'Sedan',
+    year:2025,
     specs: {
       power: '627 HP',
       acceleration: '2.9s',
@@ -213,10 +218,12 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'BMW M5 CS',
         description: 'El coche M más potente de todos los tiempos.',
+        type:'Sedan'
       },
       en: {
         name: 'BMW M5 CS',
         description: 'The most powerful M car ever.',
+        type:'Sedan'
       },
     },
   },
@@ -233,6 +240,8 @@ export const vehicles: Vehicle[] = [
       '/bmw/b8/24.jpg', '/bmw/b8/25.jpg', '/bmw/b8/26.jpg', '/bmw/b8/27.jpg', '/bmw/b8/28.jpg',],
     price: '$146,000',
     description: 'The Ultimate Driving Machine',
+    type:'Sedan',
+    year:2025,
     specs: {
       power: '617 HP',
       acceleration: '3.0s',
@@ -242,10 +251,13 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'BMW ALPINA B8',
         description: 'La máquina de conducción definitiva',
+        type:'Sedan',
+
       },
       en: {
         name: 'BMW ALPINA B8',
         description: 'The Ultimate Driving Machine',
+        type:'Sedan',
       },
     },
   },
@@ -270,6 +282,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$325,000',
     description: 'The ultimate AMG performance machine.',
+    type:'Coupe',
+    year:2025,
     specs: {
       power: '720 HP',
       acceleration: '3.2s',
@@ -279,10 +293,12 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'Mercedes-AMG GT Black Series',
         description: 'La máquina de rendimiento definitiva de AMG.',
+        type:'Coupe',
       },
       en: {
         name: 'Mercedes-AMG GT Black Series',
         description: 'The ultimate AMG performance machine.',
+        type:'Coupe',
       },
     },
   },
@@ -303,6 +319,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$185,000',
     description: 'A pinnacle of luxury and comfort.',
+    type:'Sedan',
+    year:2025,
     specs: {
       power: '496 HP',
       acceleration: '4.4s',
@@ -312,10 +330,12 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'Mercedes-Maybach S-Class',
         description: 'La cima del lujo y la comodidad.',
+        type:'Sedan',
       },
       en: {
         name: 'Mercedes-Maybach S-Class',
         description: 'A pinnacle of luxury and comfort.',
+        type:'Sedan',
       },
     },
   },
@@ -341,6 +361,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$125,000',
     description: 'The future of luxury electric mobility.',
+    type:'Electric',
+    year:2025,
     specs: {
       power: '516 HP',
       acceleration: '4.1s',
@@ -350,10 +372,13 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'Mercedes-Benz EQS 580',
         description: 'El futuro de la movilidad eléctrica de lujo.',
+        type:'Electric',
+
       },
       en: {
         name: 'Mercedes-Benz EQS 580',
         description: 'The future of luxury electric mobility.',
+        type:'Electric',
       },
     }
   },
@@ -369,6 +394,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$121,000',
     description: 'Dynamic design and thrilling performance.',
+    type:'Sedan',
+    year:2025,
     specs: {
       power: '591 HP',
       acceleration: '3.5s',
@@ -378,10 +405,13 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'Audi RS7 Performance',
         description: 'Diseño dinámico y rendimiento emocionante.',
+        type:'Sedan',
+
       },
       en: {
         name: 'Audi RS7 Performance',
         description: 'Dynamic design and thrilling performance.',
+        type:'Sedan',
       },
     }
   },
@@ -397,6 +427,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$105,000',
     description: 'A fully electric masterpiece of engineering.',
+    type:'Coupe',
+    year:2025,
     specs: {
       power: '469 HP',
       acceleration: '3.9s',
@@ -406,10 +438,13 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'Audi e-tron GT',
         description: 'Una obra maestra completamente eléctrica de ingeniería.',
+    type:'Coupe',
+
       },
       en: {
         name: 'Audi e-tron GT',
         description: 'A fully electric masterpiece of engineering.',
+    type:'Coupe',
       },
     }    
   },
@@ -429,6 +464,8 @@ export const vehicles: Vehicle[] = [
     ],
     price: '$211,000',
     description: 'The ultimate mid-engine supercar.',
+    type:'Supercar',
+    year:2025,
     specs: {
       power: '602 HP',
       acceleration: '3.1s',
@@ -438,10 +475,12 @@ export const vehicles: Vehicle[] = [
       es: {
         name: 'Audi R8 V10 Performance',
         description: 'El superdeportivo de motor central definitivo.',
+        type:'Supercar',
       },
       en: {
         name: 'Audi R8 V10 Performance',
         description: 'The ultimate mid-engine supercar.',
+        type:'Supercar',
       },
     }    
   }

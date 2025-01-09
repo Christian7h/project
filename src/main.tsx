@@ -12,6 +12,7 @@ import Contact from './pages/Contact';
 import Brand from './pages/Brand';
 import BrandPage from './pages/BrandPage';
 import VehicleDetail from './pages/VehicleDetail';
+import ListVehicles from './pages/ListVehicles';
 
 const router = createBrowserRouter(
   [
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
         { path: 'brands', element: <Brand /> }, // Lista de marcas
         { path: 'brands/:brandId', element: <BrandPage /> }, // Detalle de marca
         { path: 'vehicles/:vehicleId', element: <VehicleDetail /> }, // Detalle de vehículo
+        {path:  'listVehicles',element:<ListVehicles/>}
       ],
     },
   ],

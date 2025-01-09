@@ -48,21 +48,27 @@ const { language, toggleLanguage } = useLanguage();
           >
             {language === 'es' ? 'Marcas' : 'Brands'}
             </Link>
-          <Link
+          {/* <Link
             to="/contact"
             className="hover:text-bmw-blue dark:hover:text-bmw-blue transition"
           >
             {language === 'es' ? 'Contacto' : 'Contact'}
-            </Link>
+            </Link> */}
         </div>
 
-        {/* Botones */}
+        {/* Botones */} 
         <div className="flex items-center space-x-4">
-          <button
+          {/* <button
             className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition"
             aria-label="Schedule a test drive"
           >
             {language === 'es' ? 'Prueba de Manejo' : 'Test Drive'}
+            </button> */}
+            <button
+            className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition"
+            aria-label="Schedule a test drive"
+          >
+            {language === 'es' ? 'Contacto' : 'Contact'}
             </button>
           <button
             onClick={toggleDarkMode}
