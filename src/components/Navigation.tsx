@@ -48,6 +48,12 @@ const { language, toggleLanguage } = useLanguage();
           >
             {language === 'es' ? 'Marcas' : 'Brands'}
             </Link>
+            <Link
+            to="ListVehicles"
+            className="hover:text-bmw-blue dark:hover:text-bmw-blue transition"
+          >
+            {language === 'es' ? 'Vehículos' : 'Vehicles'}
+            </Link>
           {/* <Link
             to="/contact"
             className="hover:text-bmw-blue dark:hover:text-bmw-blue transition"
@@ -72,7 +78,7 @@ const { language, toggleLanguage } = useLanguage();
             </button>
           <button
             onClick={toggleDarkMode}
-            className="text-white bg-bmw-blue/35 dark:bg-bmw-blue/35 dark:text-bmw-blue px-4 py-2 rounded hover:bg-gray-600 transition"
+            className="text-white bg-[#D0AE4E]/40 dark:bg-bmw-blue/35 dark:text-bmw-blue px-4 py-2 rounded hover:bg-gray-600 transition"
           >
             {/* Muestra el ícono correspondiente al modo actual */}
             {isDarkMode ? (
@@ -83,7 +89,7 @@ const { language, toggleLanguage } = useLanguage();
           </button>
           <button
             onClick={toggleLanguage} // Cambia el idioma cuando el usuario haga clic
-            className="text-white bg-gray-700 px-4 py-2 rounded hover:bg-gray-600 transition"
+            className="text-white bg-gray-700/40 px-4 py-2 rounded hover:bg-gray-600 transition"
           >
             {language === 'es' ? 'Es' : 'En'} 
         </button>

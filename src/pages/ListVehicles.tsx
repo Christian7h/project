@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import { brands as brandsData, vehicles as vehiclesData } from "../data";
 import {  Link } from 'react-router-dom';
@@ -27,6 +27,9 @@ export default function ListVehicles() {
   const [filterType, setFilterType] = useState("All");
   const [filterYear, setFilterYear] = useState("All");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const vehiclesPerPage = 6; // Número de vehículos por página
+  
   useEffect(() => {
     let filtered = vehiclesData;
 
@@ -60,6 +63,15 @@ export default function ListVehicles() {
   }));
   const typeOptions = Array.from(new Set(vehiclesData.map((v) => v.type)));
   const yearOptions=Array.from(new Set(vehiclesData.map((v)=> v.year)));
+
+  // Determinar los vehículos a mostrar en la página actual
+  const indexOfLastVehicle = currentPage * vehiclesPerPage;
+  const indexOfFirstVehicle = indexOfLastVehicle - vehiclesPerPage;
+  const currentVehicles = filteredVehicles.slice(indexOfFirstVehicle, indexOfLastVehicle);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const totalPages = Math.ceil(filteredVehicles.length / vehiclesPerPage);
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-black pt-24 py-4">
@@ -126,7 +138,7 @@ export default function ListVehicles() {
       {/* Lista de Vehículos */}
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {filteredVehicles.map((vehicle) => {
+        {currentVehicles.map((vehicle) => {
           const vehicleName = vehicle.translations?.[language]?.name || vehicle.name;
             const vehicleType = vehicle.translations?.[language]?.type||vehicle.type;
           return (
@@ -139,7 +151,7 @@ export default function ListVehicles() {
               key={vehicle.id}
               className="bg-white dark:bg-zinc-900 p-4 rounded-lg shadow-md hover:shadow-lg transition"
             >
-                <div className="aspect-video">
+                <div className="">
                 <img
                     src={vehicle.image}
                     alt={vehicleName}
@@ -165,7 +177,23 @@ export default function ListVehicles() {
           );
         })}
       </div>
-
+{/* Paginación */}
+<div className="flex justify-center mt-8">
+        <button
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-bmw-blue text-white rounded-md mr-2 disabled:bg-gray-400"
+        >
+          {language === "es" ? "Anterior" : "Previous"}
+        </button>
+        <button
+          onClick={() => paginate(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 bg-bmw-blue text-white rounded-md disabled:bg-gray-400"
+        >
+          {language === "es" ? "Siguiente" : "Next"}
+        </button>
+      </div>
       {filteredVehicles.length === 0 && (
         <div className="text-center text-gray-700 dark:text-gray-400 mt-8">
           {language === "es"

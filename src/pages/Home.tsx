@@ -46,7 +46,7 @@ export default function Home() {
                 <Link
                   key={brand.id}
                   to={`/brands/${brand.id}`}
-                  className="group bg-slate-200 dark:bg-zinc-900 p-8 rounded-lg text-center transition-transform hover:-translate-y-2"
+                  className="group bg-gray-100 dark:bg-zinc-900 p-8 rounded-lg text-center transition-transform hover:-translate-y-2"
                 >
                   <img
                     src={brand.logo}
