@@ -3,6 +3,8 @@ import { useCart } from '../context/CartContext';
 import { vehicles } from '../data';
 import { ShoppingCart, X } from 'lucide-react';
 
+
+
 export default function CartDropdown() {
   const { items, removeFromCart, getSubtotal } = useCart();
   const [isOpen, setIsOpen] = React.useState(false);
@@ -43,14 +45,14 @@ export default function CartDropdown() {
                       <img
                         src={vehicle.image}
                         alt={vehicle.name}
-                        className="w-20 h-20 object-cover rounded"
+                        className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded"
                       />
                       <div className="flex-1">
-                        <h4 className="font-medium">{vehicle.name}</h4>
-                        <p className="text-sm text-gray-500">
+                        <h4 className="font-medium text-sm sm:text-base">{vehicle.name}</h4>
+                        <p className="text-xs sm:text-sm text-gray-500">
                           Quantity: {quantity}
                         </p>
-                        <p className="text-bmw-blue font-medium">
+                        <p className="text-bmw-blue font-medium text-xs sm:text-sm">
                           {formatPrice(parseInt(vehicle.price))}
                         </p>
                       </div>
@@ -67,7 +69,7 @@ export default function CartDropdown() {
                 <div className="border-t pt-4">
                   <div className="flex justify-between mb-4">
                     <span className="font-medium">Subtotal:</span>
-                    <span className="font-bold">
+                    <span className="font-bold text-xs sm:text-sm">
                       {formatPrice(getSubtotal())}
                     </span>
                   </div>

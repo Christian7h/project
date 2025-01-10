@@ -65,14 +65,7 @@ export default function Navigation({ isDarkMode, toggleDarkMode }) {
 
         {/* Botones */}
         <div className="flex items-center space-x-4">
-        <div className="relative">
-            <CartDropdown />
-            {getItemCount() > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                {getItemCount()}
-              </span>
-            )}
-          </div>
+
           <Link to='favorites'>
             <button
               className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition"
@@ -118,6 +111,14 @@ export default function Navigation({ isDarkMode, toggleDarkMode }) {
 
                 </button>
               </div>
+            )}
+          </div>
+          <div className="relative">
+            <CartDropdown />
+            {getItemCount() > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {getItemCount()}
+              </span>
             )}
           </div>
         </div>
