@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Moon, Sun, Globe,Settings,Heart } from "lucide-react"; // Importar íconos adicionales
 import { useLanguage } from '../context/LanguageContext.jsx';
+import CartDropdown from './CartDropdown';
+import { useCart } from '../context/CartContext';
 
 export default function Navigation({ isDarkMode, toggleDarkMode }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false); // Nuevo estado para el menú
   const { language, toggleLanguage } = useLanguage(); 
+  const { getItemCount } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,21 +65,29 @@ export default function Navigation({ isDarkMode, toggleDarkMode }) {
 
         {/* Botones */}
         <div className="flex items-center space-x-4">
+        <div className="relative">
+            <CartDropdown />
+            {getItemCount() > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {getItemCount()}
+              </span>
+            )}
+          </div>
           <Link to='favorites'>
             <button
               className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition"
               aria-label="Schedule a test drive"
             >
-                          <Heart className="w-6 h-6" />
+                          <Heart className="w-5 h-5" />
             </button>
           </Link>
           <Link to='contact'>
             <button
-              className="bg-bmw-blue text-white px-6 py-2 rounded hover:bg-bmw-blue/90 transition"
+              className="bg-bmw-blue text-white px-4 py-2 rounded hover:bg-bmw-blue/90 transition"
               aria-label="Schedule a test drive"
             >
-              {language === 'es' ? 'Contacto' : 'Contact'}
-            </button>
+                    <Moon className="w-5 h-5" />
+                    </button>
           </Link>
           <div className="relative">
             <button

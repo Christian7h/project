@@ -170,7 +170,7 @@ export const vehicles: Vehicle[] = [
       '/bmw/m4cls/bmwm4cls (5).jpg', '/bmw/m4cls/bmwm4cls (4).jpg', '/bmw/m4cls/bmwm4cls (3).jpg',
       '/bmw/m4cls/bmwm4cls (2).jpg', '/bmw/m4cls/bmwm4cls (1).jpg'
     ],
-    price: '$139,900',
+    price: '139900',
     description: 'Competition. Sport. Lightweight.',
     year: 2024,
     type: 'Coupe',
@@ -179,6 +179,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '3.6s',
       topSpeed: '191 mph'
     },
+    stock: 14,
     translations: {
       es: {
         name: 'BMW M4 CSL',
@@ -205,7 +206,7 @@ export const vehicles: Vehicle[] = [
       '/bmw/m5cs/bmwm5cs21.jpg', '/bmw/m5cs/bmwm5cs22.jpg', '/bmw/m5cs/bmwm5cs23.jpg', '/bmw/m5cs/bmwm5cs24.jpg',
       '/bmw/m5cs/bmwm5cs25.jpg', '/bmw/m5cs/bmwm5cs26.jpg', '/bmw/m5cs/bmwm5cs27.jpg', '/bmw/m5cs/bmwm5cs28.jpg',
       '/bmw/m5cs/bmwm5cs29.jpg', '/bmw/m5cs/bmwm5cs30.jpg', '/bmw/m5cs/bmwm5cs31.jpg', '/bmw/m5cs/bmwm5cs32.jpg',],
-    price: '$142,000',
+    price: '142000',
     description: 'The most powerful M car ever.',
     type: 'Sedan',
     year: 2025,
@@ -214,6 +215,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '2.9s',
       topSpeed: '190 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'BMW M5 CS',
@@ -238,7 +240,7 @@ export const vehicles: Vehicle[] = [
       '/bmw/b8/14.jpg', '/bmw/b8/15.jpg', '/bmw/b8/16.jpg', '/bmw/b8/17.jpg', '/bmw/b8/18.jpg',
       '/bmw/b8/19.jpg', '/bmw/b8/20.jpg', '/bmw/b8/21.jpg', '/bmw/b8/22.jpg', '/bmw/b8/23.jpg',
       '/bmw/b8/24.jpg', '/bmw/b8/25.jpg', '/bmw/b8/26.jpg', '/bmw/b8/27.jpg', '/bmw/b8/28.jpg',],
-    price: '$146,000',
+    price: '146000',
     description: 'The Ultimate Driving Machine',
     type: 'Sedan',
     year: 2025,
@@ -247,6 +249,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '3.0s',
       topSpeed: '190 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'BMW ALPINA B8',
@@ -280,7 +283,7 @@ export const vehicles: Vehicle[] = [
       '/mb/amg-gt-black/11.jpg',
       '/mb/amg-gt-black/12.jpg',
     ],
-    price: '$325,000',
+    price:'325000',
     description: 'The ultimate AMG performance machine.',
     type: 'Coupe',
     year: 2025,
@@ -289,6 +292,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '3.2s',
       topSpeed: '202 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Mercedes-AMG GT Black Series',
@@ -317,7 +321,7 @@ export const vehicles: Vehicle[] = [
       '/mb/s-class-maybach/25.jpg', '/mb/s-class-maybach/26.jpg', '/mb/s-class-maybach/28.jpg',
       '/mb/s-class-maybach/29.jpg',
     ],
-    price: '$185,000',
+    price: '185000',
     description: 'A pinnacle of luxury and comfort.',
     type: 'Sedan',
     year: 2025,
@@ -326,6 +330,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '4.4s',
       topSpeed: '155 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Mercedes-Maybach S-Class',
@@ -359,7 +364,7 @@ export const vehicles: Vehicle[] = [
       '/mb/eqs-580/12.jpg',
       '/mb/eqs-580/13.jpg'
     ],
-    price: '$125,000',
+    price: '125000',
     description: 'The future of luxury electric mobility.',
     type: 'Electric',
     year: 2025,
@@ -368,6 +373,8 @@ export const vehicles: Vehicle[] = [
       acceleration: '4.1s',
       topSpeed: '130 mph'
     },
+    stock: 2,
+
     translations: {
       es: {
         name: 'Mercedes-Benz EQS 580',
@@ -393,7 +400,7 @@ export const vehicles: Vehicle[] = [
       , '/audi/rs7/5.avif', '/audi/rs7/6.avif',
       '/audi/rs7/2.avif', '/audi/rs7/3.avif', '/audi/rs7/4.avif',
     ],
-    price: '$121,000',
+    price: '121000',
     description: 'Dynamic design and thrilling performance.',
     type: 'Sedan',
     year: 2025,
@@ -402,6 +409,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '3.5s',
       topSpeed: '190 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Audi RS7 Performance',
@@ -426,7 +434,7 @@ export const vehicles: Vehicle[] = [
       '/audi/e-tron/5.jpg', '/audi/e-tron/6.jpg', '/audi/e-tron/7.jpg', '/audi/e-tron/8.jpg',
       '/audi/e-tron/9.jpg', '/audi/e-tron/10.jpg', '/audi/e-tron/11.jpg'
     ],
-    price: '$105,000',
+    price: '105000',
     description: 'A fully electric masterpiece of engineering.',
     type: 'Coupe',
     year: 2025,
@@ -435,6 +443,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '3.9s',
       topSpeed: '152 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Audi e-tron GT',
@@ -463,7 +472,7 @@ export const vehicles: Vehicle[] = [
       '/audi/r8/21.jpg', '/audi/r8/22.jpg', '/audi/r8/23.jpg', '/audi/r8/24.jpg',
       '/audi/r8/25.jpg'
     ],
-    price: '$211,000',
+    price: '211000',
     description: 'The ultimate mid-engine supercar.',
     type: 'Supercar',
     year: 2025,
@@ -472,6 +481,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '3.1s',
       topSpeed: '205 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Audi R8 V10 Performance',
@@ -498,7 +508,7 @@ export const vehicles: Vehicle[] = [
       '/por/911/17.jpg', '/por/911/18.jpg', '/por/911/19.jpg', '/por/911/20.jpg',
       '/por/911/21.jpg'
     ],
-    price: '$204,000',
+    price: '204000',
     description: 'The iconic Porsche 911 Turbo S, designed for pure performance.',
     type: 'Supercar',
     year: 2025,
@@ -507,6 +517,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '2.7s',
       topSpeed: '205 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Porsche 911 Turbo S',
@@ -529,7 +540,7 @@ export const vehicles: Vehicle[] = [
       '/por/718/1.jpg', '/por/718/2.jpg', '/por/718/3.jpg', '/por/718/4.jpg',
       '/por/718/5.jpg'
     ],
-    price: '$99,000',
+    price: '99000',
     description: 'A perfect balance of power and handling in a compact form.',
     type: 'Sports Car',
     year: 2025,
@@ -538,6 +549,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '3.8s',
       topSpeed: '188 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Porsche 718 Cayman GT4',
@@ -561,7 +573,7 @@ export const vehicles: Vehicle[] = [
       '/por/panamera/5.webp', '/por/panamera/6.webp', '/por/panamera/7.webp', '/por/panamera/8.webp',
       '/por/panamera/9.webp', '/por/panamera/10.webp', '/por/panamera/11.webp', '/por/panamera/12.webp',
     ],
-    price: '$182,000',
+    price: '182000',
     description: 'The perfect combination of luxury and performance in a sedan.',
     type: 'Luxury Sedan',
     year: 2025,
@@ -570,6 +582,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '3.1s',
       topSpeed: '196 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Porsche Panamera Turbo S',
@@ -598,7 +611,7 @@ export const vehicles: Vehicle[] = [
       '/fer/sf90/25.webp', '/fer/sf90/26.webp'
 
     ],
-    price: '$625,000',
+    price: '625000',
     description: 'Ferrari’s most powerful and fastest road car, combining cutting-edge hybrid technology.',
     type: 'Supercar',
     year: 2025,
@@ -607,6 +620,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '2.5s',
       topSpeed: '211 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Ferrari SF90 Stradale',
@@ -631,7 +645,7 @@ export const vehicles: Vehicle[] = [
       '/fer/812/9.jpg', '/fer/812/10.jpg', '/fer/812/12.jpg', '/fer/812/13.jpg',
       '/fer/812/14.jpg', '/fer/812/15.jpg', '/fer/812/16.jpg'
     ],
-    price: '$335,000',
+    price: '335000',
     description: 'A naturally aspirated V12 engine delivering breathtaking performance and an unmatched driving experience.',
     type: 'Grand Tourer',
     year: 2025,
@@ -640,6 +654,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '2.9s',
       topSpeed: '211 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'fer 812 Superfast',
@@ -666,7 +681,7 @@ export const vehicles: Vehicle[] = [
       '/fer/portofino/17.webp', '/fer/portofino/18.webp', '/fer/portofino/19.webp', '/fer/portofino/20.webp',
       '/fer/portofino/21.webp'
     ],
-    price: '$250,000',
+    price: '250000',
     description: 'The perfect blend of sportiness and elegance, combining a powerful twin-turbo V8 with an open-top design.',
     type: 'Convertible',
     year: 2025,
@@ -675,6 +690,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '3.5s',
       topSpeed: '199 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'fer Portofino M',
@@ -707,7 +723,7 @@ export const vehicles: Vehicle[] = [
       '/lambo/aventador/31.jpg', '/lambo/aventador/32.jpg', '/lambo/aventador/33.jpg',
       '/lambo/aventador/34.jpg'
     ],
-    price: '$498,000',
+    price: '498000',
     description: 'A celebration of the Aventador legacy with unmatched performance and design.',
     type: 'Supercar',
     year: 2025,
@@ -716,6 +732,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '2.8s',
       topSpeed: '221 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Lamborghini Aventador LP 780-4 Ultimae',
@@ -747,7 +764,7 @@ export const vehicles: Vehicle[] = [
       '/lambo/huracan/28.avif', '/lambo/huracan/29.webp', '/lambo/huracan/30.avif',
       '/lambo/huracan/31.avif'
     ],
-    price: '$327,000',
+    price: '327000',
     description: 'Track-inspired engineering for the ultimate performance.',
     type: 'Supercar',
     year: 2025,
@@ -756,6 +773,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '3.0s',
       topSpeed: '193 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Lamborghini Huracán STO',
@@ -782,7 +800,7 @@ export const vehicles: Vehicle[] = [
        '/lambo/urus/14.jpg', '/lambo/urus/15.jpg',
       '/lambo/urus/16.jpg', '/lambo/urus/17.jpg',
     ],
-    price: '$260,000',
+    price: '260000',
     description: 'The pinnacle of high-performance SUVs.',
     type: 'SUV',
     year: 2025,
@@ -791,6 +809,7 @@ export const vehicles: Vehicle[] = [
       acceleration: '3.3s',
       topSpeed: '190 mph'
     },
+    stock: 2,
     translations: {
       es: {
         name: 'Lamborghini Urus Performante',

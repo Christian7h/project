@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom";
 import { vehicles } from "../data";
-import { Car, Clock3, Settings } from "lucide-react";
+import { Car, Clock3, Settings,ShoppingCart } from "lucide-react";
 import LoadingSpinner from "../components/LoadingSpinner";
 import LightGallery from "lightgallery/react";
+import { useCart } from '../context/CartContext';
 
 // import styles
 import "lightgallery/css/lightgallery.css";
@@ -18,6 +19,7 @@ export default function VehicleDetail() {
   const { vehicleId } = useParams<{ vehicleId: string }>();
   const vehicle = vehicles.find((v) => v.id === vehicleId);
   const { language } = useLanguage();  // Obtén el idioma actual del contexto
+  const { addToCart } = useCart();
 
   if (!vehicle) {
     return <LoadingSpinner />;
@@ -34,7 +36,12 @@ export default function VehicleDetail() {
   const onInit = () => {
     console.log("lightGallery has been initialized");
   };
-
+  const formatPrice = (price: string) => {
+    return new Intl.NumberFormat('es-ES', {
+      style: 'currency',
+      currency: 'CLP'
+    }).format(parseInt(price));
+  };
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-200 pt-24">
       <div className="container mx-auto px-4">
@@ -52,7 +59,7 @@ export default function VehicleDetail() {
             {/* Detalles */}
             <div className="space-y-8">
               <h1 className="text-4xl font-bold mb-4">{vehicleName}</h1>
-              <p className="text-2xl text-bmw-blue mb-6">{vehiclePrice}</p>
+              <p className="text-2xl text-bmw-blue mb-6">{formatPrice(vehiclePrice)}</p>
               <p className="text-gray-600 dark:text-gray-400 mb-8">
                 {vehicleDescription}
               </p>
@@ -79,7 +86,14 @@ export default function VehicleDetail() {
                   </p>
                 </div>
               </div>
-
+              <button 
+                onClick={() => addToCart(vehicle.id)}
+                disabled={vehicle.stock === 0}
+                className="flex items-center justify-center gap-2 bg-bmw-blue text-white py-3 rounded-lg hover:bg-bmw-blue/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
+              </button>
               {/* Botón */}
               <button className="w-full bg-bmw-blue text-white py-3 rounded-lg mt-8 hover:bg-bmw-blue/90 transition">
                 Programar prueba de manejo

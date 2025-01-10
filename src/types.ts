@@ -22,5 +22,29 @@ export interface Vehicle {
     acceleration: string;
     topSpeed: string;
   };
+  stock: number;
   translations?: { [key: string]: { name: string; description: string,type?:string } };  // Traducciones opcionales
+}
+
+export interface CartItem {
+  vehicleId: string;
+  quantity: number;
+}
+
+export interface CustomerInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
+}
+
+export interface WebpayResponse {
+  token: string;
+  url: string;
 }
