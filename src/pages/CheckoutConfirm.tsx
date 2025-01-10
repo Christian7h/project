@@ -38,7 +38,7 @@ export default function CheckoutConfirm() {
     const confirmPayment = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.post('http://localhost:3000/api/confirm-transaction', {
+        const response = await axios.post('https://backend-luxurymotors-react-nodejs-webpay.onrender.com/api/confirm-transaction', {
           token,
         });
         setPaymentResult(response.data); // Asume que el backend devuelve { status, orderId, amount, customerInfo }
