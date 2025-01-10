@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Moon, Sun, Globe,Settings,Heart } from "lucide-react"; // Importar íconos adicionales
+import { Moon, Sun, Send,Settings,Heart } from "lucide-react"; // Importar íconos adicionales
 import { useLanguage } from '../context/LanguageContext.jsx';
 import CartDropdown from './CartDropdown';
 import { useCart } from '../context/CartContext';
@@ -79,7 +79,7 @@ export default function Navigation({ isDarkMode, toggleDarkMode }) {
               className="bg-bmw-blue text-white px-4 py-2 rounded hover:bg-bmw-blue/90 transition"
               aria-label="Schedule a test drive"
             >
-                    <Moon className="w-5 h-5" />
+                    <Send className="w-5 h-5" />
                     </button>
           </Link>
           <div className="relative">

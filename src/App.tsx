@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer.tsx";
-import Checkout from './pages/Checkout';
 import ScrollToTop from "./components/ScrollTop.tsx";
 import { Outlet } from "react-router-dom";
 import LoadingScreen from "./components/LoadingScreen";
 import { LanguageProvider } from "./context/LanguageContext.tsx";
 import { FavoritesProvider } from "./context/FavoritesContext";  // Importar el proveedor del contexto
 import ScrollProgress from "./components/ScrollProgress";
-import CheckoutConfirm from './pages/CheckoutConfirm';
 import { CartProvider } from './context/CartContext';
 import { CheckoutProvider } from './context/CheckoutContext';
 

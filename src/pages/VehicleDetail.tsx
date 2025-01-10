@@ -89,20 +89,21 @@ export default function VehicleDetail() {
               <button 
                 onClick={() => addToCart(vehicle.id)}
                 disabled={vehicle.stock === 0}
-                className="flex items-center justify-center gap-2 bg-bmw-blue text-white py-3 rounded-lg hover:bg-bmw-blue/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 bg-bmw-blue text-white py-3 rounded-lg hover:bg-bmw-blue/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ShoppingCart className="w-5 h-5" />
-                Add to Cart
+            {language === 'es' ? 'añadir a la cesta' : 'Add to Cart'}
               </button>
               {/* Botón */}
               <button className="w-full bg-bmw-blue text-white py-3 rounded-lg mt-8 hover:bg-bmw-blue/90 transition">
-                Programar prueba de manejo
+            {language === 'es' ? 'Programar prueba de manejo' : 'Schedule a test drive'}
               </button>
             </div>
           </div>
-
           <div className="col-span-2">
-            <h2 className="text-3xl font-bold py-5">Galería</h2>
+            <h2 className="text-3xl font-bold py-5">
+            {language === 'es' ? 'Galería' : 'Gallery'}
+              </h2>
             <LightGallery
               onInit={onInit}
               speed={500}

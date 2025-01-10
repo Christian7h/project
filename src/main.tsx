@@ -10,7 +10,9 @@ import Brand from "./pages/Brand";
 import BrandPage from "./pages/BrandPage";
 import VehicleDetail from "./pages/VehicleDetail";
 import ListVehicles from "./pages/ListVehicles";
+import Checkout from './pages/Checkout';
 import FavoritesPage from "./pages/FavoritesPage";
+import CheckoutConfirm from './pages/CheckoutConfirm';
 
 const router = createBrowserRouter(
   [
@@ -24,6 +26,8 @@ const router = createBrowserRouter(
         { path: "brands/:brandId", element: <BrandPage /> }, // Detalle de marca
         { path: "vehicles/:vehicleId", element: <VehicleDetail /> }, // Detalle de vehículo
         { path: "listVehicles", element: <ListVehicles /> },
+        { path: "checkout", element: <Checkout /> },
+        { path: "checkout/confirm", element: <CheckoutConfirm /> },
         { path: "favorites", element: <FavoritesPage /> },
       ],
     },

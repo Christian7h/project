@@ -1,9 +1,20 @@
+//src/services/wabpay.ts
 import axios from 'axios';
-import { WebpayResponse } from '../types';
 
+import {
+  Options,
+  IntegrationCommerceCodes,
+  IntegrationApiKeys,
+  Environment,
+  WebpayPlus
+} from "transbank-sdk"
+
+
+// URL de la API de Webpay desde las variables de entorno
 const WEBPAY_API = import.meta.env.VITE_WEBPAY_API_URL;
 const WEBPAY_API_KEY = import.meta.env.VITE_WEBPAY_API_KEY;
 
+// Crear una instancia de axios para interactuar con la API
 const api = axios.create({
   baseURL: WEBPAY_API,
   headers: {
@@ -12,24 +23,23 @@ const api = axios.create({
   },
 });
 
-export async function initTransaction(amount: number, orderId: string): Promise<WebpayResponse> {
-  try {
-    const response = await api.post('/transactions', {
-      buy_order: orderId,
-      session_id: orderId,
-      amount,
-      return_url: `${window.location.origin}/checkout/confirm`,
-    });
 
-    return {
-      token: response.data.token,
-      url: response.data.url,
-    };
+
+
+export const initTransaction = async (amount: number, buyOrder: string, returnUrl: string) => {
+  try {
+    const tx = new WebpayPlus.Transaction(
+      new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration)
+    );
+    const response = await tx.create(buyOrder, buyOrder, amount, returnUrl); // Aquí también se usa buyOrder para sessionId
+
+    // Retorna la respuesta con el token y la URL
+    return { token: response.token, url: response.url };
   } catch (error) {
-    console.error('Webpay transaction initialization failed:', error);
-    throw new Error('Failed to initialize payment');
+    console.error('Error initiating Webpay transaction', error);
+    throw new Error('Webpay transaction initiation failed');
   }
-}
+};
 
 export async function getTransactionStatus(token: string): Promise<any> {
   try {

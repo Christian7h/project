@@ -44,6 +44,17 @@ export interface CustomerInfo {
   };
 }
 
+export interface Transaction {
+  id: string;
+  orderId: string;
+  amount: number;
+  status: 'pending' | 'completed' | 'failed' | 'cancelled';
+  createdAt: string;
+  updatedAt: string;
+  customerInfo: CustomerInfo;
+  items: CartItem[];
+}
+
 export interface WebpayResponse {
   token: string;
   url: string;
