@@ -59,3 +59,19 @@ export interface WebpayResponse {
   token: string;
   url: string;
 }
+
+// src/types.ts
+export interface Address {
+  street: string;
+  city: string;
+  state: string;
+  zipCode: string;
+}
+
+export interface CustomerFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: Address;
+}

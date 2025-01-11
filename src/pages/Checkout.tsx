@@ -1,27 +1,23 @@
-//src/pages/Checkout.tsx
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+// src/pages/checkout.tsx
 import { useCart } from "../context/CartContext";
 import { vehicles } from "../data";
 import { Loader2 } from "lucide-react";
-import { initiatePayment } from "../services/payment.ts"; // Importa el servicio
-import { useState } from 'react';
+import { initiatePayment } from "../services/payment.ts";
+import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-const customerSchema = z.object({
-  firstName: z.string().min(2, "First name is required"),
-  lastName: z.string().min(2, "Last name is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Valid phone number is required"),
-  address: z.object({
-    street: z.string().min(5, "Street address is required"),
-    city: z.string().min(2, "City is required"),
-    state: z.string().min(2, "State is required"),
-    zipCode: z.string().min(5, "Valid ZIP code is required"),
-  }),
-});
-
-type CustomerFormData = z.infer<typeof customerSchema>;
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
+}
 
 export default function Checkout() {
   const { items, getSubtotal } = useCart();
@@ -29,10 +25,9 @@ export default function Checkout() {
 
   const {
     register,
+    handleSubmit,
     formState: { errors },
-  } = useForm<CustomerFormData>({
-    resolver: zodResolver(customerSchema),
-  });
+  } = useForm<FormData>();
 
   const cartItems = items.map((item) => ({
     ...item,
@@ -46,11 +41,11 @@ export default function Checkout() {
     }).format(price);
   };
 
-  const handlePayment = async () => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     const totalAmount = getSubtotal();
     try {
       setIsLoading(true);
-      const { url, token } = await initiatePayment(totalAmount);
+      const { url, token } = await initiatePayment(totalAmount,data);
       if (url && token) {
         window.location.href = `${url}?token_ws=${token}`;
       }
@@ -73,14 +68,14 @@ export default function Checkout() {
                 Customer Information
               </h2>
 
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-1 text-gray-800 dark:text-white">
                       First Name
                     </label>
                     <input
-                      {...register("firstName")}
+                      {...register("firstName", { required: "First name is required" })}
                       className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                     />
                     {errors.firstName && (
@@ -94,7 +89,7 @@ export default function Checkout() {
                       Last Name
                     </label>
                     <input
-                      {...register("lastName")}
+                      {...register("lastName", { required: "Last name is required" })}
                       className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                     />
                     {errors.lastName && (
@@ -110,7 +105,13 @@ export default function Checkout() {
                     Email
                   </label>
                   <input
-                    {...register("email")}
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "Invalid email address",
+                      },
+                    })}
                     type="email"
                     className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                   />
@@ -126,7 +127,13 @@ export default function Checkout() {
                     Phone
                   </label>
                   <input
-                    {...register("phone")}
+                    {...register("phone", {
+                      required: "Phone is required",
+                      pattern: {
+                        value: /^[0-9]{9,}$/,
+                        message: "Invalid phone number",
+                      },
+                    })}
                     type="tel"
                     className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                   />
@@ -147,7 +154,7 @@ export default function Checkout() {
                       Street Address
                     </label>
                     <input
-                      {...register("address.street")}
+                      {...register("address.street", { required: "Street address is required" })}
                       className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                     />
                     {errors.address?.street && (
@@ -163,7 +170,7 @@ export default function Checkout() {
                         City
                       </label>
                       <input
-                        {...register("address.city")}
+                        {...register("address.city", { required: "City is required" })}
                         className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                       />
                       {errors.address?.city && (
@@ -177,7 +184,7 @@ export default function Checkout() {
                         State
                       </label>
                       <input
-                        {...register("address.state")}
+                        {...register("address.state", { required: "State is required" })}
                         className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                       />
                       {errors.address?.state && (
@@ -193,7 +200,7 @@ export default function Checkout() {
                       ZIP Code
                     </label>
                     <input
-                      {...register("address.zipCode")}
+                      {...register("address.zipCode", { required: "ZIP code is required" })}
                       className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                     />
                     {errors.address?.zipCode && (
@@ -203,9 +210,8 @@ export default function Checkout() {
                     )}
                   </div>
                 </div>
-
                 <button
-                  onClick={handlePayment}
+                  type="submit"
                   disabled={isLoading}
                   className="w-full bg-bmw-blue text-white py-3 rounded-lg hover:bg-bmw-blue/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
