@@ -1,5 +1,5 @@
 //src/pages/checkoutconfirm.tsx
-import React, { useEffect, useState,useRef  } from "react";
+import  { useEffect, useState,useRef  } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.jsx";
@@ -45,8 +45,9 @@ export default function CheckoutConfirm() {
         });
         setPaymentResult(response.data); // Asume que el backend devuelve { status, orderId, amount, customerInfo }
         console.log('Payment confirmation response:', response.data);
-      } catch (err) {
-        setError('Failed to confirm the payment. Please try again.');
+      } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+        setError(`Failed to confirm the payment: ${errorMessage}`);
       } finally {
         setIsLoading(false);
       }

@@ -9,7 +9,6 @@ import { LanguageProvider } from "./context/LanguageContext.tsx";
 import { FavoritesProvider } from "./context/FavoritesContext";  // Importar el proveedor del contexto
 import ScrollProgress from "./components/ScrollProgress";
 import { CartProvider } from './context/CartContext';
-import { CheckoutProvider } from './context/CheckoutContext';
 
 
 function App() {
@@ -38,7 +37,6 @@ function App() {
     <div>
       <FavoritesProvider>
       <CartProvider>
-      <CheckoutProvider>
         <LanguageProvider>
           <AnimatePresence mode="wait">
             {isLoading ? (
@@ -59,7 +57,6 @@ function App() {
             )}
           </AnimatePresence>
         </LanguageProvider>
-        </CheckoutProvider>
         </CartProvider>
       </FavoritesProvider>
     </div>

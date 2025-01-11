@@ -34,7 +34,8 @@ const router = createBrowserRouter(
   ],
   {
     future: {
-      v7_relativeSplatPath: true, // Corrige la resolución de rutas relativas en rutas tipo splat
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
     },
   }
 );
