@@ -1,9 +1,10 @@
 //src/pages/ListVehicles.tsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef   } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import { brands as brandsData, vehicles as vehiclesData } from "../data";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../context/useFavorites";  // Importar el hook
+import Fuse from "fuse.js"; // Importar Fuse.js para búsqueda avanzada
 
 interface Vehicle {
   id: number;
@@ -26,6 +27,7 @@ export default function ListVehicles() {
   const [filteredVehicles, setFilteredVehicles] =
     useState<Vehicle[]>(vehiclesData);
   const [search, setSearch] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [filterBrand, setFilterBrand] = useState("All");
   const [filterType, setFilterType] = useState("All");
   const [filterYear, setFilterYear] = useState("All");
@@ -34,6 +36,13 @@ export default function ListVehicles() {
   const [currentPage, setCurrentPage] = useState(1);
   const vehiclesPerPage = 6; // Número de vehículos por página
   const { favorites, toggleFavorite } = useFavorites();  // Usar el hook
+
+  const searchRef = useRef<HTMLDivElement>(null); // Referencia para detectar clics fuera
+
+  const fuse = new Fuse(vehiclesData, {
+    keys: ["name", "type", "year", "brandId"],
+    threshold: 0.3, // Ajusta la tolerancia de coincidencia
+  });
 
   useEffect(() => {
     let filtered = vehiclesData;
@@ -54,15 +63,45 @@ export default function ListVehicles() {
       );
     }
     // Filtrar por búsqueda
-    if (search) {
-      filtered = filtered.filter((vehicle) =>
-        vehicle.name.toLowerCase().includes(search.toLowerCase())
-      );
-    }
+// Búsqueda avanzada
+      // Búsqueda avanzada
+      if (search) {
+        const results = fuse.search(search);
+        filtered = results.map((result) => result.item);
+      }
   
-    setFilteredVehicles(filtered); // Aquí ya no se mezcla aleatoriamente
-  }, [search, filterBrand, filterType, filterYear]);
+      setFilteredVehicles(filtered);
+    }, [search, filterBrand, filterType, filterYear]);
   
+    // Generar sugerencias en tiempo real
+    useEffect(() => {
+      if (search) {
+        const results = fuse.search(search, { limit: 5 });
+        const suggestionList = results.map((result) => result.item.name);
+        setSuggestions(suggestionList);
+      } else {
+        setSuggestions([]);
+      }
+    }, [search]);
+  
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+          setSuggestions([]); // Cierra las sugerencias al hacer clic fuera
+        }
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, []);
+    
+    const handleSearchKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") {
+        setSuggestions([]); // Cierra las sugerencias al presionar Enter
+      }
+    };
   // Generar listas únicas de marcas y tipos
   const brandOptions = brandsData.map((brand) => ({
     value: brand.id,
@@ -111,16 +150,37 @@ export default function ListVehicles() {
       <div className="max-w-5xl mx-auto mb-8">
         <div className="flex flex-col md:flex-row gap-4 mx-8">
           {/* Input de Búsqueda */}
-          <input
-            type="text"
-            placeholder={
-              language === "es" ? "Buscar vehículos..." : "Search vehicles..."
-            }
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 p-3 border rounded-md dark:bg-gray-900 dark:text-white"
-          />
+           {/* Input de búsqueda */}
+          <div className="relative flex-1" ref={searchRef}>
+            <input
+              type="text"
+              placeholder={
+                language === "es" ? "Buscar vehículos..." : "Search vehicles..."
+              }
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={handleSearchKeyDown}
+              className="w-full p-3 border rounded-md dark:bg-gray-900 dark:text-white"
+            />
+            {suggestions.length > 0 && (
+              <ul className="absolute top-full left-0 w-full bg-white dark:bg-gray-800 dark:text-white border rounded-md shadow-md z-10 mt-1">
+                {suggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => {
+                      setSearch(suggestion);
+                      setSuggestions([]); // Cierra las sugerencias al seleccionar
+                    }}
+                    className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
+      
           {/* Filtro por Marca */}
           <select
             value={filterBrand}

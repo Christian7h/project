@@ -21,3 +21,4 @@ export const initiatePayment = async (amount: number, customerInfo: CustomerInfo
   });
   return response.data; // Contendrá la URL y token de redirección
 };
+
