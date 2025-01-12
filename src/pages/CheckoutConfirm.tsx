@@ -5,6 +5,7 @@ import { Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useCart } from "../context/CartContext";
 import axios from "axios";
+const WEBPAY_API_URL = import.meta.env.VITE_WEBPAY_API_URL;
 
 export default function CheckoutConfirm() {
   const [searchParams] = useSearchParams();
@@ -44,7 +45,7 @@ export default function CheckoutConfirm() {
     const confirmPayment = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.post("https://backend-luxurymotors-react-nodejs-webpay.onrender.com/api/confirm-transaction", {
+        const response = await axios.post(WEBPAY_API_URL, {
           token,
         });
         setPaymentResult(response.data);

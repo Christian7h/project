@@ -1,5 +1,6 @@
 // src/services/payment.ts
 import axios from "axios";
+const WEBPAY_API_URL_CREATE = import.meta.env.VITE_WEBPAY_API_URL_CREATE;
 
 interface CustomerInfo {
   firstName: string;
@@ -15,7 +16,7 @@ interface CustomerInfo {
 }
 
 export const initiatePayment = async (amount: number, customerInfo: CustomerInfo) => {
-  const response = await axios.post("https://backend-luxurymotors-react-nodejs-webpay.onrender.com/api/create-transaction", {
+  const response = await axios.post(WEBPAY_API_URL_CREATE, {
     amount,
     customerInfo, // Envía los datos del formulario
   });
