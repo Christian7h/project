@@ -13,6 +13,7 @@ import ListVehicles from "./pages/ListVehicles";
 import Checkout from './pages/Checkout';
 import FavoritesPage from "./pages/FavoritesPage";
 import CheckoutConfirm from './pages/CheckoutConfirm';
+import Disclaimer from "./pages/Disclaimer";
 
 const router = createBrowserRouter(
   [
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
         { path: "checkout", element: <Checkout /> },
         { path: "checkout/confirm", element: <CheckoutConfirm /> },
         { path: "favorites", element: <FavoritesPage /> },
+        { path: "disclaimer", element: <Disclaimer /> },
       ],
     },
   ],
