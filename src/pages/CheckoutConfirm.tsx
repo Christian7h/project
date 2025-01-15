@@ -1,3 +1,4 @@
+
 // src/pages/checkoutconfirm.tsx
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
@@ -5,6 +6,7 @@ import { Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useCart } from "../context/CartContext";
 import axios from "axios";
+import { sendEmail } from "../services/send-email";
 
 export default function CheckoutConfirm() {
   const [searchParams] = useSearchParams();
@@ -44,7 +46,7 @@ export default function CheckoutConfirm() {
     const confirmPayment = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.post("https://backend-luxurymotors-react-nodejs-webpay.onrender.com/api/confirm-transaction", {
+        const response = await axios.post("https://rpmlegends.netlify.app/api/confirm-transaction", {
           token,
         });
         setPaymentResult(response.data);
@@ -61,8 +63,23 @@ export default function CheckoutConfirm() {
 
   useEffect(() => {
     if (paymentResult?.status === "AUTHORIZED" && !hasClearedCart.current) {
+      const sendConfirmationEmail = async () => {
+        try {
+          await sendEmail({
+            to: paymentResult.customerInfo?.email,
+            subject: "Payment Confirmation",
+            firstName: paymentResult.customerInfo?.firstName,
+            orderId: paymentResult.orderId,
+            amount: paymentResult.amount,
+          });
+          console.log("Confirmation email sent successfully!");
+        } catch (error) {
+          console.error("Failed to send confirmation email:", error);
+        }
+      };
       clearCart();
       hasClearedCart.current = true;
+      sendConfirmationEmail();
     }
   }, [paymentResult, clearCart]);
 

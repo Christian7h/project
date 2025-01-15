@@ -63,7 +63,6 @@ export default function VehicleDetail() {
               <p className="text-gray-600 dark:text-gray-400 mb-8">
                 {vehicleDescription}
               </p>
-
               {/* Especificaciones */}
               <div className="grid grid-cols-3 gap-6">
                 <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg text-center hover:scale-105 transition duration-500">
