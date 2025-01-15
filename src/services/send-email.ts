@@ -45,7 +45,7 @@ export const sendEmail = async ({
     </div>
   `;
 
-  return await axios.post("https://rpmlegends.netlify.app/api/send-email", {
+  return await axios.post("https://backend-luxurymotors-react-nodejs-webpay.onrender.com/api/send-email", {
     to,
     subject,
     reactTemplate,
