@@ -45,7 +45,7 @@ export const sendEmail = async ({
     </div>
   `;
 
-  return await axios.post("https://backend-luxurymotors-react-nodejs-webpay.onrender.com/api/send-email", {
+  return await axios.post("https://backend-luxuymotorswebpay-12684bc9e3bd.herokuapp.com/api/send-email", {
     to,
     subject,
     reactTemplate,

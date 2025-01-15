@@ -15,7 +15,7 @@ interface CustomerInfo {
 }
 
 export const initiatePayment = async (amount: number, customerInfo: CustomerInfo) => {
-  const response = await axios.post("https://backend-luxurymotors-react-nodejs-webpay.onrender.com/api/create-transaction", {
+  const response = await axios.post("https://backend-luxuymotorswebpay-12684bc9e3bd.herokuapp.com/api/create-transaction", {
     amount,
     customerInfo, // Envía los datos del formulario
   });

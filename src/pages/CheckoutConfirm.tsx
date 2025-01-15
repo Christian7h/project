@@ -46,7 +46,7 @@ export default function CheckoutConfirm() {
     const confirmPayment = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.post("https://backend-luxurymotors-react-nodejs-webpay.onrender.com/api/confirm-transaction", {
+        const response = await axios.post("https://backend-luxuymotorswebpay-12684bc9e3bd.herokuapp.com/api/confirm-transaction", {
           token,
         });
         setPaymentResult(response.data);
