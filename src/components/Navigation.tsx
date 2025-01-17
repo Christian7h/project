@@ -96,9 +96,11 @@ export default function Navigation({ isDarkMode, toggleDarkMode }) {
                   className="flex items-center px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
                 >
                   {isDarkMode ? (
-                    <Moon className="w-5 h-5" />
-                  ) : (
                     <Sun className="w-5 h-5" />
+
+                  ) : (
+                    <Moon className="w-5 h-5" />
+
                   )}
                   {/* Eliminar el texto aquí */}
                 </button>
@@ -107,7 +109,7 @@ export default function Navigation({ isDarkMode, toggleDarkMode }) {
                   className="flex items-center px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
                 >
                   {/* <Globe className="w-5 h-5 " /> Ícono de globo para cambiar idioma */}
-                  {language === 'es' ? 'ES' : 'EN'}
+                  {language === 'es' ? 'EN' : 'ES'}
 
                 </button>
               </div>

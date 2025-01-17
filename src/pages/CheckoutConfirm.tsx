@@ -7,8 +7,12 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import { useCart } from "../context/CartContext";
 import axios from "axios";
 import { sendEmail } from "../services/send-email";
+import Confetti from "react-confetti";
+import {useWindowSize} from 'react-use';
 
 export default function CheckoutConfirm() {
+  const {width, height}=useWindowSize();
+  const [showConfetti, setShowConfetti] = useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { language } = useLanguage();
@@ -27,16 +31,16 @@ export default function CheckoutConfirm() {
       phone: string;
       address: {
         street: string;
-        city: string;
-        state: string;
-        zipCode: string;
-      };
-    };
-  } | null>(null);
+        city: string; 
+        state: string;  
+        zipCode: string;  
+      };  
+    };  
+  } | null>(null);  
 
-  const hasClearedCart = useRef(false);
+  const hasClearedCart = useRef(false)  ;
 
-  useEffect(() => {
+  useEffect(() => { 
     const token = searchParams.get("token_ws");
     if (!token) {
       setError("No payment token found.");
@@ -77,6 +81,7 @@ export default function CheckoutConfirm() {
           console.error("Failed to send confirmation email:", error);
         }
       };
+      setShowConfetti(true);
       clearCart();
       hasClearedCart.current = true;
       sendConfirmationEmail();
@@ -119,6 +124,16 @@ export default function CheckoutConfirm() {
   if (paymentResult?.status === "AUTHORIZED") {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-black flex items-center justify-center">
+               {showConfetti && (
+          <Confetti
+            width={width -20}
+            height={height}
+            numberOfPieces={200}
+            recycle={true}
+             // Asegúrate de que el confeti no se repita continuamente
+            gravity={0.1} // Control de la caída
+          />
+        )}
         <div className="text-center max-w-2xl w-full bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
           <CheckCircle2 className="w-12 h-12 text-green-500 mx-auto mb-4" />
           <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
