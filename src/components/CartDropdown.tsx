@@ -49,6 +49,7 @@ export default function CartDropdown() {
                       <img
                         src={vehicle.image}
                         alt={vehicle.name}
+                        loading="lazy"
                         className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded"
                       />
                       <div className="flex-1">

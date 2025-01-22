@@ -114,6 +114,7 @@ export default function FavoritesPage() {
               className="bg-zinc-100 dark:bg-zinc-900 rounded-lg overflow-hidden group transition-shadow  hover:shadow-lg"
             >
               <img
+                loading="lazy"
                 src={vehicle.image}
                 alt={vehicle.name}
                 className="w-full h-48 object-cover rounded-md mb-4"

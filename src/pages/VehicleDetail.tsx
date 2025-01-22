@@ -52,6 +52,7 @@ export default function VehicleDetail() {
               <img
                 src={vehicle.image}
                 alt={vehicleName}
+                loading="lazy"
                 className="w-full rounded-lg"
               />
             </div>
@@ -113,6 +114,7 @@ export default function VehicleDetail() {
               {vehicle.images.map((image, index) => (
                 <a href={image} key={index}>
                   <img
+                    loading="lazy"
                     src={image}
                     alt={`${vehicleName} ${index}`}
                     className="w-full rounded-lg hover:scale-105 transition duration-500"

@@ -30,6 +30,7 @@ export default function Brand() {
                     <img
                       src={brand.logo}
                       alt={brand.name}
+                      loading="lazy"
                       className="w-32 h-32 mx-auto mb-4 object-contain"
                     />
                     <h3 className="text-2xl font-bold mb-2">{brandName}</h3>

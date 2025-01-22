@@ -266,6 +266,7 @@ export default function ListVehicles() {
                   <img
                     src={vehicle.image}
                     alt={vehicleName}
+                    loading="lazy"
                     className="w-full h-48 object-cover rounded-md mb-4 group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
