@@ -6,6 +6,8 @@ import { vehicles } from "../data";
 import { initiatePayment } from "../services/payment.ts";
 import { FormData, CartItem } from "../types";
 
+import imgTransbank from "../assets/images/transbank.png";
+
 // Componentes reutilizables
 const FormField = ({ label, error, children }: { 
   label: string; 
@@ -65,7 +67,7 @@ const SecurePaymentInfo = () => (
       All transactions are encrypted and protected.
     </p>
     <img 
-      src="/images/transbank.png" 
+      src={imgTransbank} 
       alt="Transbank" 
       className="w-full h-full object-contain mt-4"
       loading="lazy"
