@@ -178,6 +178,7 @@ export default function CheckoutConfirm() {
               firstName: paymentResult.customerInfo.firstName,
               orderId: paymentResult.orderId,
               amount: paymentResult.amount,
+              cartItems:paymentResult.cartItems
             });
             localStorage.setItem(emailSentKey, 'true');
           } catch (error) {

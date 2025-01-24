@@ -1,4 +1,5 @@
 import axios from "axios";
+import { CartItem } from "../types";
 
 export const sendEmail = async ({
   to,
@@ -6,12 +7,14 @@ export const sendEmail = async ({
   firstName,
   orderId,
   amount,
+  cartItems
 }: {
   to: string;
   subject: string;
   firstName: string;
   orderId: string;
   amount: number;
+  cartItems:CartItem[]
 }) => {
   const reactTemplate = `
     <div style="font-family: 'Arial', sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 8px;">
@@ -39,7 +42,10 @@ export const sendEmail = async ({
           Tu orden está siendo procesada y te notificaremos cuando sea despachada. Si tienes alguna pregunta o necesitas ayuda, no dudes en 
           <a href="mailto:contacto@luxurymotors.cl" style="color: #1e88e5; text-decoration: none; font-weight: 500;">contactarnos</a>.
         </p>
-
+            <p>
+              <strong>Productos:</strong>
+              ${cartItems.map(item => `<li>${item.vehicle.name} x ${item.quantity}</li>`).join('')}
+            </p>
         <div style="text-align: center; margin: 35px 0;">
           <a href="https://www.luxurymotors.cl" 
              style="background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%); 

@@ -17,6 +17,7 @@ interface CartItem {
   vehicleId: string;
   quantity: number;
   vehicle: {
+    id: string;
     name: string;
     price: string;
     image: string;

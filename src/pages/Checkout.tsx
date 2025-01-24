@@ -5,7 +5,6 @@ import { useCart } from "../context/CartContext";
 import { vehicles } from "../data";
 import { initiatePayment } from "../services/payment.ts";
 import { FormData, CartItem } from "../types";
-
 import imgTransbank from "../assets/images/transbank.png";
 
 // Componentes reutilizables
