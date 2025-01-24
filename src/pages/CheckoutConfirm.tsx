@@ -75,10 +75,10 @@ const VoucherPDF = ({ paymentResult, language }: {
         </Text>
         
         <View style={styles.grid}>
-          <Text>{language === 'es' ? 'Orden ID:' : 'Order ID:'}</Text>
+          <Text>{language === 'es' ? 'Orden ID: ' : 'Order ID: '}</Text>
           <Text>{paymentResult.orderId}</Text>
           
-          <Text>{language === 'es' ? 'Fecha:' : 'Date:'}</Text>
+          <Text>{language === 'es' ? 'Fecha: ' : 'Date: '}</Text>
           <Text>{new Date().toLocaleDateString()}</Text>
           
           <Text>{language === 'es' ? 'Monto Total:' : 'Total Amount:'}</Text>
