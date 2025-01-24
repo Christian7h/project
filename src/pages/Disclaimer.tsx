@@ -27,7 +27,7 @@ export default function Disclaimer() {
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
               Si usted es representante de una marca, empresa o titular de derechos de autor y tiene inquietudes sobre el uso de su propiedad intelectual, marcas registradas o imágenes en este sitio web, por favor contáctenos a 
-              <a href="mailto:contact@yourwebsite.com" className="text-bmw-blue hover:underline"> contact@yourwebsite.com</a>. Revisaremos y abordaremos su solicitud de inmediato.
+              <a href="mailto:cristianvillalobos666@gmail.com" className="text-bmw-blue hover:underline"> cristianvillalobos666@gmail.com</a>. Revisaremos y abordaremos su solicitud de inmediato.
             </p>
             <p className="text-lg text-gray-700 dark:text-gray-300">
               Gracias por su comprensión y cooperación.
