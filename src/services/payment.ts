@@ -13,12 +13,42 @@ interface CustomerInfo {
     zipCode: string;
   };
 }
+interface CartItem {
+  vehicleId: string;
+  quantity: number;
+  vehicle: {
+    name: string;
+    price: string;
+    image: string;
+  };
+}
+export const initiatePayment = async (amount: number, customerInfo: CustomerInfo, cartItems: CartItem[]) => {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-export const initiatePayment = async (amount: number, customerInfo: CustomerInfo) => {
-  const response = await axios.post("https://backend-luxuymotorswebpay-12684bc9e3bd.herokuapp.com/api/create-transaction", {
-    amount,
-    customerInfo, // Envía los datos del formulario
-  });
-  return response.data; // Contendrá la URL y token de redirección
+    const response = await axios.post(
+      "https://backend-luxuymotorswebpay-12684bc9e3bd.herokuapp.com/api/create-transaction",
+      {
+        amount,
+        customerInfo,
+        cartItems
+      },
+      {
+        signal: controller.signal,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        timeout: 10000
+      }
+    );
+
+    clearTimeout(timeoutId);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(`Payment initiation failed: ${error.message}`);
+    }
+    throw error;
+  }
 };
-

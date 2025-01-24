@@ -28,6 +28,12 @@ export interface Vehicle {
 export interface CartItem {
   vehicleId: string;
   quantity: number;
+  vehicle: {
+    id: string;
+    name: string;
+    price: string;
+    image: string;
+  };
 }
 
 export interface CustomerInfo {
@@ -73,4 +79,17 @@ export interface CustomerFormData {
   email: string;
   phone: string;
   address: Address;
+}
+
+export interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
 }
