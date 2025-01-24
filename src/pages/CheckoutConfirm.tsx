@@ -242,7 +242,7 @@ export default function CheckoutConfirm() {
     }
 
     const confirmPayment = async () => {
-      const API_URL = import.meta.env.BACKEND_URL_API || "http://localhost:3000";
+      const API_URL = import.meta.env.BACKEND_URL_API || "https://backend-luxuymotorswebpay-12684bc9e3bd.herokuapp.com";
       try {
         setIsLoading(true);
         const { data } = await axios.post(`${API_URL}/api/confirm-transaction`, { token });
