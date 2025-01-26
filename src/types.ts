@@ -2,9 +2,19 @@ export interface Brand {
   id: string;
   name: string;
   logo: string;
+  history?: string;          // Campo nuevo: Historia técnica
+  trajectory?: string;       // Campo nuevo: Logros históricos
+  foundation?: number;       // Campo nuevo: Año numérico
   description: string;  // Descripción de la marca (también podría ser dinámica por idioma)
-  translations?: { [key: string]: { name: string; description: string } }; // Traducciones opcionales
-}
+  translations?: {
+    [key: string]: {
+      name: string;
+      description: string;
+      history?: string;     // Traducción de historia
+      trajectory?: string;  // Traducción de trayectoria
+      foundation?: string;  // Formato localizado (ej: "1994" vs "1.994")
+    }
+  };}
 
 export interface Vehicle {
   id: string;
@@ -22,7 +32,7 @@ export interface Vehicle {
     topSpeed: string;
   };
   stock: number;
-  translations?: { [key: string]: { name: string; description: string,type?:string } };  // Traducciones opcionales
+  translations?: { [key: string]: { name: string; description: string, type?: string } };  // Traducciones opcionales
 }
 
 export interface CartItem {
