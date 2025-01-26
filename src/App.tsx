@@ -38,6 +38,12 @@ function App() {
     ReactGA.set({page:location.pathname+location.search})
   },[location])
 
+  
+
+  useEffect(() => {
+    ReactGA.set({consentMode:true})
+  },[])
+
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 2000);
   }, []);
