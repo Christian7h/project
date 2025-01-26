@@ -4,6 +4,7 @@ import { vehicles } from "../data";
 import { ShoppingCart, X } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { Link } from "react-router-dom";
+import { trackEvent } from "../ga4"; // Asegúrate de que el path sea correcto
 
 // Memoizar formato de precio fuera del componente
 const formatPrice = (price: number) => {
@@ -128,7 +129,10 @@ export default function CartDropdown() {
                   <Link 
                     to="/checkout" 
                     className="block"
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                      setIsOpen(false); // Cierra el carrito
+                      trackEvent("proceed_to_checkout", "Cart Interaction", "User proceeded to checkout"); // Rastrear evento
+                    }}
                   >
                     <button
                       className="w-full bg-bmw-blue text-white py-2 rounded-lg hover:bg-bmw-blue/90 transition-colors"
