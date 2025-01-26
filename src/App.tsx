@@ -58,6 +58,19 @@ function App() {
     }
   }, [isDarkMode]);
 
+  useEffect(() => {
+    // Enviar evento de presencia cada 30 segundos
+    const interval = setInterval(() => {
+      ReactGA.event({
+        category: 'User',
+        action: 'Active',
+        label: 'User is active'
+      });
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
   return (
