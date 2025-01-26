@@ -1,16 +1,18 @@
-//src/pages/ListVehicles.tsx
-import { useState, useEffect, useRef   } from "react";
-import { useLanguage } from "../context/LanguageContext";
-import { brands as brandsData, vehicles as vehiclesData } from "../data";
+import { useState, useEffect, useRef, useMemo, useCallback, memo } from "react";
 import { Link } from "react-router-dom";
-import { useFavorites } from "../context/useFavorites";  // Importar el hook
-import Fuse from "fuse.js"; // Importar Fuse.js para búsqueda avanzada
+import { useLanguage } from "../context/LanguageContext";
+import { useFavorites } from "../context/useFavorites";
+import Fuse from "fuse.js";
+import { ArrowLeft,ArrowRight } from "lucide-react";
+import { brands as brandsData, vehicles as vehiclesData } from "../data";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 
 interface Vehicle {
   id: number;
   name: string;
-  brandId: string; // Relación con las marcas
-  type: string; // e.g., "SUV", "Sedan"
+  brandId: string;
+  type: string;
   year: number;
   image: string;
   translations?: {
@@ -22,123 +24,174 @@ interface Vehicle {
   };
 }
 
-export default function ListVehicles() {
+interface BrandOption {
+  value: string;
+  label: string;
+}
+
+const VEHICLES_PER_PAGE = 6;
+
+const VehicleCard = memo(({ 
+  vehicle,
+  language,
+  isFavorite,
+  onToggleFavorite
+}: {
+  vehicle: Vehicle;
+  language: string;
+  isFavorite: boolean;
+  onToggleFavorite: (id: number) => void;
+}) => {
+  const vehicleName = vehicle.translations?.[language]?.name || vehicle.name;
+  const vehicleType = vehicle.translations?.[language]?.type || vehicle.type;
+  
+  const brandName = useMemo(() => 
+    brandsData.find(b => b.id === vehicle.brandId)?.translations?.[language]?.name ||
+    brandsData.find(b => b.id === vehicle.brandId)?.name,
+    [vehicle.brandId, language]
+  );
+
+  return (
+    <div className="bg-white dark:bg-zinc-900 p-4 rounded-lg shadow-md hover:shadow-lg transition-transform duration-300">
+      <Link
+        to={`/vehicles/${vehicle.id}`}  
+        aria-label={`${vehicleName} details`}
+        className="bg-zinc-100 dark:bg-zinc-900 rounded-lg overflow-hidden group transition-shadow  hover:shadow-lg"
+      >
+        <LazyLoadImage
+          src={vehicle.image}
+          alt={vehicleName}
+          effect="opacity"
+          width="100%"
+          className="h-48 object-cover rounded-md mb-4 group-hover:scale-105 transition-transform duration-500"
+          placeholderSrc="/placeholder-car.jpg"
+        />
+        <h3 className="text-xl font-bold text-black dark:text-white mb-2">
+          {vehicleName}
+        </h3>
+        <div className="space-y-1">
+          <p className="text-gray-700 dark:text-gray-400">
+            {language === "es" ? "Marca" : "Brand"}: {brandName}
+          </p>
+          <p className="text-gray-700 dark:text-gray-400">
+            {language === "es" ? "Tipo" : "Type"}: {vehicleType}
+          </p>
+          <p className="text-gray-700 dark:text-gray-400">
+            {language === "es" ? "Año" : "Year"}: {vehicle.year}
+          </p>
+        </div>
+      </Link>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          onToggleFavorite(vehicle.id);
+        }}
+        className={`mt-2 text-xl ${
+          isFavorite 
+            ? "text-red-500 animate-heartbeat" 
+            : "text-gray-400 hover:text-red-400"
+        } transition-colors duration-200`}
+        aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+      >
+        ♥
+      </button>
+    </div>
+  );
+});
+
+const ListVehicles = () => {
   const { language } = useLanguage();
-  const [filteredVehicles, setFilteredVehicles] =
-    useState<Vehicle[]>(vehiclesData);
-  const [search, setSearch] = useState("");
+  const { favorites, toggleFavorite } = useFavorites();
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [search, setSearch] = useState("");
   const [filterBrand, setFilterBrand] = useState("All");
   const [filterType, setFilterType] = useState("All");
   const [filterYear, setFilterYear] = useState("All");
-  const [favoriteMessage, setFavoriteMessage] = useState<string | null>(null);  // Estado para el mensaje de favorito
-
   const [currentPage, setCurrentPage] = useState(1);
-  const vehiclesPerPage = 6; // Número de vehículos por página
-  const { favorites, toggleFavorite } = useFavorites();  // Usar el hook
+  const [favoriteMessage, setFavoriteMessage] = useState<string | null>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
 
-  const searchRef = useRef<HTMLDivElement>(null); // Referencia para detectar clics fuera
+  // Configuración de Fuse.js memoizada
+  const fuse = useMemo(() => new Fuse(vehiclesData, {
+    keys: [
+      { name: 'name', weight: 0.5 },
+      { name: 'brandId', weight: 0.3 },
+      { name: 'type', weight: 0.2 }
+    ],
+    threshold: 0.3,
+    minMatchCharLength: 2,
+    includeMatches: true
+  }), []);
 
-  const fuse = new Fuse(vehiclesData, {
-    keys: ["name", "type", "year", "brandId"],
-    threshold: 0.3, // Ajusta la tolerancia de coincidencia
-  });
+  // Opciones de filtro memoizadas
+  const { brandOptions, typeOptions, yearOptions } = useMemo(() => ({
+    brandOptions: brandsData.map(brand => ({
+      value: brand.id,
+      label: brand.translations?.[language]?.name || brand.name
+    })),
+    typeOptions: Array.from(new Set(vehiclesData.map(v => v.type))),
+    yearOptions: Array.from(new Set(vehiclesData.map(v => v.year)))
+  }), [language]);
 
-  useEffect(() => {
-    let filtered = vehiclesData;
-  
-    // Filtrar por marca
-    if (filterBrand !== "All") {
-      filtered = filtered.filter((vehicle) => vehicle.brandId === filterBrand);
-    }
-  
-    // Filtrar por tipo
-    if (filterType !== "All") {
-      filtered = filtered.filter((vehicle) => vehicle.type === filterType);
-    }
-    // Filtrar por year
-    if (filterYear !== "All") {
-      filtered = filtered.filter(
-        (vehicle) => vehicle.year === parseInt(filterYear)
-      );
-    }
-    // Filtrar por búsqueda
-// Búsqueda avanzada
-      // Búsqueda avanzada
-      if (search) {
-        const results = fuse.search(search);
-        filtered = results.map((result) => result.item);
-      }
-  
-      setFilteredVehicles(filtered);
-    }, [search, filterBrand, filterType, filterYear]);
-  
-    // Generar sugerencias en tiempo real
-    useEffect(() => {
-      if (search) {
-        const results = fuse.search(search, { limit: 5 });
-        const suggestionList = results.map((result) => result.item.name);
-        setSuggestions(suggestionList);
-      } else {
-        setSuggestions([]);
-      }
-    }, [search]);
-  
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-          setSuggestions([]); // Cierra las sugerencias al hacer clic fuera
-        }
-      };
-
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, []);
+  // Filtrar vehículos
+  const filteredVehicles = useMemo(() => {
+    let result = vehiclesData;
     
-    const handleSearchKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === "Enter") {
-        setSuggestions([]); // Cierra las sugerencias al presionar Enter
-      }
-    };
-  // Generar listas únicas de marcas y tipos
-  const brandOptions = brandsData.map((brand) => ({
-    value: brand.id,
-    label: brand.translations?.[language]?.name || brand.name,
-  }));
-  const typeOptions = Array.from(new Set(vehiclesData.map((v) => v.type)));
-  const yearOptions = Array.from(new Set(vehiclesData.map((v) => v.year)));
+    if (filterBrand !== "All") result = result.filter(v => v.brandId === filterBrand);
+    if (filterType !== "All") result = result.filter(v => v.type === filterType);
+    if (filterYear !== "All") result = result.filter(v => v.year === parseInt(filterYear));
+    if (search) result = fuse.search(search).map(r => r.item);
 
-  // Determinar los vehículos a mostrar en la página actual
-  const indexOfLastVehicle = currentPage * vehiclesPerPage;
-  const indexOfFirstVehicle = indexOfLastVehicle - vehiclesPerPage;
-  const currentVehicles = filteredVehicles.slice(
-    indexOfFirstVehicle,
-    indexOfLastVehicle
+    return result;
+  }, [search, filterBrand, filterType, filterYear, fuse]);
+
+  // Paginación
+  const paginatedVehicles = useMemo(() => {
+    const start = (currentPage - 1) * VEHICLES_PER_PAGE;
+    return filteredVehicles.slice(start, start + VEHICLES_PER_PAGE);
+  }, [filteredVehicles, currentPage]);
+
+  const totalPages = useMemo(() => 
+    Math.ceil(filteredVehicles.length / VEHICLES_PER_PAGE),
+    [filteredVehicles]
   );
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-  const totalPages = Math.ceil(filteredVehicles.length / vehiclesPerPage);
-
-  const handleToggleFavorite = (vehicleId: number) => {
+  // Manejar favoritos
+  const handleToggleFavorite = useCallback((vehicleId: number) => {
+    const isAdded = !favorites.includes(vehicleId);
     toggleFavorite(vehicleId);
     
-    // Verificar si el vehículo está siendo agregado o eliminado de favoritos
-    const isAdded = favorites.includes(vehicleId);
     setFavoriteMessage(
       isAdded
         ? language === "es"
-          ? "Eliminado de Favoritos!"
-          : "Removed from Favorites!"
+          ? "Añadido a Favoritos!"
+          : "Added to Favorites!"
         : language === "es"
-        ? "Añadido a Favoritos!"
-        : "Added to Favorites!"
+        ? "Eliminado de Favoritos!"
+        : "Removed from Favorites!"
     );
+    
+    setTimeout(() => setFavoriteMessage(null), 3000);
+  }, [favorites, language, toggleFavorite]);
 
-    setTimeout(() => setFavoriteMessage(null),4000);
-  };
+  // Manejar clic fuera del área de búsqueda
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        setSuggestions([]);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Manejar teclado en búsqueda
+  const handleSearchKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setSuggestions([]);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-black pt-24 py-4">
@@ -147,31 +200,29 @@ export default function ListVehicles() {
       </h1>
 
       {/* Filtros y Búsqueda */}
-      <div className="max-w-5xl mx-auto mb-8">
-        <div className="flex flex-col md:flex-row gap-4 mx-8">
-          {/* Input de Búsqueda */}
-           {/* Input de búsqueda */}
-          <div className="relative flex-1" ref={searchRef}>
+      <div className="max-w-5xl mx-auto mb-8 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {/* Búsqueda */}
+          <div className="relative md:col-span-2" ref={searchRef}>
             <input
               type="text"
-              placeholder={
-                language === "es" ? "Buscar vehículos..." : "Search vehicles..."
-              }
+              placeholder={language === "es" ? "Buscar vehículos..." : "Search vehicles..."}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={handleSearchKeyDown}
-              className="w-full p-3 border rounded-md dark:bg-gray-900 dark:text-white"
+              className="w-full p-3 border rounded-md dark:bg-gray-900 dark:text-white focus:ring-2 focus:ring-bmw-blue"
+              aria-label={language === "es" ? "Buscar vehículos" : "Search vehicles"}
             />
             {suggestions.length > 0 && (
-              <ul className="absolute top-full left-0 w-full bg-white dark:bg-gray-800 dark:text-white border rounded-md shadow-md z-10 mt-1">
+              <ul className="absolute top-full left-0 w-full bg-white dark:bg-gray-800 border rounded-md shadow-lg mt-1 z-50">
                 {suggestions.map((suggestion, index) => (
                   <li
                     key={index}
                     onClick={() => {
                       setSearch(suggestion);
-                      setSuggestions([]); // Cierra las sugerencias al seleccionar
+                      setSuggestions([]);
                     }}
-                    className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors"
                   >
                     {suggestion}
                   </li>
@@ -180,16 +231,14 @@ export default function ListVehicles() {
             )}
           </div>
 
-      
-          {/* Filtro por Marca */}
+          {/* Selectores de Filtro */}
           <select
             value={filterBrand}
             onChange={(e) => setFilterBrand(e.target.value)}
-            className="p-3 border rounded-md dark:bg-gray-900 dark:text-white"
+            className="p-3 border rounded-md dark:bg-gray-900 dark:text-white focus:ring-2 focus:ring-bmw-blue"
+            aria-label={language === "es" ? "Filtrar por marca" : "Filter by brand"}
           >
-            <option value="All">
-              {language === "es" ? "Marcas" : "All Brands"}
-            </option>
+            <option value="All">{language === "es" ? "Todas las marcas" : "All Brands"}</option>
             {brandOptions.map((brand) => (
               <option key={brand.value} value={brand.value}>
                 {brand.label}
@@ -197,133 +246,114 @@ export default function ListVehicles() {
             ))}
           </select>
 
-          {/* Filtro por Tipo */}
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
-            className="p-3 border rounded-md dark:bg-gray-900 dark:text-white"
+            className="p-3 border rounded-md dark:bg-gray-900 dark:text-white focus:ring-2 focus:ring-bmw-blue"
+            aria-label={language === "es" ? "Filtrar por tipo" : "Filter by type"}
           >
-            <option value="All">
-              {language === "es" ? "Tipos" : "All Types"}
-            </option>
+            <option value="All">{language === "es" ? "Todos los tipos" : "All Types"}</option>
             {typeOptions.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
             ))}
           </select>
-          {/* Filtro por Year */}
 
           <select
             value={filterYear}
             onChange={(e) => setFilterYear(e.target.value)}
-            className="p-3 border rounded-md dark:bg-gray-900 dark:text-white"
+            className="p-3 border rounded-md dark:bg-gray-900 dark:text-white focus:ring-2 focus:ring-bmw-blue"
+            aria-label={language === "es" ? "Filtrar por año" : "Filter by year"}
           >
-            <option value="All">
-              {language === "es" ? "Años" : "All years"}
-            </option>
+            <option value="All">{language === "es" ? "Todos los años" : "All Years"}</option>
             {yearOptions.map((year) => (
-              <option key={year} value={year}>
+              <option key={year} value={year.toString()}>
                 {year}
               </option>
             ))}
           </select>
         </div>
       </div>
- {/* Mensaje de añadido o eliminado de favoritos */}
+
+      {/* Notificación de Favoritos */}
       {favoriteMessage && (
-        <div
-          className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full shadow-lg ${
-            favoriteMessage.includes("Eliminado")
-              ? "bg-red-500"
-              : "bg-green-500"
-          }`}
-        >
+        <div className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full shadow-lg text-white ${
+          favoriteMessage.includes("Eliminado") ? "bg-red-500" : "bg-green-500"
+        } animate-fade-in-up`}>
           {favoriteMessage}
         </div>
       )}
+
       {/* Lista de Vehículos */}
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {currentVehicles.map((vehicle) => {
-          const vehicleName =
-            vehicle.translations?.[language]?.name || vehicle.name;
-          const vehicleType =
-            vehicle.translations?.[language]?.type || vehicle.type;
-            const isFavorite = favorites.includes(vehicle.id);
-            return (
-
-              <div
-                key={vehicle.id}
-                className="bg-white dark:bg-zinc-900 p-4 rounded-lg shadow-md hover:shadow-lg transition"
-              >
-                            <Link
-              key={vehicle.id}
-              to={`/vehicles/${vehicle.id}`}
-              className="bg-zinc-100 dark:bg-zinc-900 rounded-lg overflow-hidden group transition-shadow  hover:shadow-lg"
-            >
-                <div className="">
-                  <img
-                    src={vehicle.image}
-                    alt={vehicleName}
-                    loading="lazy"
-                    className="w-full h-48 object-cover rounded-md mb-4 group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <h3 className="text-xl font-bold text-black dark:text-white mb-2">
-                  {vehicleName}
-                </h3>
-                <p className="text-gray-700 dark:text-gray-400 mb-2">
-                  {language === "es" ? "Marca" : "Brand"}:{" "}
-                  {brandsData.find((b) => b.id === vehicle.brandId)
-                    ?.translations?.[language]?.name ||
-                    brandsData.find((b) => b.id === vehicle.brandId)?.name}
-                </p>
-                <p className="text-gray-700 dark:text-gray-400 mb-2">
-                  {language === "es" ? "Tipo" : "Type"}: {vehicleType}
-                </p>
-                <p className="text-gray-700 dark:text-gray-400">
-                  {language === "es" ? "Año" : "Year"}: {vehicle.year}
-                </p>
-            </Link>
-
-            <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleToggleFavorite(vehicle.id); // Cambiar el estado de favorito
-                }}
-                className={`rounded-full ${isFavorite ? "text-red-500" : "text-gray-400"}`}
-              >
-                ♥
-              </button>
-              </div>
-          );
-        })}
+        {paginatedVehicles.map(vehicle => (
+          <VehicleCard
+            key={vehicle.id}
+            vehicle={vehicle}
+            language={language}
+            isFavorite={favorites.includes(vehicle.id)}
+            onToggleFavorite={handleToggleFavorite}
+          />
+        ))}
       </div>
+
       {/* Paginación */}
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-8 space-x-2">
         <button
-          onClick={() => paginate(currentPage - 1)}
+          onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-bmw-blue text-white rounded-md mr-2 disabled:bg-gray-400"
+          className="px-4 py-2 rounded-md bg-bmw-blue text-white disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
         >
-          {language === "es" ? "Anterior" : "Previous"}
+          <ArrowLeft className="w-4 h-4"/>
         </button>
+        
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`px-3 py-1 rounded-md ${
+              currentPage === page
+                ? "bg-bmw-blue text-white"
+                : "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
+            } transition-colors`}
+          >
+            {page}
+          </button>
+        ))}
+        
         <button
-          onClick={() => paginate(currentPage + 1)}
+          onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-bmw-blue text-white rounded-md disabled:bg-gray-400"
+          className="px-4 py-2 rounded-md bg-bmw-blue text-white disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
         >
-          {language === "es" ? "Siguiente" : "Next"}
+         <ArrowRight className="h-4 w-4"/> 
         </button>
       </div>
+
+      {/* Mensaje sin resultados */}
       {filteredVehicles.length === 0 && (
-        <div className="text-center text-gray-700 dark:text-gray-400 mt-8">
-          {language === "es"
-            ? "No se encontraron vehículos con los filtros seleccionados."
-            : "No vehicles found with the selected filters."}
+        <div className="text-center text-gray-700 dark:text-gray-400 mt-8 px-4">
+          <p className="text-xl mb-4">
+            {language === "es" 
+              ? "No encontramos vehículos con esos filtros" 
+              : "No vehicles found with these filters"}
+          </p>
+          <button
+            onClick={() => {
+              setSearch("");
+              setFilterBrand("All");
+              setFilterType("All");
+              setFilterYear("All");
+            }}
+            className="bg-bmw-blue text-white px-6 py-2 rounded-md hover:bg-bmw-blue/90 transition-colors"
+          >
+            {language === "es" ? "Limpiar filtros" : "Clear filters"}
+          </button>
         </div>
       )}
     </div>
   );
-}
+};
+
+export default ListVehicles;
