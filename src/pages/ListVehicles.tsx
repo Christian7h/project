@@ -6,7 +6,6 @@ import Fuse from "fuse.js";
 import { ArrowLeft,ArrowRight } from "lucide-react";
 import { brands as brandsData, vehicles as vehiclesData } from "../data";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import 'react-lazy-load-image-component/src/effects/opacity.css';
 
 interface Vehicle {
   id: number;
@@ -114,14 +113,61 @@ const ListVehicles = () => {
   // Configuración de Fuse.js memoizada
   const fuse = useMemo(() => new Fuse(vehiclesData, {
     keys: [
-      { name: 'name', weight: 0.5 },
-      { name: 'brandId', weight: 0.3 },
-      { name: 'type', weight: 0.2 }
+      { 
+        name: 'name', 
+        weight: 0.4,
+        getFn: (vehicle) => vehicle.translations?.[language]?.name || vehicle.name || ''
+      },
+      { 
+        name: 'brandId', 
+        weight: 0.3,
+        getFn: (vehicle) => {
+          const brand = brandsData.find(b => b.id === vehicle.brandId);
+          return brand?.translations?.[language]?.name || brand?.name || '';
+        }
+      },
+      { 
+        name: 'type', 
+        weight: 0.2,
+        getFn: (vehicle) => vehicle.translations?.[language]?.type || vehicle.type || ''
+      },
+      {
+        name: 'year',
+        weight: 0.1
+      }
     ],
     threshold: 0.3,
     minMatchCharLength: 2,
-    includeMatches: true
-  }), []);
+    includeMatches: true,
+    useExtendedSearch: true
+  }), [language]);
+
+  useEffect(() => {
+    // Resetear a página 1 cuando cambien los filtros o la búsqueda
+    setCurrentPage(1);
+  }, [search, filterBrand, filterType, filterYear]);
+  
+  useEffect(() => {
+    if (search.length >= 2) {
+      const fuseResults = fuse.search(search);
+      const uniqueSuggestions = Array.from(
+        new Set(
+          fuseResults
+            .slice(0, 5) // Limitar a 5 sugerencias
+            .map(result => {
+              const item = result.item;
+              // Buscar coincidencias en las traducciones
+              const translationMatch = item.translations?.[language]?.name;
+              // Buscar en todos los campos posibles
+              return translationMatch || item.name;
+            })
+        )
+      );
+      setSuggestions(uniqueSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  }, [search, fuse, language]);
 
   // Opciones de filtro memoizadas
   const { brandOptions, typeOptions, yearOptions } = useMemo(() => ({
@@ -133,17 +179,23 @@ const ListVehicles = () => {
     yearOptions: Array.from(new Set(vehiclesData.map(v => v.year)))
   }), [language]);
 
-  // Filtrar vehículos
-  const filteredVehicles = useMemo(() => {
-    let result = vehiclesData;
-    
-    if (filterBrand !== "All") result = result.filter(v => v.brandId === filterBrand);
-    if (filterType !== "All") result = result.filter(v => v.type === filterType);
-    if (filterYear !== "All") result = result.filter(v => v.year === parseInt(filterYear));
-    if (search) result = fuse.search(search).map(r => r.item);
+// 4. Mejorar el sistema de filtrado
+const filteredVehicles = useMemo(() => {
+  let result = vehiclesData;
+  
+  // Aplicar filtros
+  if (filterBrand !== "All") result = result.filter(v => v.brandId === filterBrand);
+  if (filterType !== "All") result = result.filter(v => v.type === filterType);
+  if (filterYear !== "All") result = result.filter(v => v.year === parseInt(filterYear));
+  
+  // Aplicar búsqueda con Fuse.js
+  if (search) {
+    const fuseResults = fuse.search(search);
+    result = fuseResults.map(r => r.item);
+  }
 
-    return result;
-  }, [search, filterBrand, filterType, filterYear, fuse]);
+  return result;
+}, [search, filterBrand, filterType, filterYear, fuse]);
 
   // Paginación
   const paginatedVehicles = useMemo(() => {
@@ -152,7 +204,7 @@ const ListVehicles = () => {
   }, [filteredVehicles, currentPage]);
 
   const totalPages = useMemo(() => 
-    Math.ceil(filteredVehicles.length / VEHICLES_PER_PAGE),
+    Math.max(1, Math.ceil(filteredVehicles.length / VEHICLES_PER_PAGE)),
     [filteredVehicles]
   );
 
@@ -213,22 +265,22 @@ const ListVehicles = () => {
               className="w-full p-3 border rounded-md dark:bg-gray-900 dark:text-white focus:ring-2 focus:ring-bmw-blue"
               aria-label={language === "es" ? "Buscar vehículos" : "Search vehicles"}
             />
-            {suggestions.length > 0 && (
-              <ul className="absolute top-full left-0 w-full bg-white dark:bg-gray-800 border rounded-md shadow-lg mt-1 z-50">
-                {suggestions.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    onClick={() => {
-                      setSearch(suggestion);
-                      setSuggestions([]);
-                    }}
-                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors"
-                  >
-                    {suggestion}
-                  </li>
-                ))}
-              </ul>
-            )}
+{suggestions.length > 0 && (
+  <ul className="absolute top-full left-0 w-full bg-white dark:bg-gray-800 border rounded-md shadow-lg mt-1 z-50 max-h-60 overflow-y-auto">
+    {suggestions.map((suggestion, index) => (
+      <li
+        key={`${suggestion}-${index}`}
+        onClick={() => {
+          setSearch(suggestion);
+          setSuggestions([]);
+        }}
+        className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors text-black dark:text-white"
+      >
+        {suggestion}
+      </li>
+    ))}
+  </ul>
+)}
           </div>
 
           {/* Selectores de Filtro */}
@@ -300,36 +352,36 @@ const ListVehicles = () => {
 
       {/* Paginación */}
       <div className="flex justify-center mt-8 space-x-2">
-        <button
-          onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-          disabled={currentPage === 1}
-          className="px-4 py-2 rounded-md bg-bmw-blue text-white disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4"/>
-        </button>
-        
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-          <button
-            key={page}
-            onClick={() => setCurrentPage(page)}
-            className={`px-3 py-1 rounded-md ${
-              currentPage === page
-                ? "bg-bmw-blue text-white"
-                : "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
-            } transition-colors`}
-          >
-            {page}
-          </button>
-        ))}
-        
-        <button
-          onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-          disabled={currentPage === totalPages}
-          className="px-4 py-2 rounded-md bg-bmw-blue text-white disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-        >
-         <ArrowRight className="h-4 w-4"/> 
-        </button>
-      </div>
+  <button
+    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+    disabled={currentPage === 1}
+    className="px-4 py-2 rounded-md bg-bmw-blue text-white disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+  >
+    <ArrowLeft className="w-4 h-4"/>
+  </button>
+  
+  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+    <button
+      key={page}
+      onClick={() => setCurrentPage(page)}
+      className={`px-3 py-1 rounded-md min-w-[40px] ${
+        currentPage === page
+          ? "bg-bmw-blue text-white"
+          : "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
+      } transition-colors`}
+    >
+      {page}
+    </button>
+  ))}
+  
+  <button
+    onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+    disabled={currentPage === totalPages}
+    className="px-4 py-2 rounded-md bg-bmw-blue text-white disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+  >
+    <ArrowRight className="h-4 w-4"/> 
+  </button>
+</div>
 
       {/* Mensaje sin resultados */}
       {filteredVehicles.length === 0 && (
