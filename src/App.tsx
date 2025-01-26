@@ -9,14 +9,10 @@ import { LanguageProvider } from "./context/LanguageContext.tsx";
 import { FavoritesProvider } from "./context/FavoritesContext";  // Importar el proveedor del contexto
 import ScrollProgress from "./components/ScrollProgress";
 import { CartProvider } from './context/CartContext';
+import { initializeGA } from "./analtytics"; // Importa la inicialización de GA
 
 // Configuración inicial de Google Analytics
-window.dataLayer = window.dataLayer || [];
-function gtag(...args: any[]) {
-  window.dataLayer.push(args);
-}
-gtag('js', new Date());
-gtag('config', 'G-DWNH2G6WXW'); // Reemplaza con tu ID de GA4
+const GA_MEASUREMENT_ID = "G-DWNH2G6WXW"; // Tu ID de Google Analytics
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,24 +22,21 @@ function App() {
   const location = useLocation(); // Obtiene la ubicación actual
 
   useEffect(() => {
-    // Inicializa GA4
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-DWNH2G6WXW'; // Usa tu ID
-    document.head.appendChild(script);
+    // Inicializa Google Analytics
+    const gtag = initializeGA(GA_MEASUREMENT_ID);
 
     // Trackea la página inicial
-    gtag('config', 'G-DWNH2G6WXW', {
-      page_path: window.location.pathname,
+    gtag("config", GA_MEASUREMENT_ID, {
+      page_path: location.pathname,
     });
   }, []);
 
   useEffect(() => {
     // Trackea cambios de ruta
-    gtag('config', 'G-DWNH2G6WXW', {
+    window.gtag?.("config", GA_MEASUREMENT_ID, {
       page_path: location.pathname,
     });
-  }, [location]); // Se ejecuta cuando cambia la ruta
+  }, [location]);
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 2000);
