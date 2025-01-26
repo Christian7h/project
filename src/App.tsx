@@ -70,6 +70,30 @@ function App() {
 
     return () => clearInterval(interval);
   }, []);
+  useEffect(() => {
+    // Obtener la ubicación del usuario usando la API de geolocalización
+    fetch('https://ipapi.co/json/')
+      .then(response => response.json())
+      .then(data => {
+        // Enviar el país del usuario a GA4
+        ReactGA.event({
+          category: 'User',
+          action: 'Country',
+          label: data.country_name
+        });
+        console.log(data.country_name)
+        
+        // Establecer la dimensión personalizada para el país
+        ReactGA.set({
+          country: data.country_name,
+          region: data.region,
+          city: data.city
+        });
+      })
+      .catch(error => {
+        console.error('Error al obtener la ubicación:', error);
+      });
+  }, []);
 
   const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
