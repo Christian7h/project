@@ -5,6 +5,17 @@ import { ShoppingCart, X } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { Link } from "react-router-dom";
 
+import ReactGA from "react-ga4"
+
+const onClick=()=>{
+  ReactGA.event({
+    category: "Carrito",
+    action:"Ir al Checkout",
+    label:"Ir al Carrito",
+  })
+}
+
+
 // Memoizar formato de precio fuera del componente
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat("es-CL", {
@@ -131,6 +142,8 @@ export default function CartDropdown() {
                     onClick={() => setIsOpen(false)}
                   >
                     <button
+                      onClick={onClick}
+                      disabled={cartItems.length === 0}
                       className="w-full bg-bmw-blue text-white py-2 rounded-lg hover:bg-bmw-blue/90 transition-colors"
                     >
                       {translations.checkout}

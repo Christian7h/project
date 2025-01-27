@@ -15,6 +15,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import CheckoutConfirm from './pages/CheckoutConfirm';
 import Disclaimer from "./pages/Disclaimer";
 
+
 const router = createBrowserRouter(
   [
     {
