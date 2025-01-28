@@ -12,7 +12,7 @@ const AnimatedNumber = memo(({ target }: { target: number }) => {
 
   useEffect(() => {
     const animation = animate(count, target, {
-      duration: 2,
+      duration: 8,
       ease: "easeOut"
     });
     return () => animation.stop();
@@ -82,10 +82,9 @@ export default function Home() {
   const { language } = useLanguage();
   
   // Memoizar datos calculados
-  const [totalVehicles, totalBrands, totalVehiclesAvailable] = useMemo(() => [
+  const [totalVehicles, totalBrands] = useMemo(() => [
     vehicles.length,
     brands.length,
-    vehicles.filter((vehicle) => vehicle.stock > 0).length
   ], []);
 
   // Memoizar traducciones de marcas
@@ -133,23 +132,13 @@ export default function Home() {
             </InfoColumn>
 
             <InfoColumn
-              title={language === 'es' ? 'Vehículos' : 'Vehicles'}
-              description={language === 'es'
-                ? 'Explora nuestra colección de autos de lujo.'
-                : 'Explore our luxury car collection.'}
-              link="/ListVehicles"
-            >
-              <AnimatedNumber target={totalVehicles} />
-            </InfoColumn>
-
-            <InfoColumn
               title={language === 'es' ? 'Vehículos Disponibles' : 'Available Vehicles'}
               description={language === 'es'
                 ? 'Descubre nuestros autos disponibles.'
                 : 'Discover our available cars.'}
               link="/ListVehicles"
             >
-              <AnimatedNumber target={totalVehiclesAvailable} />
+              <AnimatedNumber target={totalVehicles} />
             </InfoColumn>
 
             {/* Columnas adicionales... */}

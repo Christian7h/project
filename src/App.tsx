@@ -1,41 +1,41 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { AnimatePresence } from "framer-motion";
+import { Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer.tsx";
 import ScrollToTop from "./components/ScrollTop.tsx";
-import { Outlet } from "react-router-dom";
 import LoadingScreen from "./components/LoadingScreen";
+import ScrollProgress from "./components/ScrollProgress";
 import { LanguageProvider } from "./context/LanguageContext.tsx";
 import { FavoritesProvider } from "./context/FavoritesContext";
-import ScrollProgress from "./components/ScrollProgress";
 import { CartProvider } from './context/CartContext';
-
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(
-    () => localStorage.getItem("theme") === "dark"
-  );
-
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem("theme") === "dark";
+    }
+    return false;
+  });
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), 2000);
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
+    const root = document.documentElement;
+    root.classList.toggle("dark", isDarkMode);
+    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
 
-  const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
+  const toggleDarkMode = useCallback(() => {
+    setIsDarkMode(prev => !prev);
+  }, []);
 
   return (
-    <div>
+    <div >
       <FavoritesProvider>
         <CartProvider>
           <LanguageProvider>

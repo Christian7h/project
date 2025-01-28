@@ -40,7 +40,7 @@ const VehicleDetail = () => {
   }), [vehicle, language]);
 
   const formatPrice = useCallback((price: string) => {
-    return new Intl.NumberFormat('es-ES', {
+    return new Intl.NumberFormat('es-CL', {
       style: 'currency',
       currency: 'CLP'
     }).format(Number(price));

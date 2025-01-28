@@ -1,5 +1,15 @@
 //src/data.ts
-import { Brand, Vehicle } from './types';
+import { Brand, Vehicle, Coupon } from './types';
+// Función para convertir USD a CLP (1 USD = 1059 CLP)
+
+export const coupons: Coupon[] = [
+  { code: 'BMW10', discount: 50 },
+  { code: 'MB15', discount: 15 },
+  { code: 'AUDI20', discount: 20 },
+  { code: 'POR25', discount: 25 },
+  { code: 'FER30', discount: 30 },
+];
+
 
 export const brands: Brand[] = [
   {
@@ -206,7 +216,7 @@ export const brands: Brand[] = [
     id: 'toyota',
     name: 'Toyota',
     logo: '/toyota/toyota.png',
-    description: 'Let’s Go Places',
+    description: "Let's Go Places",
     foundation: 1937,
     history: "Founded by Kiichiro Toyoda. Revolutionized manufacturing with the Toyota Production System. First passenger car: Model AA (1936).",
     trajectory: "World's largest automaker by production. Pioneer in hybrid technology with Prius (1997).",
@@ -220,7 +230,7 @@ export const brands: Brand[] = [
       },
       en: {
         name: 'Toyota',
-        description: 'Let’s Go Places',
+        description: "Let's Go Places",
         foundation: '1937',
         history: "Founded by Kiichiro Toyoda. Revolutionized manufacturing with the Toyota Production System. First passenger car: Model AA (1936).",
         trajectory: "World's largest automaker by production. Pioneer in hybrid technology with Prius (1997)."
@@ -511,7 +521,7 @@ export const brands: Brand[] = [
     foundation: 1910,
     history: "Founded in Milan as A.L.F.A. (Anonima Lombarda Fabbrica Automobili). Iconic Quadrifoglio badge from racing driver Ugo Sivocci.",
     trajectory: "11 victories at Le Mans. Giulia Quadrifoglio (2016) revived performance legacy. Stellantis era since 2021.",
-    translations: {
+    translations: { 
       es: {
         name: 'Alfa Romeo',
         description: 'La mecánica de las emociones',
@@ -554,7 +564,7 @@ export const brands: Brand[] = [
     }
   },
   {
-    id: 'rivian',
+    id: 'Genesis',
     name: 'Rivian',
     logo: '/rivian/rivian.png',
     description: 'Adventure vehicles for the planet',
@@ -577,8 +587,165 @@ export const brands: Brand[] = [
         trajectory: "First EV pickup to market (R1T). Partnership with Amazon for 100k electric delivery vans."
       }
     }
+  },
+  {
+    id: 'lexus',
+    name: 'Lexus',
+    logo: '/lexus/lexus.png',
+    description: 'The Pursuit of Perfection',
+    foundation: 1989,
+    history: "Founded as Toyota's luxury division to compete with European premium brands. Revolutionized luxury car reliability standards.",
+    trajectory: "Pioneer in hybrid luxury vehicles with the RX 400h. Multiple J.D. Power awards for quality and reliability.",
+    translations: {
+      es: {
+        name: 'Lexus',
+        description: 'La búsqueda de la perfección',
+        foundation: '1989',
+        history: "Fundada como división de lujo de Toyota para competir con marcas premium europeas. Revolucionó los estándares de confiabilidad en autos de lujo.",
+        trajectory: "Pionera en vehículos híbridos de lujo con el RX 400h. Múltiples premios J.D. Power por calidad y confiabilidad."
+      },
+      en: {
+        name: 'Lexus',
+        description: 'The Pursuit of Perfection',
+        foundation: '1989',
+        history: "Founded as Toyota's luxury division to compete with European premium brands. Revolutionized luxury car reliability standards.",
+        trajectory: "Pioneer in hybrid luxury vehicles with the RX 400h. Multiple J.D. Power awards for quality and reliability."
+      }
+    }
+  },
+  {
+    id: 'aston-martin',
+    name: 'Aston Martin',
+    logo: '/aston-martin/aston-martin.png',
+    description: 'Power, Beauty and Soul',
+    foundation: 1913,
+    history: "British luxury sports car manufacturer famous for its association with James Bond. Survived multiple bankruptcies to become symbol of British automotive excellence.",
+    trajectory: "Multiple class wins at 24 Hours of Le Mans. Valkyrie hypercar developed with Red Bull Racing F1 technology.",
+    translations: {
+      es: {
+        name: 'Aston Martin',
+        description: 'Poder, Belleza y Alma',
+        foundation: '1913',
+        history: "Fabricante británico de deportivos de lujo famoso por su asociación con James Bond. Sobrevivió múltiples bancarrotas para convertirse en símbolo de excelencia automotriz británica.",
+        trajectory: "Múltiples victorias de clase en las 24 Horas de Le Mans. Hypercar Valkyrie desarrollado con tecnología de Red Bull Racing de F1."
+      },
+      en: {
+        name: 'Aston Martin',
+        description: 'Power, Beauty and Soul',
+        foundation: '1913',
+        history: "British luxury sports car manufacturer famous for its association with James Bond. Survived multiple bankruptcies to become symbol of British automotive excellence.",
+        trajectory: "Multiple class wins at 24 Hours of Le Mans. Valkyrie hypercar developed with Red Bull Racing F1 technology."
+      }
+    }
+  },
+  {
+    id: 'rimac',
+    name: 'Rimac',
+    logo: '/rimac/rimac.png',
+    description: 'The Future of Performance',
+    foundation: 2009,
+    history: "Croatian electric hypercar manufacturer founded by Mate Rimac at 21. Revolutionizing EV performance with record-breaking acceleration.",
+    trajectory: "Nevera holds 23 performance records. Strategic partnership with Porsche. Battery tech supplier to major OEMs.",
+    translations: {
+      es: {
+        name: 'Rimac',
+        description: 'El Futuro del Rendimiento',
+        foundation: '2009',
+        history: "Fabricante croata de hypercars eléctricos fundado por Mate Rimac a los 21 años. Revolucionando el rendimiento EV con aceleración récord.",
+        trajectory: "Nevera posee 23 récords de rendimiento. Alianza estratégica con Porsche. Proveedor de tecnología de baterías para grandes fabricantes."
+      },
+      en: {
+        name: 'Rimac',
+        description: 'The Future of Performance',
+        foundation: '2009',
+        history: "Croatian electric hypercar manufacturer founded by Mate Rimac at 21. Revolutionizing EV performance with record-breaking acceleration.",
+        trajectory: "Nevera holds 23 performance records. Strategic partnership with Porsche. Battery tech supplier to major OEMs."
+      }
+    }
+  },
+  {
+    id: 'cadillac-v',
+    name: 'Cadillac V-Series',
+    logo: '/cadillac-v/cadillac-v.png',
+    description: 'The Cadillac of Performance',
+    foundation: 2004,
+    history: "Performance division combining American luxury with track capabilities. Developed at GM's Milford Proving Grounds.",
+    trajectory: "Multiple SCCA championships. CT5-V Blackwing: último sedán manual con motor V8 supercargado.",
+    translations: {
+      es: {
+        name: 'Cadillac V-Series',
+        description: 'El Máximo Rendimiento de Cadillac',
+        foundation: '2004',
+        history: "División de rendimiento que combina lujo americano con capacidades de pista. Desarrollado en los Milford Proving Grounds de GM.",
+        trajectory: "Múltiples campeonatos SCCA. CT5-V Blackwing: último sedán manual con motor V8 supercargado."
+      },
+      en: {
+        name: 'Cadillac V-Series',
+        description: 'The Cadillac of Performance',
+        foundation: '2004',
+        history: "Performance division combining American luxury with track capabilities. Developed at GM's Milford Proving Grounds.",
+        trajectory: "Multiple SCCA championships. CT5-V Blackwing: Last manual transmission V8 supercharged sedan."
+      }
+    }
+  },
+  {
+    id: 'noble',
+    name: 'Noble',
+    logo: '/noble/noble.png',
+    description: 'Pure Driving Thrill',
+    foundation: 1999,
+    history: "British sports car manufacturer specializing in lightweight, driver-focused vehicles. Gained fame with the M600 supercar.",
+    trajectory: "M600 held Lotus Exige lap record at Top Gear track. Pioneer in analog supercar philosophy.",
+    translations: {
+      es: {
+        name: 'Noble',
+        description: 'Emoción de Conducción Pura',
+        foundation: '1999',
+        history: "Fabricante británico de deportivos especializado en vehículos ligeros centrados en el conductor. Fama con el superdeportivo M600.",
+        trajectory: "M600 mantuvo récord de vuelta de Lotus Exige en pista de Top Gear. Pionero en filosofía de superdeportivos analógicos."
+      },
+      en: {
+        name: 'Noble',
+        description: 'Pure Driving Thrill',
+        foundation: '1999',
+        history: "British sports car manufacturer specializing in lightweight, driver-focused vehicles. Gained fame with the M600 supercar.",
+        trajectory: "M600 held Lotus Exige lap record at Top Gear track. Pioneer in analog supercar philosophy."
+      }
+    }
+  },
+  {
+    id: 'gumpert',
+    name: 'Gumpert',
+    logo: '/gumpert/gumpert.png',
+    description: 'Engineered for Extremes',
+    foundation: 2004,
+    history: "German sports car manufacturer founded by Roland Gumpert, former Audi Sport director. Designed specifically for Nürburgring performance.",
+    trajectory: "Apollo Sport held Nürburgring production car record (7:11.57) in 2009. Featured in Top Gear's 'Star in a Reasonably Priced Car'.",
+    translations: {
+      es: {
+        name: 'Gumpert',
+        description: 'Ingeniería para Extremos',
+        foundation: '2004',
+        history: "Fabricante alemán de deportivos fundado por Roland Gumpert, ex director de Audi Sport. Diseñados específicamente para rendimiento en Nürburgring.",
+        trajectory: "Apollo Sport mantuvo récord de Nürburgring para autos de producción (7:11.57) en 2009. Presentado en 'Star in a Reasonably Priced Car' de Top Gear."
+      },
+      en: {
+        name: 'Gumpert',
+        description: 'Engineered for Extremes',
+        foundation: '2004',
+        history: "German sports car manufacturer founded by Roland Gumpert, former Audi Sport director. Designed specifically for Nürburgring performance.",
+        trajectory: "Apollo Sport held Nürburgring production car record (7:11.57) in 2009. Featured in Top Gear's 'Star in a Reasonably Priced Car'."
+      }
+    }
   }
 ];
+
+
+
+
+
+
+
 
 export const vehicles: Vehicle[] = [
   {
@@ -2856,5 +3023,204 @@ export const vehicles: Vehicle[] = [
       }
     }
   },
-];
+  {
+    id: 'lcs-500-sport-Convertible',
+    brandId: 'lexus',
+    name: 'Lexus LC 500 Sport Convertible',
+    image: '/lexus/lc/1.jpg',
+    images: [
+      '/lexus/lc/1.jpg', 
+      '/lexus/lc/2.jpg', 
+      '/lexus/lc/3.jpg'
+    ],
+    price: '1200000',
+    description: 'El coche de lujo más elegante y potente que puedes imaginar',
+    type: 'Coupé Convertible',
+    year: 2024,
+    specs: {
+      power: '520 HP',
+      acceleration: '3.5s',
+      topSpeed: '260 mph'
+    },
+    stock: 5,
+    translations: {
+      en: {
+        name: 'Lexus LC 500 Sport Convertible',
+        description: 'The most elegant and powerful luxury car you can imagine',
+        type: 'Coupe Convertible'
+      },
+      es: {
+        name: 'Lexus LC 500 Sport Convertible',
+        description: 'El coche de lujo más elegante y potente que puedes imaginar',
+        type: 'Coupé Convertible'
+      }
+    }
+  },
 
+  // Segundo vehículo de Lexus:
+  {
+    id: 'es-300-sedan',
+    brandId: 'lexus',
+    name: 'Lexus ES 300 Sedán',
+    image: '/lexus/es/1.jpg',
+    images: [
+      '/lexus/es/1.jpg', 
+      '/lexus/es/2.jpg', 
+      '/lexus/es/3.jpg'
+    ],
+    price: '45000',
+    description: 'El sedan de lujo más confiable y cómodo para viajar',
+    type: 'Sedán',
+    year: 2024,
+    specs: {
+      power: '302 HP',
+      acceleration: '6.7s',
+      topSpeed: '180 mph'
+    },
+    stock: 8,
+    translations: {
+      en: {
+        name: 'Lexus ES 300 Sedán',
+        description: 'The most comfortable and reliable luxury sedan for travel',
+        type: 'Sedan'
+      },
+      es: {
+        name: 'Lexus ES 300 Sedán',
+        description: 'El sedan de lujo más confiable y cómodo para viajar',
+        type: 'Sedán'
+      }
+    }
+  },
+  {
+    id: 'db-11-v12-sports-coupe',
+    brandId: 'aston-martin',
+    name: 'Aston Martin DB 11 V12 Coupe Sport',
+    image: '/aston-martin/db/1.jpg',
+    images: [
+      '/aston-martin/db/1.jpg', 
+      '/aston-martin/db/2.jpg', 
+      '/aston-martin/db/3.jpg'
+    ],
+    price: '1800000',
+    description: 'El coche deportivo más erótico y potente que has ever seen',
+    type: 'Coupe Sport',
+    year: 2024,
+    specs: {
+      power: '608 HP',
+      acceleration: '3.6s',
+      topSpeed: '296 mph'
+    },
+    stock: 7,
+    translations: {
+      en: {
+        name: 'Aston Martin DB 11 V12 Coupe Sport',
+        description: 'The most sexy and powerful sports car you\'ve ever seen',
+        type: 'Coupe Sport'
+      },
+      es: {
+        name: 'Aston Martin DB 11 V12 Coupe Deportivo',
+        description: 'El coche deportivo más erótico y potente que has ever seen',
+        type: 'Coupé Deportivo'
+      }
+    }
+  },
+
+  // Segundo vehículo de Aston Martin:
+  {
+    id: 'dbs-superlegger-convertible',
+    brandId: 'aston-martin',
+    name: 'Aston Martin DBS Superlegger Convertible',
+    image: '/aston-martin/dbs/1.jpg',
+    images: [
+      '/aston-martin/dbs/1.jpg', 
+      '/aston-martin/dbs/2.jpg', 
+      '/aston-martin/dbs/3.jpg'
+    ],
+    price: '3200000',
+    description: 'El hiperdeportivo más erótico y lujoso del mundo',
+    type: 'Convertible Sport',
+    year: 2024,
+    specs: {
+      power: '715 HP',
+      acceleration: '4.1s',
+      topSpeed: '328 mph'
+    },
+    stock: 6,
+    translations: {
+      en: {
+        name: 'Aston Martin DBS Superlegger Convertible',
+        description: 'The most sexy and luxurious hypercar in the world',
+        type: 'Convertible Sport'
+      },
+      es: {
+        name: 'Aston Martin DBS Superlegger Convertible',
+        description: 'El hiperdeportivo más erótico y lujoso del mundo',
+        type: 'Coupé Deportivo'
+      }
+    }
+  },
+  {
+    id: 'alfa-romeo-gulia-quadrifoglio-sedan',
+    brandId: 'alfa-romeo',
+    name: 'Alfa Romeo Giulia Quadrifoglio Sedán',
+    image: '/alfa-romeo/gulia/1.jpg', 
+    images: [
+      '/alfa-romeo/gulia/2.jpg',
+      '/alfa-romeo/gulia/3.jpg'
+    ],
+    price: '1200000',
+    description: 'El sedán más deportivo de Alfa Romeo, con una potencia considerable y rendimiento excepcional.',
+    type: 'Sports Sedán',
+    year: 2016,
+    specs: {
+      power: '280 HP',
+      acceleration: '5.1 seconds (0-60 mph)', 
+      topSpeed: '155 mph'
+    },
+    stock: 5,
+    translations: {
+      en: {
+        name: 'Alfa Romeo Giulia Quadrifoglio Sedan',
+        description: 'The most powerful sedan from Alfa Romeo, with considerable power and exceptional performance.',
+        type: 'Performance Sedan'
+      },
+      es: {
+        name: 'Alfa Romeo Giulia Quadrifoglio Sedán',
+        description: 'El sedán más deportivo de Alfa Romeo, con una potencia considerable y rendimiento excepcional.',
+        type: 'Sports Sedán'
+      }
+    }
+  },
+  {
+    id: 'alfa-romeo-8c-45-deportivo', 
+    brandId: 'alfa-romeo',
+    name: 'Alfa Romeo 8C 45° Deportivo',
+    image: '/alfa-romeo/8c/1.jpg',
+    images: [
+      '/alfa-romeo/8c/2.jpg',
+      '/alfa-romeo/8c/3.jpg'
+    ],
+    price: '1800000',
+    description: 'Un coche clásico de gran potencia y estilo, ideal para los amantes de la velocidad.',
+    type: 'Coupé Deportivo',
+    year: 2019,
+    specs: {
+      power: '450 HP',
+      acceleration: '3.9 seconds (0-60 mph)',
+      topSpeed: '174 mph'
+    },
+    stock: 6,
+    translations: {
+      en: {
+        name: 'Alfa Romeo 8C 45° Sports Car',
+        description: 'A classic car with great power and style, perfect for speed enthusiasts.',
+        type: 'Sports Car'
+      },
+      es: {
+        name: 'Alfa Romeo 8C 45° Deportivo',
+        description: 'Un coche clásico de gran potencia y estilo, ideal para los amantes de la velocidad.',
+        type: 'Coupé Deportivo'
+      }
+    }
+  }
+];

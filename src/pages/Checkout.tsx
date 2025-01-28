@@ -2,16 +2,19 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import { useCart } from "../context/CartContext";
-import { vehicles } from "../data";
+import { vehicles, coupons } from "../data";
 import { initiatePayment } from "../services/payment.ts";
 import { FormData, CartItem } from "../types";
 import imgTransbank from "../assets/images/transbank.png";
 
-// Componentes reutilizables
-const FormField = ({ label, error, children }: { 
-  label: string; 
-  error?: string; 
-  children: React.ReactNode 
+const FormField = ({
+  label,
+  error,
+  children,
+}: {
+  label: string;
+  error?: string;
+  children: React.ReactNode;
 }) => (
   <div>
     <label className="block text-sm font-medium mb-1 text-gray-800 dark:text-white">
@@ -22,15 +25,18 @@ const FormField = ({ label, error, children }: {
   </div>
 );
 
-const OrderItem = ({ vehicle, quantity }: { 
-  vehicle: typeof vehicles[0]; 
-  quantity: number 
+const OrderItem = ({
+  vehicle,
+  quantity,
+}: {
+  vehicle: (typeof vehicles)[0];
+  quantity: number;
 }) => {
   const total = parseInt(vehicle.price) * quantity;
-  const formatPrice = (price: number) => 
+  const formatPrice = (price: number) =>
     new Intl.NumberFormat("es-CL", {
       style: "currency",
-      currency: "CLP"
+      currency: "CLP",
     }).format(price);
 
   return (
@@ -62,12 +68,12 @@ const SecurePaymentInfo = () => (
       Secure Payment
     </h3>
     <p className="text-sm text-gray-600 dark:text-gray-300">
-      Your payment will be processed securely through Webpay Transbank.
-      All transactions are encrypted and protected.
+      Your payment will be processed securely through Webpay Transbank. All
+      transactions are encrypted and protected.
     </p>
-    <img 
-      src={imgTransbank} 
-      alt="Transbank" 
+    <img
+      src={imgTransbank}
+      alt="Transbank"
       className="w-full h-full object-contain mt-4"
       loading="lazy"
     />
@@ -75,21 +81,41 @@ const SecurePaymentInfo = () => (
 );
 
 export default function Checkout() {
-  const { items, getSubtotal } = useCart();
+  const { items, getSubtotal, clearCart } = useCart();
   const [isLoading, setIsLoading] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const [discount, setDiscount] = useState(0);
+  const [couponMessage, setCouponMessage] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const cartTotal = getSubtotal();
-  const cartItems: CartItem[] = items.map(item => ({
+  const cartTotal = getSubtotal() - discount;
+  const cartItems: CartItem[] = items.map((item) => ({
     ...item,
-    vehicle: vehicles.find(v => v.id === item.vehicleId)!
+    vehicle: vehicles.find((v) => v.id === item.vehicleId)!,
   }));
 
-  const formatPrice = (price: number) => 
+  const formatPrice = (price: number) =>
     new Intl.NumberFormat("es-CL", {
       style: "currency",
-      currency: "CLP"
+      currency: "CLP",
     }).format(price);
+
+  const applyCoupon = (code: string) => {
+    const coupon = coupons.find((c) => c.code === code);
+    if (coupon) {
+      const discountAmount = (getSubtotal() * coupon.discount) / 100; // Calcula el descuento en base al porcentaje
+      setDiscount(discountAmount);
+      setCouponMessage(
+        `Coupon applied: ${coupon.code} - ${coupon.discount}% off`
+      );
+    } else {
+      setDiscount(0);
+      setCouponMessage("Invalid coupon code.");
+    }
+  };
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
@@ -120,16 +146,23 @@ export default function Checkout() {
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
-                  <FormField label="First Name" error={errors.firstName?.message}>
+                  <FormField
+                    label="First Name"
+                    error={errors.firstName?.message}
+                  >
                     <input
-                      {...register("firstName", { required: "First name is required" })}
+                      {...register("firstName", {
+                        required: "First name is required",
+                      })}
                       className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                     />
                   </FormField>
 
                   <FormField label="Last Name" error={errors.lastName?.message}>
                     <input
-                      {...register("lastName", { required: "Last name is required" })}
+                      {...register("lastName", {
+                        required: "Last name is required",
+                      })}
                       className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                     />
                   </FormField>
@@ -168,32 +201,52 @@ export default function Checkout() {
                     Shipping Address
                   </h3>
 
-                  <FormField label="Street Address" error={errors.address?.street?.message}>
+                  <FormField
+                    label="Street Address"
+                    error={errors.address?.street?.message}
+                  >
                     <input
-                      {...register("address.street", { required: "Street address is required" })}
+                      {...register("address.street", {
+                        required: "Street address is required",
+                      })}
                       className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                     />
                   </FormField>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <FormField label="City" error={errors.address?.city?.message}>
+                    <FormField
+                      label="City"
+                      error={errors.address?.city?.message}
+                    >
                       <input
-                        {...register("address.city", { required: "City is required" })}
+                        {...register("address.city", {
+                          required: "City is required",
+                        })}
                         className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                       />
                     </FormField>
 
-                    <FormField label="State" error={errors.address?.state?.message}>
+                    <FormField
+                      label="State"
+                      error={errors.address?.state?.message}
+                    >
                       <input
-                        {...register("address.state", { required: "State is required" })}
+                        {...register("address.state", {
+                          required: "State is required",
+                        })}
                         className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                       />
                     </FormField>
                   </div>
 
-                  <FormField label="ZIP Code" error={errors.address?.zipCode?.message}>
+                  <FormField
+                    label="ZIP Code"
+                    error={errors.address?.zipCode?.message}
+                  >
                     <input
-                      {...register("address.zipCode", { required: "ZIP code is required" })}
+                      {...register("address.zipCode", {
+                        required: "ZIP code is required",
+                      })}
                       className="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:text-white"
                     />
                   </FormField>
@@ -219,16 +272,55 @@ export default function Checkout() {
 
                 <div className="space-y-4">
                   {cartItems.map(({ vehicle, quantity }) => (
-                    <OrderItem key={vehicle.id} vehicle={vehicle} quantity={quantity} />
+                    <OrderItem
+                      key={vehicle.id}
+                      vehicle={vehicle}
+                      quantity={quantity}
+                    />
                   ))}
                 </div>
 
                 <div className="border-t mt-6 pt-4">
                   <div className="flex justify-between text-lg font-semibold text-gray-800 dark:text-white">
+                    <span>Subtotal:</span>
+                    <span>{formatPrice(getSubtotal())}</span>
+                  </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between text-lg text-green-600 dark:text-green-400">
+                      <span>Discount:</span>
+                      <span>-{formatPrice(discount)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-lg font-semibold text-gray-800 dark:text-white">
                     <span>Total:</span>
                     <span>{formatPrice(cartTotal)}</span>
                   </div>
                 </div>
+
+                <div className="mt-4">
+                  <input
+                    type="text"
+                    placeholder="Enter coupon code"
+                    className="w-full px-3 py-2 border rounded-lg mb-2 dark:bg-gray-700 dark:text-white"
+                    onBlur={(e) => applyCoupon(e.target.value)}
+                  />
+                  {couponMessage && (
+                    <p
+                      className={`text-sm ${
+                        discount > 0 ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
+                      {couponMessage}
+                    </p>
+                  )}
+                </div>
+
+                <button
+                  onClick={clearCart}
+                  className="w-full mt-4 bg-red-500 text-white py-3 rounded-lg hover:bg-red-400 transition-colors"
+                >
+                  Clear Cart
+                </button>
               </div>
 
               <SecurePaymentInfo />

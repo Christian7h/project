@@ -103,3 +103,8 @@ export interface FormData {
     zipCode: string;
   };
 }
+
+export interface Coupon {
+  code: string;
+  discount: number;
+}
