@@ -7,7 +7,7 @@ import axios from "axios";
 import { sendEmail } from "../services/send-email";
 import Confetti from "react-confetti";
 import { useWindowSize } from 'react-use';
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { Download } from 'lucide-react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 
@@ -23,6 +23,7 @@ interface CartItem {
   vehicleId: string;
   quantity: number;
   vehicle: {
+    id: string;
     name: string;
     price: string;
     image: string;
@@ -68,55 +69,96 @@ const VoucherPDF = ({ paymentResult, language }: {
   <Document>
     <Page style={styles.page}>
       <View style={styles.section}>
-        <Text style={styles.header}>Luxury Motors - {language === 'es' ? 'Comprobante de Pago' : 'Payment Receipt'}</Text>
+        <Image 
+          style={styles.logo} 
+          src="https://www.luxurymotors.cl/logo.png"
+        />
         
-        <Text style={styles.subHeader}>
-          {language === 'es' ? 'Detalles de la Transacción' : 'Transaction Details'}
-        </Text>
-        
-        <View style={styles.grid}>
-          <Text>{language === 'es' ? 'Orden ID: ' : 'Order ID: '}</Text>
-          <Text>{paymentResult.orderId}</Text>
-          
-          <Text>{language === 'es' ? 'Fecha: ' : 'Date: '}</Text>
-          <Text>{new Date().toLocaleDateString()}</Text>
-          
-          <Text>{language === 'es' ? 'Monto Total:' : 'Total Amount:'}</Text>
-          <Text>{new Intl.NumberFormat(language === 'es' ? 'es-CL' : 'en-US', {
-            style: 'currency',
-            currency: 'CLP'
-          }).format(paymentResult.amount)}</Text>
+        <View style={{ 
+          flexDirection: 'row', 
+          justifyContent: 'space-between',
+          marginBottom: 10 
+        }}>
+          <Text style={{ fontSize: 8, color: '#64748b' }}>
+            {new Date().toLocaleDateString()}
+          </Text>
+          <Text style={{ fontSize: 8, color: '#64748b' }}>
+            {language === 'es' ? 'Orden ID: ' : 'Order ID: '} 
+            {paymentResult.orderId}
+          </Text>
+        </View>
+
+        <Text style={styles.header}>Luxury Motors - {language === 'es' ? 'COMPROBANTE' : 'RECEIPT'}</Text>
+
+        <View style={{ 
+          flexDirection: 'row', 
+          justifyContent: 'space-between',
+          marginBottom: 15 
+        }}>
+          <View style={{ width: '48%' }}>
+            <Text style={styles.subHeader}>
+              {language === 'es' ? 'DATOS DEL CLIENTE' : 'CUSTOMER INFO'}
+            </Text>
+            <Text>{paymentResult.customerInfo.firstName} {paymentResult.customerInfo.lastName}</Text>
+            <Text>{paymentResult.customerInfo.email}</Text>
+            <Text>{paymentResult.customerInfo.phone}</Text>
+            <Text style={styles.address}>
+              {paymentResult.customerInfo.address.street}, 
+              {paymentResult.customerInfo.address.city}
+            </Text>
+          </View>
+
+          <View style={{ width: '48%' }}>
+            <Text style={styles.subHeader}>
+              {language === 'es' ? 'DETALLES DE PAGO' : 'PAYMENT DETAILS'}
+            </Text>
+            <Text>
+              {new Intl.NumberFormat(language === 'es' ? 'es-CL' : 'en-US', {
+                style: 'currency',
+                currency: 'CLP'
+              }).format(paymentResult.amount)}
+            </Text>
+            <Text>**** **** **** {paymentResult.cardLast4Digits}</Text>
+            <Text style={{ marginTop: 8 }}>
+              {language === 'es' ? 'Estado: ' : 'Status: '}
+              <Text style={{ color: '#16a34a' }}>
+                {language === 'es' ? 'APROBADO' : 'APPROVED'}
+              </Text>
+            </Text>
+          </View>
         </View>
 
         <Text style={styles.subHeader}>
-          {language === 'es' ? 'Información del Cliente' : 'Customer Information'}
+          {language === 'es' ? 'VEHÍCULOS ADQUIRIDOS' : 'PURCHASED VEHICLES'}
         </Text>
-        
-        <Text>{paymentResult.customerInfo.firstName} {paymentResult.customerInfo.lastName}</Text>
-        <Text>{paymentResult.customerInfo.email}</Text>
-        <Text>{paymentResult.customerInfo.phone}</Text>
-        
-        <Text style={styles.address}>
-          {paymentResult.customerInfo.address.street}, 
-          {paymentResult.customerInfo.address.city}, 
-          {paymentResult.customerInfo.address.state}, 
-          {paymentResult.customerInfo.address.zipCode}
-        </Text>
+        <View style={styles.grid}>
+          {paymentResult.cartItems.map((item, index) => (
+            <View key={index} style={styles.item}>
+              <Text style={{ fontFamily: 'Helvetica-Bold' }}>{item.vehicle.name}</Text>
+              <Text>
+                {language === 'es' ? 'Cantidad: ' : 'Quantity: '} 
+                {item.quantity}
+              </Text>
+              <Text>
+                {new Intl.NumberFormat(language === 'es' ? 'es-CL' : 'en-US', {
+                  style: 'currency',
+                  currency: 'CLP'
+                }).format(parseInt(item.vehicle.price) * item.quantity)}
+              </Text>
+            </View>
+          ))}
+        </View>
 
-        <Text style={styles.subHeader}>
-          {language === 'es' ? 'Productos Adquiridos' : 'Purchased Items'}
-        </Text>
-        
-        {paymentResult.cartItems.map((item, index) => (
-          <View key={index} style={styles.item}>
-            <Text>{item.vehicle.name}</Text>
-            <Text>{language === 'es' ? 'Cantidad:' : 'Quantity:'} {item.quantity}</Text>
-            <Text>{new Intl.NumberFormat(language === 'es' ? 'es-CL' : 'en-US', {
-              style: 'currency',
-              currency: 'CLP'
-            }).format(parseInt(item.vehicle.price) * item.quantity)}</Text>
-          </View>
-        ))}
+        <View style={{ 
+          marginTop: 15,
+          paddingTop: 10,
+          borderTop: '1px solid #1a365d',
+          textAlign: 'center',
+          fontSize: 8
+        }}>
+          <Text>Luxury Motors - Av. Nueva Costanera 3737, Vitacura</Text>
+          <Text>contacto@luxurymotors.cl - +56 2 2345 6789</Text>
+        </View>
       </View>
     </Page>
   </Document>
@@ -124,33 +166,62 @@ const VoucherPDF = ({ paymentResult, language }: {
 // Añade estos estilos para el PDF
 const styles = StyleSheet.create({
   page: {
-    padding: 30
+    padding: 20,
+    backgroundColor: '#f8fafc',
+    fontSize: 10,
   },
   header: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 18,
+    marginBottom: 10,
     textAlign: 'center',
-    color: '#1a365d'
+    color: '#1a365d',
+    borderBottom: '2px solid #1a365d',
+    paddingBottom: 8,
+    fontFamily: 'Helvetica-Bold'
   },
   subHeader: {
-    fontSize: 18,
-    marginVertical: 15,
-    color: '#2d3748'
+    fontSize: 12,
+    marginVertical: 8,
+    color: '#1a365d',
+    fontFamily: 'Helvetica-Bold',
+    backgroundColor: '#e2e8f0',
+    padding: 6,
+    borderRadius: 4
   },
   grid: {
-    display: 'flex',
-    gridTemplateColumns: 'repeat(2, 1fr)',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 10,
-    marginBottom: 15
+    marginBottom: 10
   },
   item: {
-    marginVertical: 8,
-    paddingBottom: 8,
-    borderBottom: '1px solid #e2e8f0'
+    marginVertical: 5,
+    padding: 8,
+    border: '1px solid #cbd5e1',
+    borderRadius: 4,
+    backgroundColor: '#ffffff',
+    width: '48%',
+    fontSize: 9
   },
   address: {
-    marginVertical: 10,
-    color: '#4a5568'
+    marginVertical: 8,
+    color: '#4a5568',
+    padding: 8,
+    border: '1px dashed #cbd5e1',
+    borderRadius: 4,
+    fontSize: 9
+  },
+  section: {
+    marginBottom: 15,
+    padding: 15,
+    backgroundColor: '#ffffff',
+    borderRadius: 6,
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+  },
+  logo: {
+    width: 80,
+    marginBottom: 10,
+    alignSelf: 'center'
   }
 });
 const LoadingState = ({ language }: { language: string }) => (

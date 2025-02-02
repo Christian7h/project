@@ -36,7 +36,7 @@ interface EmailTemplateProps {
         }}
       >
         <a
-          href="https://rpmlegends.netlify.app"
+          href="https://luxurymotor.netlify.app"
           style={{ color: "#fff", textDecoration: "none" }}
         >
           Visit Our Website

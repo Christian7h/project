@@ -10,7 +10,6 @@ export const coupons: Coupon[] = [
   { code: 'FER30', discount: 30 },
 ];
 
-
 export const brands: Brand[] = [
   {
     id: 'bmw',
