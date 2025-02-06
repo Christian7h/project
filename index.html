@@ -3,6 +3,25 @@
   <head>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWNH2G6WXW"></script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDR6tRnbi4_cXTahj_o0C4AW6vT3ctvnjQ",
+    authDomain: "luxurymotors-react-webpay.firebaseapp.com",
+    projectId: "luxurymotors-react-webpay",
+    storageBucket: "luxurymotors-react-webpay.firebasestorage.app",
+    messagingSenderId: "944166321613",
+    appId: "1:944166321613:web:586487d94c2286e37a1884"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
