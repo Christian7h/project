@@ -4,6 +4,7 @@ import { Car, Clock3, Settings, ShoppingCart } from "lucide-react";
 import LightGallery from "lightgallery/react";
 import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
+import { DiscussionEmbed } from 'disqus-react';
 import { useCart } from "../context/CartContext";
 import { useLanguage } from "../context/LanguageContext";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -11,6 +12,8 @@ import { vehicles } from "../data";
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
 import "lightgallery/css/lg-thumbnail.css";
+
+
 
 type SpecItem = {
   icon: React.ReactNode;
@@ -225,6 +228,17 @@ const VehicleDetail = () => {
               );
             })}
           </div>
+        </div>
+        {/* Disqus comment section */}
+        <div className="mt-16 px-4">
+          <DiscussionEmbed
+            shortname="start-knai8pmag4" // Reemplaza con tu shortname de Disqus
+            config={{
+              identifier: vehicleId, // El ID del vehículo para que cada vehículo tenga su propia sección de comentarios
+              title: translations.name, // El título del vehículo
+              url: window.location.href, // URL actual para que se use como la base de los comentarios
+            }}
+          />
         </div>
       </div>
     </div>

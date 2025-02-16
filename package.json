@@ -16,6 +16,7 @@
     "@react-three/fiber": "^8.17.14",
     "animate.css": "^4.1.1",
     "axios": "^1.7.9",
+    "disqus-react": "^1.1.5",
     "framer-motion": "^11.16.1",
     "fuse.js": "^7.0.0",
     "lightgallery": "^2.8.2",
