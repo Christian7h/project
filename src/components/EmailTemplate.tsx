@@ -36,7 +36,7 @@ interface EmailTemplateProps {
         }}
       >
         <a
-          href="https://luxurymotor.netlify.app"
+          href="https://project-d61.pages.dev"
           style={{ color: "#fff", textDecoration: "none" }}
         >
           Visit Our Website

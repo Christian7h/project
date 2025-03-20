@@ -69,7 +69,7 @@ export const sendEmail = async ({
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
-    const API_URL = import.meta.env.BACKEND_URL_API || "https://backend-luxuymotorswebpay-12684bc9e3bd.herokuapp.com";
+    const API_URL = import.meta.env.BACKEND_URL_API || "https://backend-luxurymotors-react-nodej-production.up.railway.app";
 
     const response = await axios.post(
       `${API_URL}/api/send-email`,

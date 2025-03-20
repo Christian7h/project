@@ -71,7 +71,7 @@ const VoucherPDF = ({ paymentResult, language }: {
       <View style={styles.section}>
         <Image 
           style={styles.logo} 
-          src="https://www.luxurymotors.cl/logo.png"
+          src="https://project-d61.pages.dev"
         />
         
         <View style={{ 
@@ -313,7 +313,7 @@ export default function CheckoutConfirm() {
     }
 
     const confirmPayment = async () => {
-      const API_URL = import.meta.env.BACKEND_URL_API || "https://backend-luxuymotorswebpay-12684bc9e3bd.herokuapp.com";
+      const API_URL = import.meta.env.BACKEND_URL_API || "https://backend-luxurymotors-react-nodej-production.up.railway.app";
       try {
         setIsLoading(true);
         const { data } = await axios.post(`${API_URL}/api/confirm-transaction`, { token });
