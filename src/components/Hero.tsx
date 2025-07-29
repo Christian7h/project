@@ -132,7 +132,7 @@ export default function HeroSection() {
         <div className="relative mx-auto h-full flex flex-col justify-center md:px-40 z-10">
           <div className="py-20 px-4">
             
-            <h1 className="text-6xl font-bold mb-4 text-white">BMW M4 CSL</h1>
+            <h1 className="text-6xl font-bold mb-4 text-white">Christian7hDeus</h1>
             <p className="text-xl mb-8 text-gray-300">
               Competition. Sport. Lightweight.
             </p>

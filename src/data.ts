@@ -185,7 +185,7 @@ export const brands: Brand[] = [
         trajectory: "Creator of fastest production cars: Veyron Super Sport (431 km/h) and Chiron Super Sport 300+ (490 km/h)."
       }
     }
-  },
+  },  
   {
     id: 'koenigsegg',
     name: 'Koenigsegg',
