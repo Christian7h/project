@@ -9,7 +9,6 @@ import {
   WebpayPlus
 } from "transbank-sdk"
 
-
 // URL de la API de Webpay desde las variables de entorno
 const WEBPAY_API = import.meta.env.VITE_WEBPAY_API_URL;
 const WEBPAY_API_KEY = import.meta.env.VITE_WEBPAY_API_KEY;
@@ -22,9 +21,6 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-
-
 
 export const initTransaction = async (amount: number, buyOrder: string, returnUrl: string) => {
   try {

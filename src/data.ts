@@ -185,7 +185,7 @@ export const brands: Brand[] = [
         trajectory: "Creator of fastest production cars: Veyron Super Sport (431 km/h) and Chiron Super Sport 300+ (490 km/h)."
       }
     }
-  },  
+  },
   {
     id: 'koenigsegg',
     name: 'Koenigsegg',
@@ -520,7 +520,7 @@ export const brands: Brand[] = [
     foundation: 1910,
     history: "Founded in Milan as A.L.F.A. (Anonima Lombarda Fabbrica Automobili). Iconic Quadrifoglio badge from racing driver Ugo Sivocci.",
     trajectory: "11 victories at Le Mans. Giulia Quadrifoglio (2016) revived performance legacy. Stellantis era since 2021.",
-    translations: { 
+    translations: {
       es: {
         name: 'Alfa Romeo',
         description: 'La mecánica de las emociones',
@@ -874,7 +874,7 @@ export const vehicles: Vehicle[] = [
       '/mb/amg-gt-black/11.jpg',
       '/mb/amg-gt-black/12.jpg',
     ],
-    price:'325000',
+    price: '325000',
     description: 'The ultimate AMG performance machine.',
     type: 'Coupe',
     year: 2025,
@@ -986,7 +986,7 @@ export const vehicles: Vehicle[] = [
     name: 'Audi RS7 Performance',
     image: '/audi/rs7/11.jpg',
     images: [
-      '/audi/rs7/9.avif', '/audi/rs7/11.jpg','/audi/rs7/7.avif', '/audi/rs7/8.avif', '/audi/rs7/12.webp'
+      '/audi/rs7/9.avif', '/audi/rs7/11.jpg', '/audi/rs7/7.avif', '/audi/rs7/8.avif', '/audi/rs7/12.webp'
 
       , '/audi/rs7/5.avif', '/audi/rs7/6.avif',
       '/audi/rs7/2.avif', '/audi/rs7/3.avif', '/audi/rs7/4.avif',
@@ -1388,7 +1388,7 @@ export const vehicles: Vehicle[] = [
       '/lambo/urus/4.jpg', '/lambo/urus/5.jpg', '/lambo/urus/6.jpg',
       '/lambo/urus/7.jpg', '/lambo/urus/8.jpg', '/lambo/urus/9.jpg',
       '/lambo/urus/10.jpg', '/lambo/urus/11.jpg', '/lambo/urus/12.jpg',
-       '/lambo/urus/14.jpg', '/lambo/urus/15.jpg',
+      '/lambo/urus/14.jpg', '/lambo/urus/15.jpg',
       '/lambo/urus/16.jpg', '/lambo/urus/17.jpg',
     ],
     price: '260000',
@@ -1901,7 +1901,7 @@ export const vehicles: Vehicle[] = [
       }
     }
   },
-  
+
   {
     id: 'pagani-zonda-r',
     brandId: 'pagani',
@@ -3028,8 +3028,8 @@ export const vehicles: Vehicle[] = [
     name: 'Lexus LC 500 Sport Convertible',
     image: '/lexus/lc/1.jpg',
     images: [
-      '/lexus/lc/1.jpg', 
-      '/lexus/lc/2.jpg', 
+      '/lexus/lc/1.jpg',
+      '/lexus/lc/2.jpg',
       '/lexus/lc/3.jpg'
     ],
     price: '1200000',
@@ -3063,8 +3063,8 @@ export const vehicles: Vehicle[] = [
     name: 'Lexus ES 300 Sedán',
     image: '/lexus/es/1.jpg',
     images: [
-      '/lexus/es/1.jpg', 
-      '/lexus/es/2.jpg', 
+      '/lexus/es/1.jpg',
+      '/lexus/es/2.jpg',
       '/lexus/es/3.jpg'
     ],
     price: '45000',
@@ -3096,8 +3096,8 @@ export const vehicles: Vehicle[] = [
     name: 'Aston Martin DB 11 V12 Coupe Sport',
     image: '/aston-martin/db/1.jpg',
     images: [
-      '/aston-martin/db/1.jpg', 
-      '/aston-martin/db/2.jpg', 
+      '/aston-martin/db/1.jpg',
+      '/aston-martin/db/2.jpg',
       '/aston-martin/db/3.jpg'
     ],
     price: '1800000',
@@ -3131,8 +3131,8 @@ export const vehicles: Vehicle[] = [
     name: 'Aston Martin DBS Superlegger Convertible',
     image: '/aston-martin/dbs/1.jpg',
     images: [
-      '/aston-martin/dbs/1.jpg', 
-      '/aston-martin/dbs/2.jpg', 
+      '/aston-martin/dbs/1.jpg',
+      '/aston-martin/dbs/2.jpg',
       '/aston-martin/dbs/3.jpg'
     ],
     price: '3200000',
@@ -3162,7 +3162,7 @@ export const vehicles: Vehicle[] = [
     id: 'alfa-romeo-gulia-quadrifoglio-sedan',
     brandId: 'alfa-romeo',
     name: 'Alfa Romeo Giulia Quadrifoglio Sedán',
-    image: '/alfa-romeo/gulia/1.jpg', 
+    image: '/alfa-romeo/gulia/1.jpg',
     images: [
       '/alfa-romeo/gulia/2.jpg',
       '/alfa-romeo/gulia/3.jpg'
@@ -3173,7 +3173,7 @@ export const vehicles: Vehicle[] = [
     year: 2016,
     specs: {
       power: '280 HP',
-      acceleration: '5.1 seconds (0-60 mph)', 
+      acceleration: '5.1 seconds (0-60 mph)',
       topSpeed: '155 mph'
     },
     stock: 5,
@@ -3191,7 +3191,7 @@ export const vehicles: Vehicle[] = [
     }
   },
   {
-    id: 'alfa-romeo-8c-45-deportivo', 
+    id: 'alfa-romeo-8c-45-deportivo',
     brandId: 'alfa-romeo',
     name: 'Alfa Romeo 8C 45° Deportivo',
     image: '/alfa-romeo/8c/1.jpg',

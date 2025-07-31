@@ -104,7 +104,7 @@ export default function Navigation({ isDarkMode, toggleDarkMode }: NavigationPro
           className="text-2xl font-bold text-bmw-blue dark:text-bmw-blue hover:opacity-90 transition-opacity"
           aria-label="Home"
         >
-          Luxury Motors
+          Luxury Cars
         </Link>
 
         {/* Navigation Links */}

@@ -313,6 +313,41 @@ export default function Checkout() {
                       {couponMessage}
                     </p>
                   )}
+                  
+                  {/* Test Coupon Codes Section */}
+                  <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700/30 rounded-lg">
+                    <h4 className="text-sm font-semibold text-yellow-800 dark:text-yellow-300 mb-2 flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Test Coupon Codes Available:
+                    </h4>
+                    <div className="grid grid-cols-1 gap-2 text-xs">
+                      <div className="flex justify-between items-center py-1 px-2 bg-white/50 dark:bg-black/20 rounded border border-yellow-200/50 dark:border-yellow-700/20">
+                        <code className="font-mono text-yellow-900 dark:text-yellow-200 font-semibold">BMW10</code>
+                        <span className="text-yellow-700 dark:text-yellow-300">50% off</span>
+                      </div>
+                      <div className="flex justify-between items-center py-1 px-2 bg-white/50 dark:bg-black/20 rounded border border-yellow-200/50 dark:border-yellow-700/20">
+                        <code className="font-mono text-yellow-900 dark:text-yellow-200 font-semibold">MB15</code>
+                        <span className="text-yellow-700 dark:text-yellow-300">15% off</span>
+                      </div>
+                      <div className="flex justify-between items-center py-1 px-2 bg-white/50 dark:bg-black/20 rounded border border-yellow-200/50 dark:border-yellow-700/20">
+                        <code className="font-mono text-yellow-900 dark:text-yellow-200 font-semibold">AUDI20</code>
+                        <span className="text-yellow-700 dark:text-yellow-300">20% off</span>
+                      </div>
+                      <div className="flex justify-between items-center py-1 px-2 bg-white/50 dark:bg-black/20 rounded border border-yellow-200/50 dark:border-yellow-700/20">
+                        <code className="font-mono text-yellow-900 dark:text-yellow-200 font-semibold">POR25</code>
+                        <span className="text-yellow-700 dark:text-yellow-300">25% off</span>
+                      </div>
+                      <div className="flex justify-between items-center py-1 px-2 bg-white/50 dark:bg-black/20 rounded border border-yellow-200/50 dark:border-yellow-700/20">
+                        <code className="font-mono text-yellow-900 dark:text-yellow-200 font-semibold">FER30</code>
+                        <span className="text-yellow-700 dark:text-yellow-300">30% off</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-yellow-700 dark:text-yellow-400 mt-2 italic">
+                      💡 These are test codes for development purposes
+                    </p>
+                  </div>
                 </div>
 
                 <button

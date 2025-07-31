@@ -146,44 +146,100 @@ const VehicleDetail = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-200 pt-24">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
-          <div>
+        {/* Hero Section del vehículo */}
+        <div className="relative mb-16 rounded-2xl overflow-hidden shadow-2xl">
+          {/* Imagen principal con overlay */}
+          <div className="relative h-[400px] md:h-[600px]">
             <img
               src={vehicle.image}
               alt={translations.name}
               loading="lazy"
-              className="w-full rounded-lg"
-              width={800}
-              height={600}
+              className="w-full h-full object-cover"
             />
-          </div>
-
-          <div className="space-y-8">
-            <h1 className="text-4xl font-bold">{translations.name}</h1>
-            <p className="text-2xl text-bmw-blue">
-              {formatPrice(translations.price)}
-            </p>
-            <p className="text-gray-600 dark:text-gray-400">
-              {translations.description}
-            </p>
-
-            <div className="grid grid-cols-3 gap-6">
-              {specs.map(({ icon, value, label }, index) => (
-                <SpecCard
-                  key={`${label}-${index}`}
-                  icon={icon}
-                  value={value}
-                  label={label}
-                />
-              ))}
+            {/* Overlay gradiente */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/30" />
+            
+            {/* Contenido superpuesto */}
+            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+              <div className="max-w-4xl">
+                <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-2xl">
+                  {translations.name}
+                </h1>
+                <p className="text-2xl md:text-3xl font-bold text-bmw-lightblue mb-4 drop-shadow-lg">
+                  {formatPrice(translations.price)}
+                </p>
+                <p className="text-lg md:text-xl text-gray-200 max-w-3xl leading-relaxed drop-shadow-md">
+                  {translations.description}
+                </p>
+              </div>
             </div>
+            
+            {/* Badge de precio flotante */}
+            <div className="absolute top-8 right-8">
+              <div className="bg-bmw-blue/90 backdrop-blur-md text-white px-6 py-3 rounded-xl shadow-xl border border-white/20">
+                <p className="text-sm font-medium">Precio</p>
+                <p className="text-xl font-bold">{formatPrice(translations.price)}</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-            <ActionButtons
-              vehicleId={vehicle.id}
-              stock={vehicle.stock}
-              addToCart={addToCart}
-              language={language}
-            />
+        {/* Sección de especificaciones mejorada */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold mb-8 text-center">
+            {language === "es" ? "Especificaciones técnicas" : "Technical Specifications"}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {specs.map(({ icon, value, label }, index) => (
+              <div
+                key={`${label}-${index}`}
+                className="group relative bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-zinc-200 dark:border-zinc-700 hover:border-bmw-blue/30 dark:hover:border-bmw-lightblue/30 text-center"
+              >
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-bmw-blue to-bmw-lightblue rounded-t-xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                  {icon}
+                </div>
+                <p className="text-3xl font-bold mb-2 text-gray-800 dark:text-gray-200">{value}</p>
+                <p className="text-sm font-medium text-bmw-blue dark:text-bmw-lightblue uppercase tracking-wide">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Botones de acción mejorados */}
+        <div className="mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            <button
+              onClick={() => addToCart(vehicle.id)}
+              disabled={vehicle.stock === 0}
+              className="group relative overflow-hidden bg-gradient-to-r from-bmw-blue to-bmw-lightblue text-white py-4 px-8 rounded-xl hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+              aria-label={language === "es" ? "Añadir al carrito" : "Add to cart"}
+            >
+              <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+              <div className="relative flex items-center justify-center gap-3">
+                <ShoppingCart className="w-6 h-6" />
+                <span className="text-lg font-semibold">
+                  {language === "es" ? "Añadir a la cesta" : "Add to Cart"}
+                </span>
+              </div>
+            </button>
+
+            <button
+              className="group relative overflow-hidden bg-gradient-to-r from-gray-800 to-gray-900 dark:from-gray-700 dark:to-gray-800 text-white py-4 px-8 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              aria-label={
+                language === "es" ? "Programar prueba de manejo" : "Schedule test drive"
+              }
+            >
+              <div className="absolute inset-0 bg-white/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+              <div className="relative flex items-center justify-center gap-3">
+                <Car className="w-6 h-6" />
+                <span className="text-lg font-semibold">
+                  {language === "es"
+                    ? "Prueba de manejo"
+                    : "Test Drive"}
+                </span>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -196,18 +252,21 @@ const VehicleDetail = () => {
               : "Recommended Vehicles"}
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {filteredRecommended.map((vehicle) => {
-              const translations = vehicle.translations?.[language] || {};
+            {filteredRecommended.map((recommendedVehicle) => {
+              const vehicleTranslations = recommendedVehicle.translations?.[language] as { name?: string; description?: string } || {};
+              const vehicleName = vehicleTranslations.name || recommendedVehicle.name;
+              const vehicleDescription = vehicleTranslations.description || recommendedVehicle.description;
+              
               return (
                 <Link
-                  key={vehicle.id}
-                  to={`/vehicles/${vehicle.id}`}
+                  key={recommendedVehicle.id}
+                  to={`/vehicles/${recommendedVehicle.id}`}
                   className="group relative bg-zinc-100 dark:bg-zinc-900 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
                 >
                   <div className="hover-scale aspect-video relative overflow-hidden">
                     <img
-                      src={vehicle.image}
-                      alt={translations.name || vehicle.name}
+                      src={recommendedVehicle.image}
+                      alt={vehicleName}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
@@ -215,13 +274,13 @@ const VehicleDetail = () => {
                   </div>
                   <div className="p-6">
                     <h3 className="text-2xl font-bold mb-2 text-gray-800 dark:text-gray-200 group-hover:text-bmw-blue transition-colors">
-                      {translations.name || vehicle.name}
+                      {vehicleName}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-                      {translations.description || vehicle.description}
+                      {vehicleDescription}
                     </p>
                     <p className="text-xl font-semibold text-bmw-blue dark:text-bmw-lightblue">
-                      {formatPrice(vehicle.price.toString())}
+                      {formatPrice(recommendedVehicle.price.toString())}
                     </p>
                   </div>
                 </Link>
@@ -244,49 +303,6 @@ const VehicleDetail = () => {
     </div>
   );
 };
-
-const SpecCard = ({ icon, value, label }: SpecItem) => (
-  <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg text-center hover:scale-105 transition duration-500">
-    {icon}
-    <p className="text-2xl font-bold">{value}</p>
-    <p className="text-sm text-gray-600 dark:text-gray-400">{label}</p>
-  </div>
-);
-
-const ActionButtons = ({
-  vehicleId,
-  stock,
-  addToCart,
-  language,
-}: {
-  vehicleId: string;
-  stock: number;
-  addToCart: (id: string) => void;
-  language: string;
-}) => (
-  <>
-    <button
-      onClick={() => addToCart(vehicleId)}
-      disabled={stock === 0}
-      className="w-full flex items-center justify-center gap-2 bg-bmw-blue text-white py-3 rounded-lg hover:bg-bmw-blue/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
-      aria-label={language === "es" ? "Añadir al carrito" : "Add to cart"}
-    >
-      <ShoppingCart className="w-5 h-5" />
-      {language === "es" ? "Añadir a la cesta" : "Add to Cart"}
-    </button>
-
-    <button
-      className="w-full bg-bmw-blue text-white py-3 rounded-lg hover:bg-bmw-blue/90 transition"
-      aria-label={
-        language === "es" ? "Programar prueba de manejo" : "Schedule test drive"
-      }
-    >
-      {language === "es"
-        ? "Programar prueba de manejo"
-        : "Schedule a test drive"}
-    </button>
-  </>
-);
 
 const GallerySection = ({
   language,

@@ -14,9 +14,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem("theme") === "dark";
+      const savedTheme = localStorage.getItem("theme");
+      return savedTheme ? savedTheme === "dark" : true;
     }
-    return false;
+    return true; // Por defecto modo oscuro
   });
 
   useEffect(() => {

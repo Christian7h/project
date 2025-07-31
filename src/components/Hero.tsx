@@ -131,16 +131,18 @@ export default function HeroSection() {
       {!isPlaying && (
         <div className="relative mx-auto h-full flex flex-col justify-center md:px-40 z-10">
           <div className="py-20 px-4">
-            
-            <h1 className="text-6xl font-bold mb-4 text-white">Christian7hDeus</h1>
+
+            <h1 className="text-5xl md:text-4xl lg:text-5xl xl:text-7xl font-bold mb-4 text-white">
+              BMW M4 CSL
+            </h1>
             <p className="text-xl mb-8 text-gray-300">
               Competition. Sport. Lightweight.
             </p>
             <div className="flex space-x-4">
-              <Link to='contact'>
-              <button className="bg-bmw-blue text-white px-8 py-3 rounded-md flex items-center">
-                Configure Now <ChevronRight className="ml-2" />
-              </button>
+              <Link to='/vehicles/m4-csl'>
+                <button className="bg-bmw-blue text-white px-8 py-3 rounded-md flex items-center hover:bg-bmw-blue/80 transition">
+                  Reserve yours <ChevronRight className="ml-2" />
+                </button>
               </Link>
               <button
                 onClick={handleWatchFilm}
@@ -153,7 +155,7 @@ export default function HeroSection() {
           {/* Imagen al fondo */}
           <div className="absolute inset-0 -z-50">
             <img
-              src="https://mediapool.bmwgroup.com/cache/P9/202205/P90461734/P90461734-the-new-bmw-m4-csl-on-the-racetrack-05-2022-2250px.jpg"
+              src="ImageHero.jpg"
               alt="Hero Image"
               className="w-full h-full object-cover" // Imagen con opacidad para que el texto se vea
             />
