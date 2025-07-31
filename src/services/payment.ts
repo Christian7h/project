@@ -27,7 +27,7 @@ export const initiatePayment = async (amount: number, customerInfo: CustomerInfo
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-    const API_URL = import.meta.env.BACKEND_URL_API || "https://backend-luxurymotors-react-nodej-production.up.railway.app";
+    const API_URL = import.meta.env.BACKEND_URL_API || "https://backend-luxurymotors-react-nodejs-webpay.onrender.com";
 
     const response = await axios.post(
       `${API_URL}/api/create-transaction`,
