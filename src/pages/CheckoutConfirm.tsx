@@ -499,7 +499,7 @@ export default function CheckoutConfirm() {
 
     const confirmPayment = async () => {
       const API_URL =
-        import.meta.env.BACKEND_URL_API || "http://localhost:3000";
+        import.meta.env.BACKEND_URL_API || "https://backend-luxurymotors-react-nodejs-webpay.onrender.com";
       try {
         setIsLoading(true);
         const { data } = await axios.post(
