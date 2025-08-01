@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'bmw-blue': '#0066B1',
+        'bmw-blue': '#0066B1', //EFBF04 //FFD700 //A57D02
       },
     },
   },

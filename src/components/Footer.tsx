@@ -6,7 +6,7 @@ export default function Footer() {
   const { language } = useLanguage();
 
   return (
-    <footer className="relative py-24 bg-white dark:bg-black">
+    <footer className="relative py-24 bg-gradient-to-tr from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700">
       {/* Decorative top border */}
       
       {/* Background pattern */}
@@ -108,8 +108,8 @@ export default function Footer() {
             <div className="w-full border-t border-gray-300 dark:border-gray-700"></div>
           </div>
           <div className="relative flex justify-center">
-            <div className="bg-gradient-to-r from-bmw-blue to-bmw-lightblue px-6 py-2 rounded-full shadow-lg">
-              <div className="w-8 h-1 bg-white/50 rounded-full"></div>
+            <div className="bg-gradient-to-r from-bmw-blue to-bmw-blue px-6 py-2 rounded-full shadow-lg">
+              <div className="w-4 h-4 bg-white/50 rounded-full"></div>
             </div>
           </div>
         </div>

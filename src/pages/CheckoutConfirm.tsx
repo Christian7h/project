@@ -499,7 +499,7 @@ export default function CheckoutConfirm() {
 
     const confirmPayment = async () => {
       const API_URL =
-        import.meta.env.BACKEND_URL_API || "https://backend-luxurymotors-react-nodejs-webpay.onrender.com";
+        import.meta.env.BACKEND_URL_API || "http://localhost:3000";
       try {
         setIsLoading(true);
         const { data } = await axios.post(
@@ -600,7 +600,7 @@ export default function CheckoutConfirm() {
       }).format(amount);
 
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 flex items-center justify-center">
         <ConfettiWrapper show={showConfetti} width={width} height={height} />
 
         <div className="text-center max-w-3xl w-full bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg mt-24">
