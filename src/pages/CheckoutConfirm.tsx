@@ -14,9 +14,23 @@ import {
   View,
   StyleSheet,
   Image,
+  pdf,
 } from "@react-pdf/renderer";
 import { Download } from "lucide-react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+
+// Helper function to convert Blob to Base64
+const blobToBase64 = (blob: Blob): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = (reader.result as string).split(",")[1];
+      resolve(base64String);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+};
 
 // Interfaces TypeScript
 interface Address {
@@ -499,7 +513,7 @@ export default function CheckoutConfirm() {
 
     const confirmPayment = async () => {
       const API_URL =
-        import.meta.env.BACKEND_URL_API || "https://backend-luxurymotors-react-nodejs-webpay.onrender.com";
+        import.meta.env.BACKEND_URL_API || "http://localhost:3000";
       try {
         setIsLoading(true);
         const { data } = await axios.post(
@@ -530,6 +544,12 @@ export default function CheckoutConfirm() {
         const emailSentKey = `email_sent_${paymentResult.orderId}`;
         if (!localStorage.getItem(emailSentKey)) {
           try {
+            // Generar PDF en memoria
+            const blob = await pdf(
+              <VoucherPDF paymentResult={paymentResult} language={language} />
+            ).toBlob();
+            const base64PDF = await blobToBase64(blob);
+
             // Calcular subtotal si no viene en los datos
             const calculatedSubtotal = paymentResult.subtotal || 
               paymentResult.cartItems.reduce((total, item) => 
@@ -549,6 +569,12 @@ export default function CheckoutConfirm() {
               subtotal: calculatedSubtotal,
               discount: paymentResult.discount,
               couponCode: paymentResult.couponCode,
+              attachments: [
+                {
+                  filename: `comprobante-${paymentResult.orderId}.pdf`,
+                  content: base64PDF,
+                },
+              ],
             });
             localStorage.setItem(emailSentKey, "true");
           } catch (error) {

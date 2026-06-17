@@ -6,6 +6,7 @@ import Footer from "./components/Footer.tsx";
 import ScrollToTop from "./components/ScrollTop.tsx";
 import LoadingScreen from "./components/LoadingScreen";
 import ScrollProgress from "./components/ScrollProgress";
+import SmoothScroll from "./components/SmoothScroll";
 import { LanguageProvider } from "./context/LanguageContext.tsx";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { CartProvider } from './context/CartContext';
@@ -45,6 +46,7 @@ function App() {
                 <LoadingScreen key="loading" />
               ) : (
                 <>
+                  <SmoothScroll />
                   <ScrollProgress />
                   <main>
                     <ScrollToTop />

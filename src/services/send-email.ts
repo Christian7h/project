@@ -10,7 +10,8 @@ export const sendEmail = async ({
   cartItems,
   subtotal,
   discount,
-  couponCode
+  couponCode,
+  attachments = []
 }: {
   to: string;
   subject: string;
@@ -21,6 +22,7 @@ export const sendEmail = async ({
   subtotal?: number;
   discount?: number;
   couponCode?: string;
+  attachments?: { filename: string; content: string }[];
 }) => {
   // Calcular subtotal si no se proporciona
   const calculatedSubtotal = subtotal || 
@@ -153,7 +155,7 @@ export const sendEmail = async ({
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
-    const API_URL = import.meta.env.BACKEND_URL_API || "https://backend-luxurymotors-react-nodejs-webpay.onrender.com";
+    const API_URL = import.meta.env.BACKEND_URL_API || "http://localhost:3000";
 
     const response = await axios.post(
       `${API_URL}/api/send-email`,
@@ -161,13 +163,14 @@ export const sendEmail = async ({
         to,
         subject,
         reactTemplate,
+        attachments
       },
       {
         signal: controller.signal,
         headers: {
           'Content-Type': 'application/json'
         },
-        timeout: 10000
+        timeout: 15000
       }
     );
 

@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { vehicles, coupons } from "../data";
-import { initiatePayment } from "../services/payment.ts";
+import { initiatePayment,initiateMercadoPagoPayment } from "../services/payment.ts";
 import { FormData, CartItem } from "../types";
 import imgTransbank from "../assets/images/transbank.png";
 import imgMercadopago from "../assets/images/mercadpago.png";
@@ -203,12 +203,14 @@ export default function Checkout() {
   const [isLoading, setIsLoading] = useState(false);
   const [discount, setDiscount] = useState(0);
   const [couponMessage, setCouponMessage] = useState("");
+  const [appliedCouponCode, setAppliedCouponCode] = useState<string>("");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
 
+  // ... (cartTotal and cartItems calculation remains same)
   const cartTotal = getSubtotal() - discount;
   const cartItems: CartItem[] = items.map((item) => {
     const fullVehicle = vehicles.find((v) => v.id === item.vehicleId)!;
@@ -223,6 +225,7 @@ export default function Checkout() {
     };
   });
 
+  // ... (formatPrice remains same)
   const formatPrice = (price: number) =>
     new Intl.NumberFormat("es-CL", {
       style: "currency",
@@ -230,19 +233,28 @@ export default function Checkout() {
     }).format(price);
 
   const applyCoupon = (code: string) => {
-    const coupon = coupons.find((c) => c.code === code);
+    if (!code) {
+      setDiscount(0);
+      setAppliedCouponCode("");
+      setCouponMessage("");
+      return;
+    }
+    const coupon = coupons.find((c) => c.code.toUpperCase() === code.toUpperCase());
     if (coupon) {
-      const discountAmount = (getSubtotal() * coupon.discount) / 100; // Calcula el descuento en base al porcentaje
+      const discountAmount = Math.round((getSubtotal() * coupon.discount) / 100);
       setDiscount(discountAmount);
+      setAppliedCouponCode(coupon.code);
       setCouponMessage(
         `Coupon applied: ${coupon.code} - ${coupon.discount}% off`
       );
     } else {
       setDiscount(0);
+      setAppliedCouponCode("");
       setCouponMessage("Invalid coupon code.");
     }
   };
 
+  // ... (handleRemoveItem remains same)
   const handleRemoveItem = (vehicleId: string) => {
     const vehicle = cartItems.find(item => item.vehicle.id === vehicleId);
     if (vehicle) {
@@ -259,18 +271,42 @@ export default function Checkout() {
     }
   };
 
-  const handleMercadoPagoPayment = () => {
-    // TODO: Implementar cuando esté listo el backend de Mercado Pago
-    setCouponMessage("🚧 Mercado Pago estará disponible próximamente. Por favor usa Transbank por ahora.");
-    setTimeout(() => {
-      setCouponMessage("");
-    }, 4000);
+  const handleMercadoPagoPayment: SubmitHandler<FormData> = async (data) => {
+    try {
+      setIsLoading(true);
+
+      const resp = await initiateMercadoPagoPayment(
+        cartTotal, 
+        data, 
+        cartItems, 
+        getSubtotal(), 
+        discount, 
+        appliedCouponCode
+      );
+
+      if (resp.init_point) {
+        window.location.href = resp.init_point;
+      } else {
+        console.error("Respuesta inesperada del backend:", resp);
+      }
+    } catch (error) {
+      console.error("Error initiating Mercado Pago payment:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       setIsLoading(true);
-      const { url, token } = await initiatePayment(cartTotal, data, cartItems);
+      const { url, token } = await initiatePayment(
+        cartTotal, 
+        data, 
+        cartItems, 
+        getSubtotal(), 
+        discount, 
+        appliedCouponCode
+      );
       if (url && token) {
         window.location.href = `${url}?token_ws=${token}`;
       }
@@ -442,8 +478,8 @@ export default function Checkout() {
                   <button
                     
                     type="button"
-                    onClick={handleMercadoPagoPayment}
-                    disabled={true}
+                    onClick={handleSubmit(handleMercadoPagoPayment)}
+                    disabled={isLoading}
                     className="w-full bg-gradient-to-r from-blue-500 via-blue-600 to-cyan-500 hover:from-blue-600 hover:via-blue-700 hover:to-cyan-600 disabled:from-gray-400 disabled:via-gray-500 disabled:to-gray-400 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none flex items-center justify-center gap-3 relative"
                     title="Próximamente disponible"
                   >

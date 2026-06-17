@@ -3,173 +3,185 @@ import { useParams, Link } from "react-router-dom";
 import { brands, vehicles } from "../data";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useLanguage } from "../context/LanguageContext";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, Calendar, History, Trophy, ArrowRight, Zap, Gauge, Wind, Heart } from "lucide-react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useFavorites } from "../context/useFavorites";
+import { Brand as BrandType, Vehicle as VehicleType } from "../types";
 
-function BrandInfo({ brand, language }) {
-  const { logo, name, description, history, trajectory, foundation } =
-    brand.translations?.[language] || brand;
+const formatPrice = (price: string) => {
+  const num = parseInt(price);
+  if (isNaN(num)) return price;
+  return new Intl.NumberFormat('es-CL', {
+    style: 'currency',
+    currency: 'CLP',
+  }).format(num * 1000);
+};
+
+function BrandHero({ brand, language }: { brand: BrandType; language: string }) {
+  const { name, description } = brand.translations?.[language] || brand;
 
   return (
-    <div className="mb-16">
-      {/* Hero Section con fondo gradiente y logo centrado */}
-      <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden mb-8 shadow-2xl bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-        {/* Patrón de fondo decorativo */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 border border-white/20 rounded-full"></div>
-          <div className="absolute top-20 right-20 w-24 h-24 border border-white/20 rounded-full"></div>
-          <div className="absolute bottom-20 left-1/4 w-16 h-16 border border-white/20 rounded-full"></div>
-          <div className="absolute bottom-10 right-1/3 w-20 h-20 border border-white/20 rounded-full"></div>
+    <section className="relative h-[70vh] flex items-center justify-center overflow-hidden bg-zinc-950">
+      {/* Background Decor */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black z-10"></div>
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-bmw-blue/20 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4"></div>
+
+        {/* Pattern */}
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-20 text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="mb-12 inline-block"
+        >
+          <div className="p-8 bg-white/5 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 shadow-2xl">
+            <img
+              src={brand.logo}
+              alt={name}
+              className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-[0_10px_30px_rgba(255,255,255,0.1)]"
+            />
+          </div>
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-6xl md:text-8xl font-black text-white mb-6 uppercase tracking-tight"
+        >
+          {name}
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto font-medium"
+        >
+          {description}
+        </motion.p>
+      </div>
+    </section>
+  );
+}
+
+function BrandDetails({ brand, language }: { brand: BrandType; language: string }) {
+  const { history, trajectory, foundation } = brand.translations?.[language] || brand;
+
+  const details = [
+    { icon: Calendar, label: language === 'es' ? 'Fundación' : 'Foundation', value: foundation },
+    { icon: History, label: language === 'es' ? 'Herencia' : 'Heritage', value: history },
+    { icon: Trophy, label: language === 'es' ? 'Logros' : 'Achievements', value: trajectory },
+  ];
+
+  return (
+    <section className="py-24 bg-black relative">
+      <div className="container mx-auto px-4">
+        <div className="grid lg:grid-cols-3 gap-8">
+          {details.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="p-10 bg-zinc-900/50 rounded-[2rem] border border-zinc-800 hover:border-bmw-blue/50 transition-colors group"
+            >
+              <div className="w-14 h-14 bg-bmw-blue/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-bmw-blue group-hover:text-white transition-all duration-500">
+                <item.icon className="w-7 h-7 text-bmw-blue group-hover:text-white" />
+              </div>
+              <h3 className="text-zinc-500 font-bold uppercase tracking-widest text-xs mb-4">{item.label}</h3>
+              <p className="text-zinc-200 text-lg leading-relaxed">
+                {item.value}
+              </p>
+            </motion.div>
+          ))}
         </div>
-        
-        {/* Logo centrado */}
-        <div className="absolute inset-0 flex items-center justify-center">
+      </div>
+    </section>
+  );
+}
+
+const VehicleCard = ({ vehicle, language, isFavorite, onToggleFavorite }: {
+  vehicle: VehicleType;
+  language: string;
+  isFavorite: boolean;
+  onToggleFavorite: (id: string) => void;
+}) => {
+  const vName = vehicle.translations?.[language]?.name || vehicle.name;
+  const vType = vehicle.translations?.[language]?.type || vehicle.type;
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="group bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 hover:border-bmw-blue/30 transition-all duration-500"
+    >
+      <div className="relative aspect-[16/10] overflow-hidden">
+        <LazyLoadImage
+          src={vehicle.image}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          alt={vName}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            onToggleFavorite(vehicle.id);
+          }}
+          className={`absolute top-4 right-4 z-10 p-3 rounded-full backdrop-blur-md transition-all duration-300 ${isFavorite ? "bg-red-500 text-white" : "bg-white/10 text-white hover:bg-white/20"
+            }`}
+        >
+          <Heart className={`w-5 h-5 ${isFavorite ? "fill-white" : ""}`} />
+        </button>
+
+        <div className="absolute bottom-6 left-6 text-white">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-bmw-blue mb-1 block">{vType}</span>
+          <h3 className="text-2xl font-bold">{vName}</h3>
+        </div>
+      </div>
+
+      <div className="p-8">
+        <div className="grid grid-cols-3 gap-6 mb-8 py-6 border-y border-zinc-800">
           <div className="text-center">
-            <div className="mb-8 flex justify-center">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
-                <img
-                  src={brand.logo}
-                  alt={name}
-                  className="w-24 h-24 md:w-32 md:h-32 object-contain"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 drop-shadow-2xl">
-              {name}
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-200 max-w-3xl leading-relaxed drop-shadow-lg">
-              {description}
-            </p>
+            <Zap className="w-5 h-5 text-zinc-500 mb-2 mx-auto" />
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{vehicle.specs.power}</span>
+          </div>
+          <div className="text-center">
+            <Gauge className="w-5 h-5 text-zinc-500 mb-2 mx-auto" />
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{vehicle.specs.acceleration}</span>
+          </div>
+          <div className="text-center">
+            <Wind className="w-5 h-5 text-zinc-500 mb-2 mx-auto" />
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{vehicle.specs.topSpeed}</span>
           </div>
         </div>
-        
-        {/* Elementos decorativos en las esquinas */}
-        
-        {/* Efectos de luz */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-      </div>
 
-      {/* Cards de información */}
-      <div className="grid lg:grid-cols-3 gap-6">
-        {foundation && (
-          <div className="group relative bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-zinc-200 dark:border-zinc-700 hover:border-bmw-blue/30 dark:hover:border-bmw-lightblue/30">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-bmw-blue to-bmw-lightblue rounded-t-xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 bg-bmw-blue/10 dark:bg-bmw-lightblue/10 rounded-lg flex items-center justify-center mr-3">
-                <svg className="w-5 h-5 text-bmw-blue dark:text-bmw-lightblue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-bmw-blue dark:text-bmw-lightblue">
-                {language === "es" ? "Fundación" : "Foundation"}
-              </h3>
-            </div>
-            <p className="text-2xl font-semibold text-gray-800 dark:text-gray-200">{foundation}</p>
-          </div>
-        )}
-
-        {history && (
-          <div className="group relative bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-zinc-200 dark:border-zinc-700 hover:border-bmw-blue/30 dark:hover:border-bmw-lightblue/30">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-bmw-blue to-bmw-lightblue rounded-t-xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 bg-bmw-blue/10 dark:bg-bmw-lightblue/10 rounded-lg flex items-center justify-center mr-3">
-                <svg className="w-5 h-5 text-bmw-blue dark:text-bmw-lightblue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-bmw-blue dark:text-bmw-lightblue">
-                {language === "es" ? "Historia" : "History"}
-              </h3>
-            </div>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-4 group-hover:line-clamp-none transition-all duration-300">
-              {history}
-            </p>
-          </div>
-        )}
-
-        {trajectory && (
-          <div className="group relative bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-zinc-200 dark:border-zinc-700 hover:border-bmw-blue/30 dark:hover:border-bmw-lightblue/30">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-bmw-blue to-bmw-lightblue rounded-t-xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 bg-bmw-blue/10 dark:bg-bmw-lightblue/10 rounded-lg flex items-center justify-center mr-3">
-                <svg className="w-5 h-5 text-bmw-blue dark:text-bmw-lightblue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-bmw-blue dark:text-bmw-lightblue">
-                {language === "es" ? "Trayectoria" : "Trajectory"}
-              </h3>
-            </div>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-4 group-hover:line-clamp-none transition-all duration-300">
-              {trajectory}
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function VehicleList({ vehicles, language }) {
-  if (vehicles.length === 0) {
-    return (
-      <p className="text-xl text-gray-500 dark:text-gray-400">
-        {language === "es"
-          ? "No hay modelos disponibles para esta marca."
-          : "No models available for this brand."}
-      </p>
-    );
-  }
-
-  return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {vehicles.map((vehicle) => {
-        const { name, description } =
-          vehicle.translations?.[language] || vehicle;
-
-        const formattedPrice = new Intl.NumberFormat("es-CL", {
-          style: "currency",
-          currency: "CLP",
-        }).format(vehicle.price);
-        
-        return (
+        <div className="flex items-center justify-between">
+          <span className="text-2xl font-bold text-white">{formatPrice(vehicle.price)}</span>
           <Link
-            key={vehicle.id}
             to={`/vehicles/${vehicle.id}`}
-            className="group relative bg-zinc-100 dark:bg-zinc-900 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+            className="w-12 h-12 bg-bmw-blue rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform"
           >
-            {/* Imagen del vehículo */}
-            <div className="hover-scale aspect-video relative overflow-hidden">
-              <img
-                src={vehicle.image}
-                alt={name}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition duration-300"></div>
-            </div>
-            {/* Contenido del vehículo */}
-            <div className="p-6">
-              <h3 className="text-2xl font-bold mb-2 text-gray-800 dark:text-gray-200 group-hover:text-bmw-blue transition-colors">
-                {name}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-                {description}
-              </p>
-              <p className="text-xl font-semibold text-bmw-blue dark:text-bmw-lightblue">
-                {formattedPrice}
-              </p>
-            </div>
+            <ArrowRight className="w-5 h-5" />
           </Link>
-        );
-      })}
-    </div>
+        </div>
+      </div>
+    </motion.div>
   );
-}
+};
 
 export default function BrandPage() {
   const { brandId } = useParams<{ brandId: string }>();
   const { language } = useLanguage();
+  const { favorites, toggleFavorite } = useFavorites();
 
   const brand = useMemo(() => brands.find((b) => b.id === brandId), [brandId]);
   const brandVehicles = useMemo(
@@ -180,14 +192,52 @@ export default function BrandPage() {
   if (!brand) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-200 pt-24">
-      <div className="container mx-auto px-4">
-        <BrandInfo brand={brand} language={language} />
-        <h2 className="text-3xl font-bold mb-8">
-          {language === "es" ? "Modelos destacados" : "Featured Models"}
-        </h2>
-        <VehicleList vehicles={brandVehicles} language={language} />
+    <main className="min-h-screen bg-black scroll-smooth">
+      <BrandHero brand={brand} language={language} />
+
+      <div className="relative">
+        {/* Floating Back Button */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
+          <Link
+            to="/brands"
+            className="flex items-center gap-2 px-6 py-4 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white rounded-2xl shadow-2xl font-bold hover:scale-105 transition-transform"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            {language === 'es' ? 'Todas las Marcas' : 'All Brands'}
+          </Link>
+        </div>
+
+        <BrandDetails brand={brand} language={language} />
+
+        <section className="py-24 container mx-auto px-4">
+          <div className="flex items-end justify-between mb-16">
+            <div>
+              <h2 className="text-4xl font-bold text-white mb-4">
+                {language === "es" ? "Evolución en Pista" : "Track Evolution"}
+              </h2>
+              <p className="text-zinc-500">{language === 'es' ? 'Modelos actualmente disponibles en nuestra flota.' : 'Models currently available in our fleet.'}</p>
+            </div>
+            <div className="text-right">
+              <span className="text-5xl font-black text-zinc-800">{brandVehicles.length}</span>
+              <p className="text-xs font-bold text-bmw-blue uppercase tracking-widest">{language === 'es' ? 'Unidades' : 'Units'}</p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
+            <AnimatePresence>
+              {brandVehicles.map((vehicle) => (
+                <VehicleCard
+                  key={vehicle.id}
+                  vehicle={vehicle}
+                  language={language}
+                  isFavorite={favorites.includes(vehicle.id)}
+                  onToggleFavorite={toggleFavorite}
+                />
+              ))}
+            </AnimatePresence>
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }

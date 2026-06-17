@@ -761,7 +761,7 @@ export const vehicles: Vehicle[] = [
       '/bmw/m4cls/bmwm4cls (5).jpg', '/bmw/m4cls/bmwm4cls (4).jpg', '/bmw/m4cls/bmwm4cls (3).jpg',
       '/bmw/m4cls/bmwm4cls (2).jpg', '/bmw/m4cls/bmwm4cls (1).jpg'
     ],
-    price: '139900',
+    price: '11',
     description: 'Competition. Sport. Lightweight.',
     year: 2024,
     type: 'Coupe',
@@ -852,6 +852,41 @@ export const vehicles: Vehicle[] = [
         name: 'BMW ALPINA B8',
         description: 'The Ultimate Driving Machine',
         type: 'Sedan',
+      },
+    },
+  },
+  {
+    id: 'bmw-m4-cs',
+    brandId: 'bmw',
+    name: 'BMW M4 CS',
+    image: '/bmw/m4cls/bmwm4cls (20).jpg',
+    images: ['/bmw/m4cls/bmwm4cls (20).jpg', '/bmw/m4cls/bmwm4cls (19).jpg', '/bmw/m4cls/bmwm4cls (18).jpg',
+      '/bmw/m4cls/bmwm4cls (17).jpg', '/bmw/m4cls/bmwm4cls (16).jpg', '/bmw/m4cls/bmwm4cls (15).jpg',
+      '/bmw/m4cls/bmwm4cls (14).jpg', '/bmw/m4cls/bmwm4cls (13).jpg', '/bmw/m4cls/bmwm4cls (12).jpg',
+      '/bmw/m4cls/bmwm4cls (11).jpg', '/bmw/m4cls/bmwm4cls (10).jpg', '/bmw/m4cls/bmwm4cls (9).jpg',
+      '/bmw/m4cls/bmwm4cls (8).jpg', '/bmw/m4cls/bmwm4cls (7).jpg', '/bmw/m4cls/bmwm4cls (6).jpg',
+      '/bmw/m4cls/bmwm4cls (5).jpg', '/bmw/m4cls/bmwm4cls (4).jpg', '/bmw/m4cls/bmwm4cls (3).jpg',
+      '/bmw/m4cls/bmwm4cls (2).jpg', '/bmw/m4cls/bmwm4cls (1).jpg',],
+    price: '126000',
+    description: 'The Ultimate Driving Machine',
+    type: 'Coupe',
+    year: 2025,
+    specs: {
+      power: '627 HP',
+      acceleration: '2.9s',
+      topSpeed: '190 mph'
+    },
+    stock: 2,
+    translations: {
+      es: {
+        name: 'BMW M4 CS',
+        description: 'El coche M más potente de todos los tiempos.',
+        type: 'Coupe'
+      },
+      en: {
+        name: 'BMW M4 CS',
+        description: 'The most powerful M car ever.',
+        type: 'Coupe'
       },
     },
   },
